@@ -15,10 +15,12 @@ public class PlayerInput : MonoBehaviour
     void Update()
     {
         delayPassed += Time.deltaTime;
-        if (Input.GetButtonDown("Fire1") && delayPassed >= jumpDelay && movement != null)
-        {
-            delayPassed = 0;
-            movement.Jump();
-        }
+		if (Input.GetAxis ("Vertical") > 0.0 && delayPassed >= jumpDelay && movement != null) {
+			delayPassed = 0;
+			movement.Jump ();
+		} else {
+			movement.TryShortHop (Input.GetAxis("Vertical"));
+		}
+		this.movement.HorizontalFactor = Input.GetAxis ("Horizontal");
     }
 }
