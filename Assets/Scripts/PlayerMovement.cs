@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Movement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour {
 
 	public float jumpSpeed;
     public float shortHopJumpSpeed;
@@ -8,31 +8,23 @@ public class Movement : MonoBehaviour {
 
 	private Rigidbody2D rigidbodyObject;
 	private BoxCollider2D boxCollider;
-	private float distanceToGround;
 	private float groundMargin = 0.1f;
 
 	private Vector2 acceleration;
-	private float horizontalFactor;
-	public float HorizontalFactor {
-		get { return this.horizontalFactor; }
+	private Direction movementDirection;
+	public Direction MovementDirection {
+		get { return this.movementDirection; }
 		set {
-			this.horizontalFactor = value;
-			this.acceleration = new Vector2 (this.moveSpeed * this.horizontalFactor, this.acceleration.y);
+			this.movementDirection = value;
+			this.acceleration = new Vector2 ((float)value * this.moveSpeed, this.acceleration.y);
 		}
 	}
-	private bool canShortHop;
-	private readonly float shortHopFactor = 0.6f;
 
 	void Start()
 	{
 		rigidbodyObject = GetComponent<Rigidbody2D>();
 		boxCollider = GetComponent<BoxCollider2D>();
-		if (boxCollider != null)
-		{
-			distanceToGround = boxCollider.bounds.extents.y;
-		}
 		acceleration = new Vector2 (0.0f, 0.0f);
-		this.canShortHop = true;
 	}
 
 	public bool IsGrounded()
@@ -43,7 +35,6 @@ public class Movement : MonoBehaviour {
 
 	public void FullHop()
 	{
-		//this.canShortHop = true;
 		if(rigidbodyObject != null && IsGrounded())
 		{
 			rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
