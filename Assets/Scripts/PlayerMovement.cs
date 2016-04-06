@@ -16,17 +16,7 @@ public class PlayerMovement : MonoBehaviour {
 		get { return this.movementDirection; }
 		set {
 			this.movementDirection = value;
-			switch (value) {
-			case Direction.LEFT:
-				this.acceleration = new Vector2 (-this.moveSpeed, this.acceleration.y);
-				break;
-			case Direction.RIGHT:
-				this.acceleration = new Vector2 (this.moveSpeed, this.acceleration.y);
-				break;
-			case Direction.NONE:
-				this.acceleration = new Vector2 (0.0f, this.acceleration.y);
-				break;
-			}
+			this.acceleration = new Vector2 ((float)value * this.moveSpeed, this.acceleration.y);
 		}
 	}
 
