@@ -35,7 +35,6 @@ public class PlayerMovement : MonoBehaviour {
 
 	public void FullHop()
 	{
-		//this.canShortHop = true;
 		if(rigidbodyObject != null && IsGrounded())
 		{
 			rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
