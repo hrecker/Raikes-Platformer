@@ -2,7 +2,7 @@
 
 public class PlayerInput : MonoBehaviour
 {
-    private Movement movement;
+    private PlayerMovement movement;
     private float delayPassed;
 
     public float shortHopMaxFrames;
@@ -12,7 +12,7 @@ public class PlayerInput : MonoBehaviour
 
     void Start()
     {
-        movement = GetComponent<Movement>();
+        movement = GetComponent<PlayerMovement>();
     }
     
     void Update()
@@ -58,7 +58,13 @@ public class PlayerInput : MonoBehaviour
                 }
             }
         }
-
-		this.movement.HorizontalFactor = Input.GetAxis ("Horizontal");
+			
+		if (Input.GetKey (KeyCode.RightArrow)) {
+			this.movement.MovementDirection = Direction.RIGHT;
+		} else if (Input.GetKey (KeyCode.LeftArrow)) {
+			this.movement.MovementDirection = Direction.LEFT;
+		} else {
+			this.movement.MovementDirection = Direction.NONE;
+		}
     }
 }
