@@ -2,10 +2,13 @@
 
 public class PlayerInput : MonoBehaviour
 {
-    public float jumpDelay;
-
     private Movement movement;
     private float delayPassed;
+
+    public float shortHopMaxFrames;
+    private int jumpFramesHeld;
+    private bool jumped;
+    private bool spaceReleased;
 
     void Start()
     {
@@ -14,13 +17,48 @@ public class PlayerInput : MonoBehaviour
     
     void Update()
     {
-        delayPassed += Time.deltaTime;
-		if (Input.GetAxis ("Vertical") > 0.0 && delayPassed >= jumpDelay && movement != null) {
-			delayPassed = 0;
-			movement.Jump ();
-		} else {
-			movement.TryShortHop (Input.GetAxis("Vertical"));
-		}
+        if(jumped && movement.IsGrounded())
+        {
+            jumpFramesHeld = 0;
+            jumped = false;
+        }
+
+        if(!jumped)
+        {
+            if (!Input.GetKey(KeyCode.Space))
+            {
+                spaceReleased = true;
+            }
+            if(spaceReleased)
+            {
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    jumpFramesHeld++;
+                    if (jumpFramesHeld > shortHopMaxFrames)
+                    {
+                        movement.FullHop();
+                        spaceReleased = false;
+                        jumped = true;
+                    }
+                }
+                else
+                {
+                    if (jumpFramesHeld > 0 && jumpFramesHeld <= shortHopMaxFrames)
+                    {
+                        movement.ShortHop();
+                        spaceReleased = false;
+                        jumped = true;
+                    }
+                    else if (jumpFramesHeld > 0)
+                    {
+                        movement.FullHop();
+                        spaceReleased = false;
+                        jumped = true;
+                    }
+                }
+            }
+        }
+
 		this.movement.HorizontalFactor = Input.GetAxis ("Horizontal");
     }
 }

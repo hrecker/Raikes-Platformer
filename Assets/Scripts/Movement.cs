@@ -3,6 +3,7 @@
 public class Movement : MonoBehaviour {
 
 	public float jumpSpeed;
+    public float shortHopJumpSpeed;
 	public float moveSpeed;
 
 	private Rigidbody2D rigidbodyObject;
@@ -34,28 +35,27 @@ public class Movement : MonoBehaviour {
 		this.canShortHop = true;
 	}
 
-	private bool isGrounded()
+	public bool IsGrounded()
 	{
-		Vector2 origin = new Vector2 (transform.position.x, transform.position.y - boxCollider.bounds.size.y / 2.0f);
-		return Physics2D.Raycast(origin, Vector2.down, distanceToGround + groundMargin);
+		Vector2 origin = new Vector2 (transform.position.x, transform.position.y - (boxCollider.bounds.size.y / 2.0f));
+		return Physics2D.Raycast(origin, Vector2.down, groundMargin);
 	}
 
-	public void Jump()
+	public void FullHop()
 	{
-		this.canShortHop = true;
-		if(rigidbodyObject != null && isGrounded())
+		//this.canShortHop = true;
+		if(rigidbodyObject != null && IsGrounded())
 		{
 			rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
 		}
 	}
 
-	public void TryShortHop(float vertical) {
-		if (!this.canShortHop || vertical > 0.1) {
-			return;
-		}
-		this.canShortHop = false;
-		rigidbodyObject.velocity = new Vector2 (rigidbodyObject.velocity.x, rigidbodyObject.velocity.y * this.shortHopFactor);
-	}
+	public void ShortHop() {
+        if (rigidbodyObject != null && IsGrounded())
+        {
+            rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, shortHopJumpSpeed);
+        }
+    }
 
 	public void Update() {
 		this.rigidbodyObject.velocity += this.acceleration * Time.deltaTime;
