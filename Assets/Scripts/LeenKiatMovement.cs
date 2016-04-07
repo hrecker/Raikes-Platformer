@@ -7,17 +7,25 @@ public class LeenKiatMovement : MonoBehaviour {
     public float squishedHorizontalSpeed;
     public float jumpSpeed;
     private Rigidbody2D rigidbodyObject;
-    private float directionModifier;
+
+    public bool squished;
     
     void Start ()
     {
+        squished = false;
         rigidbodyObject = GetComponent<Rigidbody2D>();
-        directionModifier = horizontalDirection == Direction.LEFT ? -1 : 1;
-        rigidbodyObject.velocity = new Vector2(directionModifier * normalHorizontalSpeed, rigidbodyObject.velocity.y);
+        rigidbodyObject.velocity = new Vector2((float) horizontalDirection * normalHorizontalSpeed, rigidbodyObject.velocity.y);
 	}
 	
 	void Update ()
     {
-        rigidbodyObject.velocity = new Vector2(directionModifier * normalHorizontalSpeed, rigidbodyObject.velocity.y);
+        if(!squished)
+        {
+            rigidbodyObject.velocity = new Vector2((float) horizontalDirection * normalHorizontalSpeed, rigidbodyObject.velocity.y);
+        }
+        else
+        {
+            rigidbodyObject.velocity = new Vector2((float) horizontalDirection * squishedHorizontalSpeed, rigidbodyObject.velocity.y);
+        }
     }
 }

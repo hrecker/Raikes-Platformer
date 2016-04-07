@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	private Rigidbody2D rigidbodyObject;
 	private BoxCollider2D boxCollider;
+    private float colliderMargin = 0.05f;
 	private float groundMargin = 0.1f;
 
 	private Vector2 acceleration;
@@ -29,7 +30,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	public bool IsGrounded()
 	{
-		Vector2 origin = new Vector2 (transform.position.x, transform.position.y - (boxCollider.bounds.size.y / 2.0f));
+		Vector2 origin = new Vector2 (transform.position.x, transform.position.y - (boxCollider.bounds.size.y / 2.0f) - colliderMargin);
 		return Physics2D.Raycast(origin, Vector2.down, groundMargin);
 	}
 
@@ -49,6 +50,6 @@ public class PlayerMovement : MonoBehaviour {
     }
 
 	public void Update() {
-		this.rigidbodyObject.velocity += this.acceleration * Time.deltaTime;
+        this.rigidbodyObject.velocity += this.acceleration * Time.deltaTime;
 	}
 }
