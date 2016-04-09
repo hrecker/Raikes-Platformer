@@ -7,7 +7,6 @@ public class LeenKiatMovement : MonoBehaviour {
     public float squishedHorizontalSpeed;
     public float jumpSpeed;
     private Rigidbody2D rigidbodyObject;
-
     public bool squished;
     
     void Start ()
@@ -27,5 +26,10 @@ public class LeenKiatMovement : MonoBehaviour {
         {
             rigidbodyObject.velocity = new Vector2((float) horizontalDirection * squishedHorizontalSpeed, rigidbodyObject.velocity.y);
         }
+    }
+
+    public void Squish()
+    {
+        squished = true;
     }
 }
