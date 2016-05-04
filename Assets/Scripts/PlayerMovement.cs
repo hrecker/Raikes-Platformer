@@ -13,9 +13,11 @@ public class PlayerMovement : MonoBehaviour {
 
 	private Vector2 acceleration;
 	private Direction movementDirection;
-	public Direction MovementDirection {
+	public Direction MovementDirection
+    {
 		get { return this.movementDirection; }
-		set {
+		set
+        {
 			this.movementDirection = value;
 			this.acceleration = new Vector2 ((float)value * this.moveSpeed, this.acceleration.y);
 		}
