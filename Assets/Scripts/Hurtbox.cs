@@ -22,7 +22,6 @@ public class Hurtbox : MonoBehaviour {
     {
         if (other.isTrigger && other.GetComponent<Hitbox>() != null && objectMessenger != null)
         {
-            //Debug.Log("Hurtbox trigger. Is enemy? : " + (GetComponentInParent<LeenKiatMovement>() != null));
             objectMessenger.Invoke("HitByOther", null);
         }
     }
