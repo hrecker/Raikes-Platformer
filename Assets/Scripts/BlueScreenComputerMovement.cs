@@ -17,6 +17,7 @@ public class BlueScreenComputerMovement : MonoBehaviour {
         rigidbodyObject = GetComponent<Rigidbody2D>();
         messenger = GetComponent<IMessenger>();
         rigidbodyObject.velocity = new Vector2((float)horizontalDirection * horizontalSpeed, rigidbodyObject.velocity.y);
+        moving = true;
     }
 
     void Update()

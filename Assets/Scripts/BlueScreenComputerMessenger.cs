@@ -5,11 +5,17 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger {
 
     private Hitbox[] hitBoxes;
     private Hurtbox[] hurtBoxes;
+    private SpriteRenderer spriteRenderer;
+
+    public Sprite movingSprite;
+    public Sprite stoppedSprite;
 
     void Start()
     {
         hitBoxes = GetComponentsInChildren<Hitbox>();
         hurtBoxes = GetComponentsInChildren<Hurtbox>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        Invoke("StartedMovement", null);
     }
 
     public void Invoke(string msg, object[] args)
@@ -24,9 +30,11 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger {
                 break;
             case "StoppedMovement":
                 ActivateHitBox();
+                spriteRenderer.sprite = stoppedSprite;
                 break;
             case "StartedMovement":
                 ActivateHurtBox();
+                spriteRenderer.sprite = movingSprite;
                 break;
         }
     }
