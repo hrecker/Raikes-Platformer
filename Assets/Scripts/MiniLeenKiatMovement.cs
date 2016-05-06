@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class LeenKiatMovement : MonoBehaviour {
+public class MiniLeenKiatMovement : MonoBehaviour {
 
     public Direction horizontalDirection;
     public float normalHorizontalSpeed;

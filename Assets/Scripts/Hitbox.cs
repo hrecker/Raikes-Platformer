@@ -25,4 +25,20 @@ public class Hitbox : MonoBehaviour {
             objectMessenger.Invoke("HitOther", null);
         }
     }
+
+    public void Deactivate()
+    {
+        foreach(Collider2D collider in GetComponents<Collider2D>())
+        {
+            collider.enabled = false;
+        }
+    }
+
+    public void Activate()
+    {
+        foreach (Collider2D collider in GetComponents<Collider2D>())
+        {
+            collider.enabled = true;
+        }
+    }
 }
