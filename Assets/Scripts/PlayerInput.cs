@@ -19,7 +19,6 @@ public class PlayerInput : MonoBehaviour
     {
         if(jumped && movement.IsGrounded())
         {
-            Debug.Log("setting jumped to false");
             jumpFramesHeld = 0;
             jumped = false;
         }
