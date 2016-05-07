@@ -6,12 +6,15 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
     {
         switch(msg)
         {
-            case "HitOther":
-                Debug.Log("Player hit another object");
-                break;
-            case "HitByOther":
-                Debug.Log("Player received hit");
-                break;
+		case "HitOther":
+			PlayerInput input = GetComponentInParent<PlayerInput> ();
+			if (input != null) {
+				input.bounceOnEnemy ();
+			}
+            break;
+        case "HitByOther":
+            Debug.Log("Player received hit");
+            break;
         }
     }
 }

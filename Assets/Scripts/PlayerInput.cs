@@ -67,4 +67,11 @@ public class PlayerInput : MonoBehaviour
 			this.movement.MovementDirection = Direction.NONE;
 		}
     }
+
+	public void bounceOnEnemy() {
+		this.jumpFramesHeld = 1;
+		this.jumped = false;
+		this.spaceReleased = true;
+	}
+
 }
