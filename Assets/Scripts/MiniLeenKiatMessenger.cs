@@ -4,6 +4,13 @@ using System;
 
 public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
 {
+    private MiniLeenKiatMovement movement;
+
+    void Start()
+    {
+        movement = GetComponent<MiniLeenKiatMovement>();
+    }
+
     public void Invoke(string msg, object[] args)
     {
         switch (msg)
@@ -13,6 +20,10 @@ public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
                 break;
             case "HitByOther":
                 Debug.Log("MiniLeenKiat received hit");
+                if (movement != null)
+                {
+                    movement.Squish();
+                }
                 break;
         }
     }

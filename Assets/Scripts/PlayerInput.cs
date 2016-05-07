@@ -59,12 +59,25 @@ public class PlayerInput : MonoBehaviour
             }
         }
 			
-		if (Input.GetKey (KeyCode.RightArrow)) {
-			this.movement.MovementDirection = Direction.RIGHT;
-		} else if (Input.GetKey (KeyCode.LeftArrow)) {
-			this.movement.MovementDirection = Direction.LEFT;
-		} else {
-			this.movement.MovementDirection = Direction.NONE;
+		if (Input.GetKey (KeyCode.RightArrow))
+        {
+			movement.MovementDirection = Direction.RIGHT;
+		}
+        else if (Input.GetKey (KeyCode.LeftArrow))
+        {
+			movement.MovementDirection = Direction.LEFT;
+		}
+        else
+        {
+			movement.MovementDirection = Direction.NONE;
 		}
     }
+
+	public void BounceOnEnemy()
+    {
+		jumpFramesHeld = 1;
+		jumped = false;
+		spaceReleased = true;
+	}
+
 }
