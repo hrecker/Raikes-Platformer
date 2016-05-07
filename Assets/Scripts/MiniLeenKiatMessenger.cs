@@ -8,12 +8,16 @@ public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
     {
         switch (msg)
         {
-            case "HitOther":
-                Debug.Log("MiniLeenKiat hit another object");
-                break;
-            case "HitByOther":
-                Debug.Log("MiniLeenKiat received hit");
-                break;
+		case "HitOther":
+			Debug.Log ("MiniLeenKiat hit another object");
+            break;
+        case "HitByOther":
+			Debug.Log("MiniLeenKiat received hit");
+			LeenKiatMovement movement = GetComponentInParent<LeenKiatMovement> ();
+			if (movement != null) {
+				movement.Squish ();
+			}
+            break;
         }
     }
 }
