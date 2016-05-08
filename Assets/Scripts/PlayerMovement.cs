@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -23,12 +23,29 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
+    void Awake()
+    {
+        boxCollider = GetComponent<BoxCollider2D>();
+
+        // Make hitboxes, hurtboxes, and main collider ignore eachother
+        Hitbox[] hitboxes = GetComponentsInChildren<Hitbox>();
+        Hurtbox[] hurtboxes = GetComponentsInChildren<Hurtbox>();
+        foreach (Hitbox hitbox in hitboxes)
+        {
+            Physics2D.IgnoreCollision(hitbox.GetComponent<Collider2D>(), boxCollider);
+            foreach (Hurtbox hurtbox in hurtboxes)
+            {
+                Physics2D.IgnoreCollision(hitbox.GetComponent<Collider2D>(), hurtbox.GetComponent<Collider2D>());
+                Physics2D.IgnoreCollision(hurtbox.GetComponent<Collider2D>(), boxCollider);
+            }
+        }
+    }
+
 	void Start()
 	{
 		rigidbodyObject = GetComponent<Rigidbody2D>();
-		boxCollider = GetComponent<BoxCollider2D>();
 		acceleration = new Vector2 (0.0f, 0.0f);
-	}
+    }
 
 	public bool IsGrounded()
 	{
@@ -44,15 +61,16 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
-	public void ShortHop() {
+	public void ShortHop()
+    {
         if (rigidbodyObject != null && IsGrounded())
         {
             rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, shortHopJumpSpeed);
         }
     }
 
-	public void Update() {
+	public void Update()
+    {
         this.rigidbodyObject.velocity += this.acceleration * Time.deltaTime;
 	}
 }
-
