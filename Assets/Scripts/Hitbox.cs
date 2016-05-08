@@ -4,9 +4,17 @@ using System.Collections;
 public class Hitbox : MonoBehaviour {
 
     private IMessenger objectMessenger;
+    private Collider2D hitboxCollider;
+
+    public Collider2D HitboxCollider
+    {
+        get { return hitboxCollider; }
+        set { hitboxCollider = value; }
+    }
 
     void Start()
     {
+        hitboxCollider = GetComponent<Collider2D>();
         objectMessenger = GetComponent<IMessenger>();
         if(objectMessenger == null)
         {
@@ -28,17 +36,11 @@ public class Hitbox : MonoBehaviour {
 
     public void Deactivate()
     {
-        foreach(Collider2D collider in GetComponents<Collider2D>())
-        {
-            collider.enabled = false;
-        }
+        hitboxCollider.enabled = false;
     }
 
     public void Activate()
     {
-        foreach (Collider2D collider in GetComponents<Collider2D>())
-        {
-            collider.enabled = true;
-        }
+        hitboxCollider.enabled = true;
     }
 }

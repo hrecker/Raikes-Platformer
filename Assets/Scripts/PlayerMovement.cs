@@ -61,14 +61,16 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
-	public void ShortHop() {
+	public void ShortHop()
+    {
         if (rigidbodyObject != null && IsGrounded())
         {
             rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, shortHopJumpSpeed);
         }
     }
 
-	public void Update() {
+	public void Update()
+    {
         this.rigidbodyObject.velocity += this.acceleration * Time.deltaTime;
 	}
 }

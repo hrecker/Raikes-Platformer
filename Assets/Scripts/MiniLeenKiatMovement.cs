@@ -1,13 +1,18 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-public class MiniLeenKiatMovement : MonoBehaviour {
-
+public class MiniLeenKiatMovement : MonoBehaviour
+{
     public Direction horizontalDirection;
     public float normalHorizontalSpeed;
     public float squishedHorizontalSpeed;
     public float jumpSpeed;
     private Rigidbody2D rigidbodyObject;
-    public bool squished;
+    private bool squished;
+
+    public bool Squished
+    {
+        get { return squished; }
+    }
     
     void Start ()
     {
