@@ -36,17 +36,11 @@ public class Hitbox : MonoBehaviour {
 
     public void Deactivate()
     {
-        foreach(Collider2D collider in GetComponents<Collider2D>())
-        {
-            collider.enabled = false;
-        }
+        hitboxCollider.enabled = false;
     }
 
     public void Activate()
     {
-        foreach (Collider2D collider in GetComponents<Collider2D>())
-        {
-            collider.enabled = true;
-        }
+        hitboxCollider.enabled = true;
     }
 }
