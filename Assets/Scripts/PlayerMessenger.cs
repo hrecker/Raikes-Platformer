@@ -7,9 +7,12 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
     private bool invulnerable;
     private float currentTimePassed;
     private Hurtbox[] hurtboxes;
+    private SpriteAlternator invincibilityAlternator;
 
     void Start()
     {
+        invincibilityAlternator = GetComponent<SpriteAlternator>();
+        invincibilityAlternator.SetActive(false);
         hurtboxes = GetComponentsInChildren<Hurtbox>();
         invulnerable = false;
     }
@@ -48,6 +51,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         {
             hurtbox.Deactivate();
         }
+        invincibilityAlternator.SetActive(true);
     }
 
     private void makeVulnerable()
@@ -58,5 +62,6 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         {
             hurtbox.Activate();
         }
+        invincibilityAlternator.SetActive(false);
     }
 }
