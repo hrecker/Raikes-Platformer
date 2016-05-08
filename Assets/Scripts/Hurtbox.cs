@@ -4,9 +4,17 @@ using System.Collections;
 public class Hurtbox : MonoBehaviour {
 
     private IMessenger objectMessenger;
+    private Collider2D hurtboxCollider;
+
+    public Collider2D HurtboxCollider
+    {
+        get { return hurtboxCollider; }
+        set { hurtboxCollider = value; }
+    }
 
     void Start()
     {
+        hurtboxCollider = GetComponent<Collider2D>();
         objectMessenger = GetComponent<IMessenger>();
         if (objectMessenger == null)
         {
