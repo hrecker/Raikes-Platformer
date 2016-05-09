@@ -12,12 +12,12 @@ public class SpriteAlternator : MonoBehaviour
 
     void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         active = true;
     }
 
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         currentIndex = -1;
         SwitchSprite();
     }
