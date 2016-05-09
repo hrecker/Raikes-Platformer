@@ -1,12 +1,20 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Hurtbox : MonoBehaviour {
 
     private IMessenger objectMessenger;
+    private Collider2D hurtboxCollider;
+
+    public Collider2D HurtboxCollider
+    {
+        get { return hurtboxCollider; }
+        set { hurtboxCollider = value; }
+    }
 
     void Start()
     {
+        hurtboxCollider = GetComponent<Collider2D>();
         objectMessenger = GetComponent<IMessenger>();
         if (objectMessenger == null)
         {
@@ -28,17 +36,11 @@ public class Hurtbox : MonoBehaviour {
 
     public void Deactivate()
     {
-        foreach (Collider2D collider in GetComponents<Collider2D>())
-        {
-            collider.enabled = false;
-        }
+        hurtboxCollider.enabled = false;
     }
 
     public void Activate()
     {
-        foreach (Collider2D collider in GetComponents<Collider2D>())
-        {
-            collider.enabled = true;
-        }
+        hurtboxCollider.enabled = true;
     }
 }
