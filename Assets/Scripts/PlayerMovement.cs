@@ -49,8 +49,9 @@ public class PlayerMovement : MonoBehaviour {
 
 	public bool IsGrounded()
 	{
-		Vector2 origin = new Vector2 (transform.position.x, transform.position.y - (boxCollider.bounds.size.y / 2.0f) - colliderMargin);
-		return Physics2D.Raycast(origin, Vector2.down, groundMargin);
+		Vector2 leftOrigin = new Vector2 (transform.position.x - (boxCollider.bounds.size.x / 2.0f), transform.position.y - (boxCollider.bounds.size.y / 2.0f) - colliderMargin);
+		Vector2 rightOrigin = new Vector2 (transform.position.x + (boxCollider.bounds.size.x / 2.0f), transform.position.y - (boxCollider.bounds.size.y / 2.0f) - colliderMargin);
+		return Physics2D.Raycast(leftOrigin, Vector2.down, groundMargin) || Physics2D.Raycast(rightOrigin, Vector2.down, groundMargin);
 	}
 
 	public void FullHop()
