@@ -1,4 +1,4 @@
-﻿﻿public enum Direction
+﻿public enum Direction
 {
 	LEFT = -1,
     NONE = 0,
