@@ -14,6 +14,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         switch (msg)
         {
             case "HitOther":
+                Debug.Log("Player hit an enemy");
                 if (input != null)
                 {
                     input.BounceOnEnemy();
