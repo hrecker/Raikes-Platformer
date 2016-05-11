@@ -32,6 +32,10 @@ public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
                 {
                     squish();
                 }
+                else
+                {
+                    Destroy(gameObject);
+                }
                 break;
         }
     }
