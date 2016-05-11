@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	private Rigidbody2D rigidbodyObject;
 	private BoxCollider2D boxCollider;
-    private float colliderMargin = 0.05f;
+    private float colliderMargin = 0.10f;
 	private float groundMargin = 0.1f;
 
 	private Vector2 acceleration;
@@ -49,9 +49,9 @@ public class PlayerMovement : MonoBehaviour {
 
 	public bool IsGrounded()
 	{
-		Vector2 leftOrigin = new Vector2 (transform.position.x - (boxCollider.bounds.size.x / 2.0f), transform.position.y - (boxCollider.bounds.size.y / 2.0f) - colliderMargin);
-		Vector2 rightOrigin = new Vector2 (transform.position.x + (boxCollider.bounds.size.x / 2.0f), transform.position.y - (boxCollider.bounds.size.y / 2.0f) - colliderMargin);
-		return Physics2D.Raycast(leftOrigin, Vector2.down, groundMargin) || Physics2D.Raycast(rightOrigin, Vector2.down, groundMargin);
+		var hurtbox = this.GetComponentsInChildren<Hurtbox> () [0].HurtboxCollider;
+		Vector2 bottomLeft = new Vector2 (transform.position.x - (boxCollider.bounds.size.x / 2.0f), hurtbox.bounds.center.y - hurtbox.bounds.extents.y - colliderMargin);
+		return Physics2D.Raycast (bottomLeft, Vector2.right, boxCollider.bounds.size.x + groundMargin);
 	}
 
     //Full hop. If needGrounded is true, the player will only full hop if grounded

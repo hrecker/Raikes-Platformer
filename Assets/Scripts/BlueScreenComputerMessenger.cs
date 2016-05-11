@@ -20,6 +20,7 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger {
 
     public void Invoke(string msg, object[] args)
     {
+		
         switch (msg)
         {
             case "HitOther":
@@ -29,6 +30,7 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger {
                 Debug.Log("Blue screen compuer received hit");
                 Destroy(gameObject);
                 break;
+
             case "StoppedMovement":
                 ActivateHitBox();
                 spriteRenderer.sprite = stoppedSprite;
@@ -37,14 +39,19 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger {
                 ActivateHurtBox();
                 spriteRenderer.sprite = movingSprite;
                 break;
+             
         }
     }
 
     private void ActivateHitBox()
     {
         foreach(Hitbox hitbox in hitBoxes)
-        {
-            hitbox.Activate();
+		{
+			//Hitbox exists regardless of the state,
+			//it's just bigger or smaller, so we don't
+			//invoke Activate()
+			hitbox.HitboxCollider.offset += new Vector2 (0.0f, 0.12f);
+			((BoxCollider2D)hitbox.HitboxCollider).size += new Vector2 (0.0f, 0.24f);
         }
         foreach (Hurtbox hurtbox in hurtBoxes)
         {
@@ -55,8 +62,12 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger {
     private void ActivateHurtBox()
     {
         foreach (Hitbox hitbox in hitBoxes)
-        {
-            hitbox.Deactivate();
+		{
+			//Hitbox exists regardless of the state,
+			//it's just bigger or smaller, so we don't
+			//invoke Deactivate()
+			hitbox.HitboxCollider.offset -= new Vector2 (0.0f, 0.12f);
+			((BoxCollider2D)hitbox.HitboxCollider).size -= new Vector2 (0.0f, 0.24f);
         }
         foreach (Hurtbox hurtbox in hurtBoxes)
         {
