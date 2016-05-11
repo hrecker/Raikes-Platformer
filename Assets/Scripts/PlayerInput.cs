@@ -3,11 +3,11 @@
 public class PlayerInput : MonoBehaviour
 {
     private PlayerMovement movement;
-    private float delayPassed;
 
     public float shortHopMaxFrames;
     private int jumpFramesHeld;
     private bool jumped;
+    private bool bounce; // if bounce is true, player does not need to be grounded to jump
     private bool spaceReleased;
 
     void Start()
@@ -36,24 +36,27 @@ public class PlayerInput : MonoBehaviour
                     jumpFramesHeld++;
                     if (jumpFramesHeld > shortHopMaxFrames)
                     {
-                        movement.FullHop();
+                        movement.FullHop(!bounce);
                         spaceReleased = false;
                         jumped = true;
+                        bounce = false;
                     }
                 }
                 else
                 {
                     if (jumpFramesHeld > 0 && jumpFramesHeld <= shortHopMaxFrames)
                     {
-                        movement.ShortHop();
+                        movement.ShortHop(!bounce);
                         spaceReleased = false;
                         jumped = true;
+                        bounce = false;
                     }
                     else if (jumpFramesHeld > 0)
                     {
-                        movement.FullHop();
+                        movement.FullHop(!bounce);
                         spaceReleased = false;
                         jumped = true;
+                        bounce = false;
                     }
                 }
             }
@@ -78,6 +81,7 @@ public class PlayerInput : MonoBehaviour
 		jumpFramesHeld = 1;
 		jumped = false;
 		spaceReleased = true;
+        bounce = true;
 	}
 
 }

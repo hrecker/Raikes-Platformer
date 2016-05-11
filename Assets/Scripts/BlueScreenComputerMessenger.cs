@@ -28,6 +28,7 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger {
                 break;
             case "HitByOther":
                 Debug.Log("Blue screen compuer received hit");
+                Destroy(gameObject);
                 break;
 
             case "StoppedMovement":

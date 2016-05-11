@@ -54,17 +54,19 @@ public class PlayerMovement : MonoBehaviour {
 		return Physics2D.Raycast (bottomLeft, Vector2.right, boxCollider.bounds.size.x + groundMargin);
 	}
 
-	public void FullHop()
+    //Full hop. If needGrounded is true, the player will only full hop if grounded
+    public void FullHop(bool needGrounded)
 	{
-		if(rigidbodyObject != null && IsGrounded())
+		if(rigidbodyObject != null && (!needGrounded || IsGrounded()))
 		{
 			rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
 		}
 	}
 
-	public void ShortHop()
+    //Short hop. If needGrounded is true, the player will only short hop if grounded
+	public void ShortHop(bool needGrounded)
     {
-        if (rigidbodyObject != null && IsGrounded())
+        if (rigidbodyObject != null && (!needGrounded || IsGrounded()))
         {
             rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, shortHopJumpSpeed);
         }
