@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	private Rigidbody2D rigidbodyObject;
 	private BoxCollider2D boxCollider;
-    private float colliderMargin = 0.05f;
+    private float colliderMargin = 0.10f;
 	private float groundMargin = 0.1f;
 
 	private Vector2 acceleration;
