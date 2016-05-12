@@ -14,9 +14,13 @@ public class Hurtbox : MonoBehaviour
         set { hurtboxCollider = value; }
     }
 
-    void Start()
+    void Awake()
     {
         hurtboxCollider = GetComponent<Collider2D>();
+    }
+
+    void Start()
+    {
         objectMessenger = GetComponent<IMessenger>();
         if (objectMessenger == null)
         {

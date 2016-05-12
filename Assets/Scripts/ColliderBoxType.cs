@@ -2,5 +2,6 @@
 public enum ColliderBoxType
 {
     ANY,
-    BOUNCE
+    BOUNCE,
+    BODY
 }
