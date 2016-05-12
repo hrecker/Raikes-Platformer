@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class Hurtbox : MonoBehaviour {
+public class Hurtbox : MonoBehaviour
+{
+    public ColliderBoxType boxType; // what type of collisions does this hurtbox detect
 
     private IMessenger objectMessenger;
     private Collider2D hurtboxCollider;
@@ -12,9 +14,13 @@ public class Hurtbox : MonoBehaviour {
         set { hurtboxCollider = value; }
     }
 
-    void Start()
+    void Awake()
     {
         hurtboxCollider = GetComponent<Collider2D>();
+    }
+
+    void Start()
+    {
         objectMessenger = GetComponent<IMessenger>();
         if (objectMessenger == null)
         {
@@ -28,7 +34,9 @@ public class Hurtbox : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.isTrigger && other.GetComponent<Hitbox>() != null && objectMessenger != null)
+        Hitbox otherHitbox = other.GetComponent<Hitbox>();
+        if (other.isTrigger && otherHitbox != null && objectMessenger != null &&
+            (boxType == ColliderBoxType.ANY || otherHitbox.boxType == ColliderBoxType.ANY || boxType == otherHitbox.boxType))
         {
             objectMessenger.Invoke("HitByOther", null);
         }
