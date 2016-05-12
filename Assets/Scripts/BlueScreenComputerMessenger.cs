@@ -47,11 +47,6 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger {
     {
         foreach(Hitbox hitbox in hitBoxes)
 		{
-            //Hitbox exists regardless of the state,
-            //it's just bigger or smaller, so we don't
-            //invoke Activate()
-            //hitbox.HitboxCollider.offset += new Vector2 (0.0f, 0.12f);
-            //((BoxCollider2D)hitbox.HitboxCollider).size += new Vector2 (0.0f, 0.24f);
             hitbox.Activate();
         }
         foreach (Hurtbox hurtbox in hurtBoxes)
@@ -64,11 +59,6 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger {
     {
         foreach (Hitbox hitbox in hitBoxes)
 		{
-            //Hitbox exists regardless of the state,
-            //it's just bigger or smaller, so we don't
-            //invoke Deactivate()
-            //hitbox.HitboxCollider.offset -= new Vector2 (0.0f, 0.12f);
-            //((BoxCollider2D)hitbox.HitboxCollider).size -= new Vector2 (0.0f, 0.24f);
             hitbox.Deactivate();
         }
         foreach (Hurtbox hurtbox in hurtBoxes)
