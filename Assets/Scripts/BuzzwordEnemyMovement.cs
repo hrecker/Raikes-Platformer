@@ -3,15 +3,15 @@ using UnityEngine;
 
 public interface IMovement {
 
-	Direction Direction { get; set; }
+	HorizontalDirection Direction { get; set; }
 
 }
 
 public class BuzzwordEnemyMovement: MonoBehaviour, IMovement
 {
 
-	public Direction direction;
-	public Direction Direction {
+	public HorizontalDirection direction;
+	public HorizontalDirection Direction {
 		get { return this.direction; }
 		set { this.direction = value; }
 	}
