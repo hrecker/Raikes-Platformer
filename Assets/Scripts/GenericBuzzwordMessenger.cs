@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class GenericBuzzwordMessenger : MonoBehaviour
+public class GenericBuzzwordMessenger : MonoBehaviour, IMessenger
 {
     public float speed;
     public string buzzword;
@@ -14,6 +14,7 @@ public class GenericBuzzwordMessenger : MonoBehaviour
     private int numLetters;
     private int currentLetterToActivate; // index of next letter to activate
     private float currentTimePassed;
+    private int lettersRemaining;
     
 	void Awake ()
     {
@@ -22,8 +23,10 @@ public class GenericBuzzwordMessenger : MonoBehaviour
         {
             GameObject newLetter = Instantiate(letterPrefab, transform.position + (i * letterDistance * Vector3.right * (float)direction * -1), Quaternion.identity) as GameObject;
             newLetter.GetComponentInChildren<TextMesh>().text = buzzword[i].ToString();
+            newLetter.transform.SetParent(transform);
             letters.Add(newLetter.GetComponent<BuzzwordLetterMovement>());
         }
+        lettersRemaining = letters.Count;
         foreach(BuzzwordLetterMovement letter in letters)
         {
             letter.SetDirectionChangeTime(directionChangeTime);
@@ -42,9 +45,28 @@ public class GenericBuzzwordMessenger : MonoBehaviour
             if (currentTimePassed >= directionChangeTime)
             {
                 currentTimePassed = 0;
-                letters[currentLetterToActivate].Activate();
+                if(letters[currentLetterToActivate].gameObject != null)
+                {
+                    letters[currentLetterToActivate].Activate();
+                }
                 currentLetterToActivate++;
             }
         }
 	}
+
+    public void Invoke(string msg, object[] args)
+    {
+        switch (msg)
+        {
+            case "LetterDestroyed":
+                lettersRemaining--;
+                if(lettersRemaining <= 0)
+                {
+                    Destroy(gameObject);
+                }
+                break;
+            default:
+                break;
+        }
+    }
 }
