@@ -27,11 +27,21 @@ public class GenericBuzzwordMessenger : MonoBehaviour, IMessenger
             letters.Add(newLetter.GetComponent<BuzzwordLetterMovement>());
         }
         lettersRemaining = letters.Count;
-        foreach(BuzzwordLetterMovement letter in letters)
+        for(int i = 0; i < letters.Count; i++)
         {
-            letter.SetDirectionChangeTime(directionChangeTime);
-            letter.SetHorizontalDirection(direction);
-            letter.SetSpeed(speed);
+            letters[i].SetDirectionChangeTime(directionChangeTime);
+            letters[i].SetHorizontalDirection(direction);
+            letters[i].SetSpeed(speed);
+            letters[i].GetComponent<BuzzwordLetterMessenger>().SetParentMessenger(this);
+            for(int j = i + 1; j < letters.Count; j++)
+            {
+                Physics2D.IgnoreCollision(
+                    letters[i].GetComponentInChildren<Hitbox>().HitboxCollider,
+                    letters[j].GetComponentInChildren<Hurtbox>().HurtboxCollider);
+                Physics2D.IgnoreCollision(
+                    letters[i].GetComponentInChildren<Hurtbox>().HurtboxCollider,
+                    letters[j].GetComponentInChildren<Hitbox>().HitboxCollider);
+            }
         }
         letters[0].Activate();
         currentLetterToActivate = 1;
@@ -45,7 +55,7 @@ public class GenericBuzzwordMessenger : MonoBehaviour, IMessenger
             if (currentTimePassed >= directionChangeTime)
             {
                 currentTimePassed = 0;
-                if(letters[currentLetterToActivate].gameObject != null)
+                if(letters[currentLetterToActivate] != null)
                 {
                     letters[currentLetterToActivate].Activate();
                 }

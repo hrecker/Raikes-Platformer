@@ -4,9 +4,9 @@ public class BuzzwordLetterMessenger : MonoBehaviour, IMessenger
 {
     private IMessenger parentMessenger;
 
-    void Start()
+    public void SetParentMessenger(IMessenger messenger)
     {
-        parentMessenger = GetComponentInParent<IMessenger>();
+        parentMessenger = messenger;
     }
 
     public void Invoke(string message, object[] args)
@@ -14,7 +14,10 @@ public class BuzzwordLetterMessenger : MonoBehaviour, IMessenger
         switch (message)
         {
             case "HitByOther":
-                parentMessenger.Invoke("LetterDestroyed", null);
+                if (parentMessenger != null)
+                {
+                    parentMessenger.Invoke("LetterDestroyed", null);
+                }
                 Destroy(gameObject);
                 break;
             default:
