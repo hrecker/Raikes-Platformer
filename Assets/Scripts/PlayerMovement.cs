@@ -12,8 +12,8 @@ public class PlayerMovement : MonoBehaviour {
 	private float groundMargin = 0.1f;
 
 	private Vector2 acceleration;
-	private Direction movementDirection;
-	public Direction MovementDirection
+	private HorizontalDirection movementDirection;
+	public HorizontalDirection MovementDirection
     {
 		get { return this.movementDirection; }
 		set

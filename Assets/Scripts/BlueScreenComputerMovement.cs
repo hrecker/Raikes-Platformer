@@ -2,7 +2,7 @@
 
 public class BlueScreenComputerMovement : MonoBehaviour {
 
-    public Direction horizontalDirection;
+    public HorizontalDirection horizontalDirection;
     public float horizontalSpeed;
     public float movementTime; //How long the enemy moves before stopping
     public float stopTime; //How long the enemy stays stopped

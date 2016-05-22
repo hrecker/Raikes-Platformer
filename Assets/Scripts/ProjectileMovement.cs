@@ -4,7 +4,7 @@ using UnityEngine;
 public class ProjectileMovement: MonoBehaviour
 {
 
-	public Direction direction;
+	public HorizontalDirection direction;
 	public float speed;
 	public float duration;
 	private float timePassed;
@@ -14,7 +14,7 @@ public class ProjectileMovement: MonoBehaviour
 		this.messenger = this.GetComponent<IMessenger> ();
 	}
 
-	public void MoveInDirection(Direction direction) {
+	public void MoveInDirection(HorizontalDirection direction) {
 		this.GetComponent<Rigidbody2D> ().velocity = new Vector2 (this.speed * (float)direction, 0.0f);
 		this.direction = direction;
 	}

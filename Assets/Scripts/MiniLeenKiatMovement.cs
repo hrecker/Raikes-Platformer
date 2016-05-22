@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MiniLeenKiatMovement : MonoBehaviour
 {
-    public Direction horizontalDirection;
+    public HorizontalDirection horizontalDirection;
     public float normalHorizontalSpeed;
     public float squishedHorizontalSpeed;
     public float jumpSpeed;

@@ -64,15 +64,15 @@ public class PlayerInput : MonoBehaviour
 			
 		if (Input.GetKey (KeyCode.RightArrow))
         {
-			movement.MovementDirection = Direction.RIGHT;
+			movement.MovementDirection = HorizontalDirection.RIGHT;
 		}
         else if (Input.GetKey (KeyCode.LeftArrow))
         {
-			movement.MovementDirection = Direction.LEFT;
+			movement.MovementDirection = HorizontalDirection.LEFT;
 		}
         else
         {
-			movement.MovementDirection = Direction.NONE;
+			movement.MovementDirection = HorizontalDirection.NONE;
 		}
     }
 

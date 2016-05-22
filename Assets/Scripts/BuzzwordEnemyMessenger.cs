@@ -1,20 +1,17 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BuzzwordEnemyMessenger: MonoBehaviour, IMessenger
+public class BuzzwordEnemyMessenger : MonoBehaviour, IMessenger
 {
-	public void Start() {
-
-	}
-
-	public void Invoke(String message, object[] args) {
-		switch (message) {
-		case "HitByOther":
-			Destroy (gameObject);
-			break;
-		default:
-			break;
-		}
-	}
+    public void Invoke(string message, object[] args)
+    {
+        switch (message)
+        {
+            case "HitByOther":
+                Destroy(gameObject);
+                break;
+            default:
+                break;
+        }
+    }
 
 }
