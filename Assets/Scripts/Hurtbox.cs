@@ -36,7 +36,8 @@ public class Hurtbox : MonoBehaviour
     {
         Hitbox otherHitbox = other.GetComponent<Hitbox>();
         if (other.isTrigger && otherHitbox != null && objectMessenger != null &&
-            (boxType == ColliderBoxType.ANY || otherHitbox.boxType == ColliderBoxType.ANY || boxType == otherHitbox.boxType))
+            (boxType == ColliderBoxType.ANY || otherHitbox.boxType == ColliderBoxType.ANY || boxType == otherHitbox.boxType) &&
+			this.canReceiveHarm(other))
         {
             objectMessenger.Invoke("HitByOther", null);
         }
