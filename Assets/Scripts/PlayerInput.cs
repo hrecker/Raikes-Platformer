@@ -39,7 +39,6 @@ public class PlayerInput : MonoBehaviour
                         movement.FullHop(true);
                         spaceReleased = false;
                         jumped = true;
-                        //bounce = false;
                     }
                 }
                 else
@@ -49,14 +48,12 @@ public class PlayerInput : MonoBehaviour
                         movement.ShortHop(true);
                         spaceReleased = false;
                         jumped = true;
-                        //bounce = false;
                     }
                     else if (jumpFramesHeld > 0)
                     {
                         movement.FullHop(true);
                         spaceReleased = false;
                         jumped = true;
-                        //bounce = false;
                     }
                 }
             }
@@ -86,10 +83,6 @@ public class PlayerInput : MonoBehaviour
         {
             movement.ShortHop(false);
         }
-		//jumpFramesHeld = 1;
-		//jumped = false;
-		//spaceReleased = true;
-        //bounce = true;
 	}
 
 }

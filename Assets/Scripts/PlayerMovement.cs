@@ -6,10 +6,12 @@ public class PlayerMovement : MonoBehaviour {
     public float shortHopJumpSpeed;
 	public float moveSpeed;
 
+    private IMessenger messenger;
 	private Rigidbody2D rigidbodyObject;
 	private BoxCollider2D boxCollider;
     private float colliderMargin = 0.10f;
 	private float groundMargin = 0.1f;
+    private PlayerState playerState;
 
 	private Vector2 acceleration;
 	private HorizontalDirection movementDirection;
@@ -18,6 +20,7 @@ public class PlayerMovement : MonoBehaviour {
 		get { return this.movementDirection; }
 		set
         {
+            messenger.Invoke("DirectionChange", new object[] { value });
 			this.movementDirection = value;
 			this.acceleration = new Vector2 ((float)value * this.moveSpeed, this.acceleration.y);
 		}
@@ -25,6 +28,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void Awake()
     {
+        messenger = GetComponent<IMessenger>();
         boxCollider = GetComponent<BoxCollider2D>();
 
         // Make hitboxes, hurtboxes, and main collider ignore eachother
@@ -60,6 +64,7 @@ public class PlayerMovement : MonoBehaviour {
 		if(rigidbodyObject != null && (!needGrounded || IsGrounded()))
 		{
 			rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
+            setPlayerState(PlayerState.JUMP);
 		}
 	}
 
@@ -69,11 +74,26 @@ public class PlayerMovement : MonoBehaviour {
         if (rigidbodyObject != null && (!needGrounded || IsGrounded()))
         {
             rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, shortHopJumpSpeed);
+            setPlayerState(PlayerState.JUMP);
         }
     }
 
 	public void Update()
     {
         this.rigidbodyObject.velocity += this.acceleration * Time.deltaTime;
+        if(playerState == PlayerState.JUMP && rigidbodyObject.velocity.y < 0)
+        {
+            setPlayerState(PlayerState.FALL);
+        }
+        else if(rigidbodyObject.velocity.y == 0)
+        {
+            setPlayerState(PlayerState.STAND);
+        }
 	}
+
+    private void setPlayerState(PlayerState newState)
+    {
+        playerState = newState;
+        messenger.Invoke("StateChange", new object[] { newState });
+    }
 }

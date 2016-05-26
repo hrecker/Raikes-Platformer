@@ -8,12 +8,14 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
     private float currentTimePassed;
     private Hurtbox[] hurtboxes;
     private SpriteAlternator invincibilityAlternator;
+    private PlayerSpriteChanger spriteChanger;
     private PlayerInput input;
 
     void Start()
     {
         input = GetComponent<PlayerInput>();
         invincibilityAlternator = GetComponent<SpriteAlternator>();
+        spriteChanger = GetComponent<PlayerSpriteChanger>();
         hurtboxes = GetComponentsInChildren<Hurtbox>();
         makeVulnerable();
     }
@@ -29,6 +31,12 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
             case "HitByOther":
                 Debug.Log("Player received hit");
                 makeInvulnerable();
+                break;
+            case "StateChange":
+                spriteChanger.SetSprite((PlayerState) args[0]);
+                break;
+            case "DirectionChange":
+                spriteChanger.FlipSprite((HorizontalDirection) args[0]);
                 break;
         }
     }
