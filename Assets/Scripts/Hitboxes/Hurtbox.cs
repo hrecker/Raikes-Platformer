@@ -6,7 +6,9 @@ public class Hurtbox : MonoBehaviour
     public ColliderBoxType boxType; // what type of collisions does this hurtbox detect
 
     private IMessenger objectMessenger;
-    private Collider2D hurtboxCollider;
+	private Collider2D hurtboxCollider;
+
+	public HitboxHarmType harmType;
 
     public Collider2D HurtboxCollider
     {
@@ -36,7 +38,8 @@ public class Hurtbox : MonoBehaviour
     {
         Hitbox otherHitbox = other.GetComponent<Hitbox>();
         if (other.isTrigger && otherHitbox != null && objectMessenger != null &&
-            (boxType == ColliderBoxType.ANY || otherHitbox.boxType == ColliderBoxType.ANY || boxType == otherHitbox.boxType))
+            (boxType == ColliderBoxType.ANY || otherHitbox.boxType == ColliderBoxType.ANY || boxType == otherHitbox.boxType) &&
+			this.canReceiveHarm(otherHitbox))
         {
             objectMessenger.Invoke("HitByOther", null);
         }
@@ -50,5 +53,10 @@ public class Hurtbox : MonoBehaviour
     public void Activate()
     {
         hurtboxCollider.enabled = true;
-    }
+	}
+
+	public bool canReceiveHarm(Hitbox hitbox) {
+		return (this.harmType & hitbox.harmType) != 0;
+	}
+
 }
