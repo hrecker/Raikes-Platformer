@@ -61,7 +61,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         {
             hurtbox.Deactivate();
         }
-        invincibilityAlternator.SetActive(true);
+        spriteChanger.ActivateFlash();
     }
 
     private void makeVulnerable()
@@ -72,6 +72,6 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         {
             hurtbox.Activate();
         }
-        invincibilityAlternator.SetActive(false);
+        spriteChanger.DeactivateFlash();
     }
 }
