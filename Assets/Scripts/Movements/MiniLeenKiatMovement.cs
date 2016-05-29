@@ -37,4 +37,9 @@ public class MiniLeenKiatMovement : MonoBehaviour
     {
         squished = true;
     }
+
+    public void Turn()
+    {
+        horizontalDirection = (HorizontalDirection)((float)horizontalDirection * -1);
+    }
 }

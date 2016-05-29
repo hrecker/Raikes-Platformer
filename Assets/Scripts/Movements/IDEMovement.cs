@@ -16,4 +16,9 @@ public class IDEMovement : MonoBehaviour
     {
         rigidbodyObject.velocity = new Vector2((float)horizontalDirection * speed, rigidbodyObject.velocity.y);
     }
+
+    public void Turn()
+    {
+        horizontalDirection = (HorizontalDirection)((float)horizontalDirection * -1);
+    }
 }

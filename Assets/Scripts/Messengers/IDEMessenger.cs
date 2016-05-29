@@ -5,10 +5,12 @@ public class IDEMessenger : MonoBehaviour, IMessenger
 {
     public Sprite[] sprites;
     private SpriteRenderer spriteRenderer;
+    private IDEMovement movement;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        movement = GetComponent<IDEMovement>();
         if(sprites.Length == 0)
         {
             Debug.LogError("No sprites set for IDE enemy");
@@ -30,6 +32,9 @@ public class IDEMessenger : MonoBehaviour, IMessenger
             case "HitByOther":
                 Debug.Log("IDE logo received hit");
                 Destroy(gameObject);
+                break;
+            case "Turn":
+                movement.Turn();
                 break;
         }
     }
