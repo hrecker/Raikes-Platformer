@@ -54,4 +54,12 @@ public class BlueScreenComputerMovement : MonoBehaviour {
         currentTimePassed = 0;
         messenger.Invoke("StartedMovement", null);
     }
+
+    public void Turn()
+    {
+        if(moving)
+        {
+            horizontalDirection = (HorizontalDirection)((float)horizontalDirection * -1);
+        }
+    }
 }

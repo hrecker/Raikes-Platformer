@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 
 public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
 {
     public Hitbox bodyHitBox;
     public Hurtbox headHurtBox;
+    private Turnbox turnBox;
     public Sprite[] shortSprites;
 
     private MiniLeenKiatMovement movement;
@@ -17,6 +16,7 @@ public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
         spriteAlternator = GetComponent<SpriteAlternator>();
         movement = GetComponent<MiniLeenKiatMovement>();
         bodyCollider = GetComponent<BoxCollider2D>();
+        turnBox = GetComponentInChildren<Turnbox>();
     }
 
     public void Invoke(string msg, object[] args)
@@ -37,6 +37,9 @@ public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
                     Destroy(gameObject);
                 }
                 break;
+            case "Turn":
+                movement.Turn();
+                break;
         }
     }
 
@@ -47,11 +50,16 @@ public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
         headHurtBox.HurtboxCollider.offset /= 2;
         bodyHitBox.HitboxCollider.offset /= 2;
 
-        // shrink body hitbox and regular collider
+        // shrink body hitbox, turnbox, and regular collider
         Vector2 hitboxBoundSize = ((BoxCollider2D)bodyHitBox.HitboxCollider).size;
         Vector2 bodyBoundSize = bodyCollider.size;
         ((BoxCollider2D)bodyHitBox.HitboxCollider).size = new Vector2(hitboxBoundSize.x, hitboxBoundSize.y / 2);
         bodyCollider.size = new Vector2(bodyBoundSize.x, bodyBoundSize.y / 2);
+        foreach(Collider2D turnBoxCollider in turnBox.TurnboxColliders)
+        {
+            Vector2 turnboxBoundSize = ((BoxCollider2D)turnBoxCollider).size;
+            ((BoxCollider2D)turnBoxCollider).size = new Vector2(turnboxBoundSize.x, turnboxBoundSize.y / 2);
+        }
 
         // change sprites
         spriteAlternator.sprites = shortSprites;
