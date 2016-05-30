@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour {
 		get { return this.movementDirection; }
 		set
         {
-            messenger.Invoke("DirectionChange", new object[] { value });
+            messenger.Invoke(Message.DIRECTION_CHANGE, new object[] { value });
 			this.movementDirection = value;
 			this.acceleration = new Vector2 ((float)value * this.moveSpeed, this.acceleration.y);
 		}
@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour {
     private void setPlayerState(PlayerState newState)
     {
         playerState = newState;
-        messenger.Invoke("StateChange", new object[] { newState });
+        messenger.Invoke(Message.STATE_CHANGE, new object[] { newState });
     }
 
     public void StartFastFall()

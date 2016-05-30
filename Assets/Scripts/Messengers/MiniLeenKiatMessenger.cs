@@ -19,14 +19,14 @@ public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
         turnBox = GetComponentInChildren<Turnbox>();
     }
 
-    public void Invoke(string msg, object[] args)
+    public void Invoke(Message msg, object[] args)
     {
         switch (msg)
         {
-            case "HitOther":
+            case Message.HIT_OTHER:
                 Debug.Log("MiniLeenKiat hit another object");
                 break;
-            case "HitByOther":
+            case Message.HIT_BY_OTHER:
                 Debug.Log("MiniLeenKiat received hit");
                 if(!movement.Squished)
                 {
@@ -37,7 +37,7 @@ public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
                     Destroy(gameObject);
                 }
                 break;
-            case "Turn":
+            case Message.TURN:
                 movement.Turn();
                 break;
         }

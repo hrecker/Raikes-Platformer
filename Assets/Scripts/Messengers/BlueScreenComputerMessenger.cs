@@ -19,31 +19,31 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger {
         turnBox = GetComponentInChildren<Turnbox>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         movement = GetComponent<BlueScreenComputerMovement>();
-        Invoke("StartedMovement", null);
+        Invoke(Message.STARTED_MOVEMENT, null);
     }
 
-    public void Invoke(string msg, object[] args)
+    public void Invoke(Message msg, object[] args)
     {
 		
         switch (msg)
         {
-            case "HitOther":
+            case Message.HIT_OTHER:
                 Debug.Log("Blue screen computer hit another object");
                 break;
-            case "HitByOther":
+            case Message.HIT_BY_OTHER:
                 Debug.Log("Blue screen compuer received hit");
                 Destroy(gameObject);
                 break;
-            case "Turn":
+            case Message.TURN:
                 movement.Turn();
                 break;
 
-            case "StoppedMovement":
+            case Message.STOPPED_MOVEMENT:
                 ActivateHitBox();
                 turnBox.Deactivate();
                 spriteRenderer.sprite = stoppedSprite;
                 break;
-            case "StartedMovement":
+            case Message.STARTED_MOVEMENT:
                 ActivateHurtBox();
                 turnBox.Activate();
                 spriteRenderer.sprite = movingSprite;

@@ -40,7 +40,7 @@ public class BuzzwordEnemyMovement: MonoBehaviour, IMovement
 			ProjectileMovement projectileMovement = projectile.GetComponent<ProjectileMovement> ();
 			projectileMovement.speed = this.projectileSpeed;
 			projectileMovement.MoveInDirection (this.direction);
-			this.messenger.Invoke ("Projectile Fired", null);
+			this.messenger.Invoke (Message.PROJECTILE_FIRED, null);
 		}
 	}
 }

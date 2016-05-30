@@ -41,7 +41,7 @@ public class Hitbox : MonoBehaviour
 			this.canHarm(otherHurtbox))
         {
 			Debug.Log (this + "  " + this.harmType + " " + otherHurtbox.harmType);
-            objectMessenger.Invoke("HitOther", null);
+            objectMessenger.Invoke(Message.HIT_OTHER, null);
         }
     }
 

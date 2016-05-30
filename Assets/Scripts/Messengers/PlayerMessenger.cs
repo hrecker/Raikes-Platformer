@@ -22,28 +22,28 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         makeVulnerable();
     }
 
-    public void Invoke(string msg, object[] args)
+    public void Invoke(Message msg, object[] args)
     {
         switch(msg)
         {
-            case "HitOther":
+            case Message.HIT_OTHER:
                 Debug.Log("Player hit another object");
                 input.BounceOnEnemy();
                 break;
-            case "HitByOther":
+            case Message.HIT_BY_OTHER:
                 Debug.Log("Player received hit");
                 makeInvulnerable();
                 //TODO: allow for variable damage taken?
                 health.TakeDamage(1);
                 break;
-            case "NoHealthRemaining":
+            case Message.NO_HEALTH_REMAINING:
                 //TODO: add logic for death
                 Destroy(gameObject);
                 break;
-            case "StateChange":
+            case Message.STATE_CHANGE:
                 spriteChanger.SetSprite((PlayerState) args[0]);
                 break;
-            case "DirectionChange":
+            case Message.DIRECTION_CHANGE:
                 spriteChanger.FlipSprite((HorizontalDirection) args[0]);
                 break;
         }

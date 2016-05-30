@@ -64,11 +64,11 @@ public class GenericBuzzwordMessenger : MonoBehaviour, IMessenger
         }
 	}
 
-    public void Invoke(string msg, object[] args)
+    public void Invoke(Message msg, object[] args)
     {
         switch (msg)
         {
-            case "LetterDestroyed":
+            case Message.LETTER_DESTROYED:
                 lettersRemaining--;
                 if(lettersRemaining <= 0)
                 {

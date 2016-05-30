@@ -11,7 +11,7 @@ public class Health : MonoBehaviour
     {
         health = maxHealth;
         messenger = GetComponent<IMessenger>();
-        messenger.Invoke("HealthUpdated", new object[] { health, maxHealth });
+        messenger.Invoke(Message.HEALTH_UPDATED, new object[] { health, maxHealth });
     }
 
     public void TakeDamage(int damage)
@@ -22,13 +22,13 @@ public class Health : MonoBehaviour
             health = 0;
             if (messenger != null)
             {
-                messenger.Invoke("NoHealthRemaining", null);
+                messenger.Invoke(Message.NO_HEALTH_REMAINING, null);
             }
         }
         if (messenger != null)
         {
-            messenger.Invoke("HealthUpdated", new object[] { health, maxHealth });
-            messenger.Invoke("HealthLost", null);
+            messenger.Invoke(Message.HEALTH_UPDATED, new object[] { health, maxHealth });
+            messenger.Invoke(Message.HEALTH_LOST, null);
         }
     }
 }
