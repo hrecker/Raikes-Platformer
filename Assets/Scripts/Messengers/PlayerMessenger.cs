@@ -10,6 +10,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
     private SpriteAlternator invincibilityAlternator;
     private PlayerSpriteChanger spriteChanger;
     private PlayerInput input;
+    private Health health;
 
     void Start()
     {
@@ -17,6 +18,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         invincibilityAlternator = GetComponent<SpriteAlternator>();
         spriteChanger = GetComponent<PlayerSpriteChanger>();
         hurtboxes = GetComponentsInChildren<Hurtbox>();
+        health = GetComponent<Health>();
         makeVulnerable();
     }
 
@@ -31,6 +33,12 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
             case "HitByOther":
                 Debug.Log("Player received hit");
                 makeInvulnerable();
+                //TODO: allow for variable damage taken?
+                health.TakeDamage(1);
+                break;
+            case "NoHealthRemaining":
+                //TODO: add logic for death
+                Destroy(gameObject);
                 break;
             case "StateChange":
                 spriteChanger.SetSprite((PlayerState) args[0]);
