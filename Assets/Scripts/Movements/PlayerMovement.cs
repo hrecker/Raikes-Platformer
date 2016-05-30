@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float jumpSpeed;
     public float shortHopJumpSpeed;
 	public float moveSpeed;
+    public float fastFallMultiplier;
 
     private IMessenger messenger;
 	private Rigidbody2D rigidbodyObject;
@@ -12,6 +13,7 @@ public class PlayerMovement : MonoBehaviour {
     private float colliderMargin = 0.10f;
 	private float groundMargin = 0.1f;
     private PlayerState playerState;
+    private float standardGravityScale;
 
 	private Vector2 acceleration;
 	private HorizontalDirection movementDirection;
@@ -48,6 +50,7 @@ public class PlayerMovement : MonoBehaviour {
 	void Start()
 	{
 		rigidbodyObject = GetComponent<Rigidbody2D>();
+        standardGravityScale = rigidbodyObject.gravityScale;
 		acceleration = new Vector2 (0.0f, 0.0f);
     }
 
@@ -95,5 +98,15 @@ public class PlayerMovement : MonoBehaviour {
     {
         playerState = newState;
         messenger.Invoke("StateChange", new object[] { newState });
+    }
+
+    public void StartFastFall()
+    {
+        rigidbodyObject.gravityScale = standardGravityScale * fastFallMultiplier;
+    }
+
+    public void StopFastFall()
+    {
+        rigidbodyObject.gravityScale = standardGravityScale;
     }
 }
