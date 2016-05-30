@@ -71,6 +71,15 @@ public class PlayerInput : MonoBehaviour
         {
 			movement.MovementDirection = HorizontalDirection.NONE;
 		}
+
+        if(Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            movement.StartFastFall();
+        }
+        else if(Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            movement.StopFastFall();
+        }
     }
 
 	public void BounceOnEnemy()
