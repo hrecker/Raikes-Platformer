@@ -1,6 +1,4 @@
-﻿using System;
-
-public enum HitboxHarmType
+﻿public enum HitboxHarmType
 {
 	PLAYER 			= 0x00000001,
 	ENEMY			= 0x00000010,

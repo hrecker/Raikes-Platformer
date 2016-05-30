@@ -22,7 +22,7 @@ public class ProjectileMovement: MonoBehaviour
 	public void Update() {
 		this.timePassed += Time.deltaTime;
 		if (this.timePassed >= this.duration) {
-			this.messenger.Invoke ("Projectile Expired", null);
+			this.messenger.Invoke (Message.PROJECTILE_EXPIRED, null);
 			this.Expire ();
 		}
 	}

@@ -9,14 +9,14 @@ public class BuzzwordLetterMessenger : MonoBehaviour, IMessenger
         parentMessenger = messenger;
     }
 
-    public void Invoke(string message, object[] args)
+    public void Invoke(Message message, object[] args)
     {
         switch (message)
         {
-            case "HitByOther":
+            case Message.HIT_BY_OTHER:
                 if (parentMessenger != null)
                 {
-                    parentMessenger.Invoke("LetterDestroyed", null);
+                    parentMessenger.Invoke(Message.LETTER_DESTROYED, null);
                 }
                 Destroy(gameObject);
                 break;

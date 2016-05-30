@@ -44,7 +44,7 @@ public class BlueScreenComputerMovement : MonoBehaviour {
         rigidbodyObject.velocity = Vector2.zero;
         moving = false;
         currentTimePassed = 0;
-        messenger.Invoke("StoppedMovement", null);
+        messenger.Invoke(Message.STOPPED_MOVEMENT, null);
     }
 
     private void startMovement()
@@ -52,7 +52,7 @@ public class BlueScreenComputerMovement : MonoBehaviour {
         rigidbodyObject.velocity = new Vector2((float)horizontalDirection * horizontalSpeed, rigidbodyObject.velocity.y);
         moving = true;
         currentTimePassed = 0;
-        messenger.Invoke("StartedMovement", null);
+        messenger.Invoke(Message.STARTED_MOVEMENT, null);
     }
 
     public void Turn()

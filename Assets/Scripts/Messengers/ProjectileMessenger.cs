@@ -6,21 +6,24 @@ public class ProjectileMessenger: MonoBehaviour, IMessenger
 
 	private ProjectileMovement movement;
 
-	public void Start() {
-		this.movement = this.GetComponent<ProjectileMovement> ();
+	public void Start()
+    {
+		movement = this.GetComponent<ProjectileMovement> ();
 	}
 
-	public void Invoke(String message, object[] args) {
-		switch (message) {
-		case "HitOther":
-			this.movement.Expire ();
-			break;
-		case "HitByOther":
-			this.movement.Expire ();
-			break;
-		default:
-			break;
-		}
-	}
+	public void Invoke(Message message, object[] args)
+    {
+        switch (message)
+        {
+            case Message.HIT_OTHER:
+                movement.Expire();
+                break;
+            case Message.HIT_BY_OTHER:
+                movement.Expire();
+                break;
+            default:
+                break;
+        }
+    }
 
 }

@@ -1,0 +1,17 @@
+﻿//types of messages that can be sent
+public enum Message
+{
+    DIRECTION_CHANGE,
+    HEALTH_LOST,
+    HEALTH_UPDATED,
+    HIT_BY_OTHER,
+    HIT_OTHER,
+    LETTER_DESTROYED,
+    NO_HEALTH_REMAINING,
+    PROJECTILE_EXPIRED,
+    PROJECTILE_FIRED,
+    STARTED_MOVEMENT,
+    STATE_CHANGE,
+    STOPPED_MOVEMENT,
+    TURN
+}

@@ -32,7 +32,7 @@ public class Turnbox : MonoBehaviour
     {
         if (objectMessenger != null)
         {
-            objectMessenger.Invoke("Turn", null);
+            objectMessenger.Invoke(Message.TURN, null);
         }
     }
 

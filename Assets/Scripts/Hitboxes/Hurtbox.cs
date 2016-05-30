@@ -41,7 +41,7 @@ public class Hurtbox : MonoBehaviour
             (boxType == ColliderBoxType.ANY || otherHitbox.boxType == ColliderBoxType.ANY || boxType == otherHitbox.boxType) &&
 			this.canReceiveHarm(otherHitbox))
         {
-            objectMessenger.Invoke("HitByOther", null);
+            objectMessenger.Invoke(Message.HIT_BY_OTHER, null);
         }
     }
 

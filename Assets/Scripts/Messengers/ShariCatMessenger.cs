@@ -9,18 +9,18 @@ public class ShariCatMessenger : MonoBehaviour, IMessenger
         movement = GetComponent<ShariCatMovement>();
     }
 
-    public void Invoke(string msg, object[] args)
+    public void Invoke(Message msg, object[] args)
     {
         switch (msg)
         {
-            case "HitOther":
+            case Message.HIT_OTHER:
                 Debug.Log("Shari's cat hit another object");
                 break;
-            case "HitByOther":
+            case Message.HIT_BY_OTHER:
                 Debug.Log("Shari's cat received hit");
                 Destroy(gameObject);
                 break;
-            case "Turn":
+            case Message.TURN:
                 movement.Turn();
                 break;
         }
