@@ -40,7 +40,7 @@ public class Hitbox : MonoBehaviour
             (boxType == ColliderBoxType.ANY || otherHurtbox.boxType == ColliderBoxType.ANY || boxType == otherHurtbox.boxType) &&
 			this.canHarm(otherHurtbox))
         {
-			Debug.Log (this + "  " + this.harmType + " " + otherHurtbox.harmType);
+			//Debug.Log (this + "  " + this.harmType + " " + otherHurtbox.harmType);
             objectMessenger.Invoke(Message.HIT_OTHER, null);
         }
     }
