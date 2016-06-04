@@ -15,4 +15,15 @@ public static class MonobehaviourExtensions
 		}
 		return objectMessenger;
 	}
+
+	public static T GetComponentInHierarchy<T>(this MonoBehaviour behaviour) {
+		T comp = behaviour.GetComponent<T> ();
+		if (comp == null) {
+			comp = behaviour.GetComponentInParent<T> ();
+		}
+		if (comp == null) {
+			comp = behaviour.GetComponentInChildren<T> ();
+		}
+		return comp;
+	}
 }
