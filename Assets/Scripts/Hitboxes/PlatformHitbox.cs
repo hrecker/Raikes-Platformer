@@ -22,16 +22,10 @@ public class PlatformHitbox: MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		
-		/*float colliderMargin = 0.10f;
-		Vector2 bottomLeft = new Vector2 (other.transform.position.x - other.bounds.extents.x, other.bounds.center.y - other.bounds.extents.y - colliderMargin);
-		RaycastHit2D result = Physics2D.Raycast (bottomLeft, Vector2.right, boxCollider.bounds.size.x + colliderMargin);
-		float y = this.transform.position.y + this.boxCollider.bounds.extents.y / 2.0f;
-		Debug.Log ("Bottom: " + bottomLeft.y + " Y: " + y);*/
 		Hitbox hitbox = other.GetComponent<Hitbox> ();
 		if (other.isTrigger && this.objectMessenger != null && hitbox != null && hitbox.affectsPlatforms)
 		{
-			this.objectMessenger.Invoke(Message.PLATFORM_LANDED_ON, null);
+			this.objectMessenger.Invoke(Message.PLATFORM_LANDED_ON, new object[] { other });
 		}
 	}
 

@@ -16,7 +16,7 @@ public static class MonobehaviourExtensions
 		return objectMessenger;
 	}
 
-	public static T GetComponentInHierarchy<T>(this MonoBehaviour behaviour) {
+	public static T GetComponentInHierarchy<T>(this Behaviour behaviour) {
 		T comp = behaviour.GetComponent<T> ();
 		if (comp == null) {
 			comp = behaviour.GetComponentInParent<T> ();
