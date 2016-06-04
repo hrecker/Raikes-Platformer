@@ -81,6 +81,20 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+	public void TrampolinePlatformHop(float jumpSpeed, bool shortHop) {
+		if (rigidbodyObject != null)
+		{
+			if (shortHop)
+			{
+				//We keep the ratio between short hop and full hop the
+				//same as the ratio between short trampoline hop and full trampoline hop.
+				jumpSpeed *= this.shortHopJumpSpeed / this.jumpSpeed;
+			}
+			rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
+			setPlayerState(PlayerState.JUMP);
+		}
+	}
+
 	public void Update()
     {
         this.rigidbodyObject.velocity += this.acceleration * Time.deltaTime;
@@ -109,4 +123,5 @@ public class PlayerMovement : MonoBehaviour {
     {
         rigidbodyObject.gravityScale = standardGravityScale;
     }
+		
 }
