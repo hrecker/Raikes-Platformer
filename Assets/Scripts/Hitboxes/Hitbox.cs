@@ -8,6 +8,7 @@ public class Hitbox : MonoBehaviour
     private Collider2D hitboxCollider;
 
 	public HitboxHarmType harmType;
+	public bool affectsPlatforms = false;
 
     public Collider2D HitboxCollider
     {
