@@ -82,6 +82,17 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+	public void TrampolinePlatformHop(float jumpSpeed, int framesToJumpOnTrampoline) {
+		//Jumps frame held must be greater than 0 because the player must
+		//actually be holding the spacebar.
+		if (this.jumpFramesHeld > 0 && this.jumpFramesHeld <= framesToJumpOnTrampoline) {
+			this.movement.TrampolinePlatformHop (jumpSpeed, false);
+		} else {
+			this.movement.TrampolinePlatformHop (jumpSpeed, true);
+		}
+		this.jumpFramesHeld = 0;
+	}
+
 	public void BounceOnEnemy()
     {
         if(Input.GetKey(KeyCode.Space))
