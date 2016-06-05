@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	public bool IsGrounded()
 	{
-		var hurtbox = this.GetComponentsInChildren<Hurtbox> () [0].HurtboxCollider;
+		var hurtbox = this.GetComponentsInChildren<Hurtbox> () [0].BoxColliders[0];
 		Vector2 bottomLeft = new Vector2 (transform.position.x - (boxCollider.bounds.size.x / 2.0f), hurtbox.bounds.center.y - hurtbox.bounds.extents.y - colliderMargin);
 		return Physics2D.Raycast (bottomLeft, Vector2.right, boxCollider.bounds.size.x + groundMargin);
 	}

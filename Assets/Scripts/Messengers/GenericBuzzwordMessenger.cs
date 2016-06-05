@@ -36,11 +36,11 @@ public class GenericBuzzwordMessenger : MonoBehaviour, IMessenger
             for(int j = i + 1; j < letters.Count; j++)
             {
                 Physics2D.IgnoreCollision(
-                    letters[i].GetComponentInChildren<Hitbox>().HitboxCollider,
-                    letters[j].GetComponentInChildren<Hurtbox>().HurtboxCollider);
+                    letters[i].GetComponentInChildren<Hitbox>().BoxColliders[0],
+                    letters[j].GetComponentInChildren<Hurtbox>().BoxColliders[0]);
                 Physics2D.IgnoreCollision(
-                    letters[i].GetComponentInChildren<Hurtbox>().HurtboxCollider,
-                    letters[j].GetComponentInChildren<Hitbox>().HitboxCollider);
+                    letters[i].GetComponentInChildren<Hurtbox>().BoxColliders[0],
+                    letters[j].GetComponentInChildren<Hitbox>().BoxColliders[0]);
             }
         }
         letters[0].Activate();

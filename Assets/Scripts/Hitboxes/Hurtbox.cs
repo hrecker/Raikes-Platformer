@@ -1,38 +1,9 @@
 using UnityEngine;
-using System.Collections;
 
-public class Hurtbox : MonoBehaviour
+public class Hurtbox : CollisionBox
 {
     public ColliderBoxType boxType; // what type of collisions does this hurtbox detect
-
-    private IMessenger objectMessenger;
-	private Collider2D hurtboxCollider;
-
-	public HitboxHarmType harmType;
-
-    public Collider2D HurtboxCollider
-    {
-        get { return hurtboxCollider; }
-        set { hurtboxCollider = value; }
-    }
-
-    void Awake()
-    {
-        hurtboxCollider = GetComponent<Collider2D>();
-    }
-
-    void Start()
-    {
-        objectMessenger = GetComponent<IMessenger>();
-        if (objectMessenger == null)
-        {
-            objectMessenger = GetComponentInParent<IMessenger>();
-        }
-        if (objectMessenger == null)
-        {
-            objectMessenger = GetComponentInChildren<IMessenger>();
-        }
-    }
+    public HitboxHarmType harmType;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -45,18 +16,9 @@ public class Hurtbox : MonoBehaviour
         }
     }
 
-    public void Deactivate()
+	public bool canReceiveHarm(Hitbox hitbox)
     {
-        hurtboxCollider.enabled = false;
-    }
-
-    public void Activate()
-    {
-        hurtboxCollider.enabled = true;
-	}
-
-	public bool canReceiveHarm(Hitbox hitbox) {
-		return (this.harmType & hitbox.harmType) != 0;
+		return (harmType & hitbox.harmType) != 0;
 	}
 
 }
