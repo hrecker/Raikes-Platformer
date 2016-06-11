@@ -3,11 +3,10 @@
 public class PlayerInput : MonoBehaviour
 {
     private PlayerMovement movement;
-
     public float shortHopMaxFrames;
+
     private int jumpFramesHeld;
     private bool jumped;
-    //private bool bounce; // if bounce is true, player does not need to be grounded to jump
     private bool spaceReleased;
 
     void Start()
@@ -17,6 +16,11 @@ public class PlayerInput : MonoBehaviour
     
     void Update()
     {
+        if(!Input.GetKey(KeyCode.Space))
+        {
+            jumpFramesHeld = 0;
+        }
+
         if(jumped && movement.IsGrounded())
         {
             jumpFramesHeld = 0;
@@ -82,15 +86,18 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-	public void TrampolinePlatformHop(float jumpSpeed, int framesToJumpOnTrampoline) {
+	public void TrampolinePlatformHop(float jumpSpeed, int framesToJumpOnTrampoline)
+    {
 		//Jumps frame held must be greater than 0 because the player must
 		//actually be holding the spacebar.
-		if (this.jumpFramesHeld > 0 && this.jumpFramesHeld <= framesToJumpOnTrampoline) {
-			this.movement.TrampolinePlatformHop (jumpSpeed, false);
-		} else {
-			this.movement.TrampolinePlatformHop (jumpSpeed, true);
+		if (jumpFramesHeld > 0 && jumpFramesHeld <= framesToJumpOnTrampoline)
+        {
+			movement.TrampolinePlatformHop (jumpSpeed, false);
+		} else
+        {
+			movement.TrampolinePlatformHop (jumpSpeed, true);
 		}
-		this.jumpFramesHeld = 0;
+		jumpFramesHeld = 0;
 	}
 
 	public void BounceOnEnemy()
@@ -104,5 +111,4 @@ public class PlayerInput : MonoBehaviour
             movement.ShortHop(false);
         }
 	}
-
 }

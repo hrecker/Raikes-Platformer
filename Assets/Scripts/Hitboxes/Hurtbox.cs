@@ -10,7 +10,7 @@ public class Hurtbox : CollisionBox
         Hitbox otherHitbox = other.GetComponent<Hitbox>();
         if (other.isTrigger && otherHitbox != null && objectMessenger != null &&
             (boxType == ColliderBoxType.ANY || otherHitbox.boxType == ColliderBoxType.ANY || boxType == otherHitbox.boxType) &&
-			this.canReceiveHarm(otherHitbox))
+			canReceiveHarm(otherHitbox))
         {
             objectMessenger.Invoke(Message.HIT_BY_OTHER, null);
         }
@@ -20,5 +20,4 @@ public class Hurtbox : CollisionBox
     {
 		return (harmType & hitbox.harmType) != 0;
 	}
-
 }

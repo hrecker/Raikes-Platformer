@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CollapsingPlatformMovement: MonoBehaviour
 {
@@ -11,46 +10,54 @@ public class CollapsingPlatformMovement: MonoBehaviour
 
 	void Start()
 	{
-		this.objectMessenger = this.GetComponent<IMessenger>();
+		objectMessenger = this.GetComponent<IMessenger>();
 		if (objectMessenger == null)
 		{
-			this.objectMessenger = this.GetComponentInParent<IMessenger>();
+			objectMessenger = this.GetComponentInParent<IMessenger>();
 		}
 		if (objectMessenger == null)
 		{
-			this.objectMessenger = this.GetComponentInChildren<IMessenger>();
+			objectMessenger = this.GetComponentInChildren<IMessenger>();
 		}
 	}
 
-	void Update() {
-		if (this.collapseCount > 0.0f) {
-			this.collapseCount -= Time.deltaTime;
-			if (this.collapseCount <= 0.0f) {
-				this.Collapse ();
+	void Update()
+    {
+		if (collapseCount > 0.0f)
+        {
+			collapseCount -= Time.deltaTime;
+			if (collapseCount <= 0.0f)
+            {
+				Collapse ();
 			}
-		} else if (this.respawnCount > 0.0f) {
-			this.respawnCount -= Time.deltaTime;
-			if (this.respawnCount <= 0.0f) {
-				this.Respawn ();
+		} else if (respawnCount > 0.0f)
+        {
+			respawnCount -= Time.deltaTime;
+			if (respawnCount <= 0.0f)
+            {
+				Respawn ();
 			}
 		}
 	}
 
-	public void BeginCollapse() {
+	public void BeginCollapse()
+    {
 		//We don't want to reset the collapse count if the
 		//player jumps and lands on the platform twice.
-		if (this.collapseCount <= 0.0f) {
-			this.collapseCount = this.timeUntilCollapse;
+		if (collapseCount <= 0.0f)
+        {
+			collapseCount = timeUntilCollapse;
 		}
 	}
 
-	public void Collapse() {
-		this.objectMessenger.Invoke (Message.PLATFORM_COLLAPSED, null);
-		this.respawnCount = this.timeUntilRespawn;
+	public void Collapse()
+    {
+		objectMessenger.Invoke (Message.PLATFORM_COLLAPSED, null);
+		respawnCount = timeUntilRespawn;
 	}
 
-	public void Respawn() {
-		this.objectMessenger.Invoke (Message.PLATFORM_RESPAWNED, null);
+	public void Respawn()
+    {
+		objectMessenger.Invoke (Message.PLATFORM_RESPAWNED, null);
 	}
-
 }

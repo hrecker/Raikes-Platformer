@@ -2,7 +2,6 @@
 
 public class ProjectileMessenger: MonoBehaviour, IMessenger
 {
-
 	private ProjectileMovement movement;
 
 	public void Start()

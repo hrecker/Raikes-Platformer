@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public class BlueScreenComputerMovement : MonoBehaviour {
-
+public class BlueScreenComputerMovement : MonoBehaviour
+{
     public HorizontalDirection horizontalDirection;
     public float horizontalSpeed;
     public float movementTime; //How long the enemy moves before stopping

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour {
-
+public class PlayerMovement : MonoBehaviour
+{
 	public float jumpSpeed;
     public float shortHopJumpSpeed;
 	public float moveSpeed;
@@ -14,17 +14,17 @@ public class PlayerMovement : MonoBehaviour {
 	private float groundMargin = 0.1f;
     private PlayerState playerState;
     private float standardGravityScale;
-
 	private Vector2 acceleration;
 	private HorizontalDirection movementDirection;
+
 	public HorizontalDirection MovementDirection
     {
 		get { return this.movementDirection; }
 		set
         {
             messenger.Invoke(Message.DIRECTION_CHANGE, new object[] { value });
-			this.movementDirection = value;
-			this.acceleration = new Vector2 ((float)value * this.moveSpeed, this.acceleration.y);
+			movementDirection = value;
+			acceleration = new Vector2 ((float)value * moveSpeed, acceleration.y);
 		}
 	}
 
@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	public void Update()
     {
-        this.rigidbodyObject.velocity += this.acceleration * Time.deltaTime;
+        rigidbodyObject.velocity += acceleration * Time.deltaTime;
         if(playerState == PlayerState.JUMP && rigidbodyObject.velocity.y < 0)
         {
             setPlayerState(PlayerState.FALL);

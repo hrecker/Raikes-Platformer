@@ -50,8 +50,8 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
             break;
 		case Message.LANDED_ON_TRAMPOLINE_PLATFORM:
 			//PlayerInput keeps track of how long the space bar has been pressed.
-			//It uses it for short hops, but we can use it for 
-			this.input.TrampolinePlatformHop ((float)args [0], (int)args[1]);
+			//It uses it for short hops, but we can use it for bouncing
+			input.TrampolinePlatformHop ((float)args [0], (int)args[1]);
 			break;
         }
     }

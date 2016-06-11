@@ -4,6 +4,7 @@ public class Hitbox : CollisionBox
 {
     public ColliderBoxType boxType; // what type of collisions does this hitbox detect
     public HitboxHarmType harmType;
+    public bool affectsPlatforms = false;
 
     void OnTriggerEnter2D(Collider2D other)
     {

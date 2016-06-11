@@ -1,9 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class MonobehaviourExtensions
 {
-	public static IMessenger getMessenger(this MonoBehaviour behaviour) {
+	public static IMessenger getMessenger(this MonoBehaviour behaviour)
+    {
 		IMessenger objectMessenger = behaviour.GetComponent<IMessenger>();
 		if (objectMessenger == null)
 		{
@@ -16,7 +16,8 @@ public static class MonobehaviourExtensions
 		return objectMessenger;
 	}
 
-	public static T GetComponentInHierarchy<T>(this Behaviour behaviour) {
+	public static T GetComponentInHierarchy<T>(this Behaviour behaviour)
+    {
 		T comp = behaviour.GetComponent<T> ();
 		if (comp == null) {
 			comp = behaviour.GetComponentInParent<T> ();
@@ -34,8 +35,10 @@ public static class MonobehaviourExtensions
 	/// <returns>The component of type T belonging to this object's parent or the parent's children.</returns>
 	/// <param name="behaviour">Behaviour.</param>
 	/// <typeparam name="T">The 1st type parameter.</typeparam>
-	public static T GetAdjacentComponent<T>(this Behaviour behaviour) {
-		if (behaviour.transform.parent == null) {
+	public static T GetAdjacentComponent<T>(this Behaviour behaviour)
+    {
+		if (behaviour.transform.parent == null)
+        {
 			return default(T);
 		}
 		return behaviour.transform.parent.GetComponentInChildren<T> ();

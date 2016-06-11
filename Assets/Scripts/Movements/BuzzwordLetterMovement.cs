@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public class BuzzwordLetterMovement : MonoBehaviour {
-
+public class BuzzwordLetterMovement : MonoBehaviour
+{
     private float speed;
     private HorizontalDirection horizontalDirection;
     private float directionChangeTime;
@@ -47,7 +47,7 @@ public class BuzzwordLetterMovement : MonoBehaviour {
 
     public void SetHorizontalDirection(HorizontalDirection direction)
     {
-        this.horizontalDirection = direction;
+        horizontalDirection = direction;
     }
 
     private Vector2 getVelocity()

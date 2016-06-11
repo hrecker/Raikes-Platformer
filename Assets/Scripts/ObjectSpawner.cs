@@ -1,14 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ObjectSpawner: MonoBehaviour
 {
 	public GameObject objectToSpawn;
 	public Vector2 spawnOffset;
-	/// <summary>
-	/// The direction to spawn in. If NONE, then
-	/// the direction of the parent object is used.
-	/// </summary>
+	// direction to spawn in. If NONE, then the direction of the parent object is used.
 	public HorizontalDirection spawnDirection;
 
 	public GameObject SpawnObject(Vector2 position, Vector2 offset, HorizontalDirection spawnDirection)

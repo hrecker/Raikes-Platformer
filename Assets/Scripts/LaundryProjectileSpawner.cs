@@ -1,22 +1,21 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-public interface IMovement {
-
+public interface IMovement
+{
 	HorizontalDirection Direction { get; set; }
-
 }
 
 public class LaundryProjectileSpawner: MonoBehaviour, IMovement
 {
-	public HorizontalDirection spawnDirection;
+    public float firingDelay;
+    public float projectileSpeed;
+    public HorizontalDirection spawnDirection;
 	public HorizontalDirection Direction
     {
 		get { return spawnDirection; }
 		set { spawnDirection = value; }
 	}
-	public float firingDelay;
-	public float projectileSpeed;
+
 	private float firingTimePassed;
 	private ObjectSpawner projectileSpawner;
 	private IMessenger messenger;
