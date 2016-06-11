@@ -10,7 +10,6 @@ public class PlayerSpriteChanger : MonoBehaviour
     private float currentTimePassed;
     private Sprite currentSprite;
     private bool flashActive; // Is the player flashing
-
     private SpriteRenderer spriteRenderer;
 
     void Start()

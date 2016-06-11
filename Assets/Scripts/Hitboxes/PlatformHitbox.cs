@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlatformHitbox: MonoBehaviour
 {
@@ -8,34 +7,34 @@ public class PlatformHitbox: MonoBehaviour
 
 	void Start()
 	{
-		this.objectMessenger = GetComponent<IMessenger>();
+		objectMessenger = GetComponent<IMessenger>();
 		if(objectMessenger == null)
 		{
-			this.objectMessenger = GetComponentInParent<IMessenger>();
+			objectMessenger = GetComponentInParent<IMessenger>();
 		}
 		if (objectMessenger == null)
 		{
-			this.objectMessenger = GetComponentInChildren<IMessenger>();
+			objectMessenger = GetComponentInChildren<IMessenger>();
 		}
-		this.boxCollider = this.GetComponentInHierarchy<BoxCollider2D> ();
+		boxCollider = this.GetComponentInHierarchy<BoxCollider2D> ();
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		Hitbox hitbox = other.GetComponent<Hitbox> ();
-		if (other.isTrigger && this.objectMessenger != null && hitbox != null && hitbox.affectsPlatforms)
+		if (other.isTrigger && objectMessenger != null && hitbox != null && hitbox.affectsPlatforms)
 		{
-			this.objectMessenger.Invoke(Message.PLATFORM_LANDED_ON, new object[] { other });
+			objectMessenger.Invoke(Message.PLATFORM_LANDED_ON, new object[] { other });
 		}
 	}
 
 	public void Deactivate()
 	{
-		this.boxCollider.enabled = false;
+		boxCollider.enabled = false;
 	}
 
 	public void Activate()
 	{
-		this.boxCollider.enabled = true;
+		boxCollider.enabled = true;
 	}
 }

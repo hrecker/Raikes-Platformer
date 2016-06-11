@@ -1,4 +1,4 @@
-﻿// what type of collisions can this collider detect
+﻿// what type of collisions a collider can detect
 public enum ColliderBoxType
 {
     ANY,

@@ -47,15 +47,15 @@ public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
     {
         movement.Squish();
         // move head hurtbox and body hitbox down
-        headHurtBox.HurtboxCollider.offset /= 2;
-        bodyHitBox.HitboxCollider.offset /= 2;
+        headHurtBox.BoxColliders[0].offset /= 2;
+        bodyHitBox.BoxColliders[0].offset /= 2;
 
         // shrink body hitbox, turnbox, and regular collider
-        Vector2 hitboxBoundSize = ((BoxCollider2D)bodyHitBox.HitboxCollider).size;
+        Vector2 hitboxBoundSize = ((BoxCollider2D)bodyHitBox.BoxColliders[0]).size;
         Vector2 bodyBoundSize = bodyCollider.size;
-        ((BoxCollider2D)bodyHitBox.HitboxCollider).size = new Vector2(hitboxBoundSize.x, hitboxBoundSize.y / 2);
+        ((BoxCollider2D)bodyHitBox.BoxColliders[0]).size = new Vector2(hitboxBoundSize.x, hitboxBoundSize.y / 2);
         bodyCollider.size = new Vector2(bodyBoundSize.x, bodyBoundSize.y / 2);
-        foreach(Collider2D turnBoxCollider in turnBox.TurnboxColliders)
+        foreach(Collider2D turnBoxCollider in turnBox.BoxColliders)
         {
             Vector2 turnboxBoundSize = ((BoxCollider2D)turnBoxCollider).size;
             ((BoxCollider2D)turnBoxCollider).size = new Vector2(turnboxBoundSize.x, turnboxBoundSize.y / 2);

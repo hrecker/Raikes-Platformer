@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
-public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger {
-
+public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger
+{
     private Hitbox[] hitBoxes;
     private Hurtbox[] hurtBoxes;
     private Turnbox turnBox;

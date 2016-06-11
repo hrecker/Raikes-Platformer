@@ -35,12 +35,26 @@ public class GenericBuzzwordMessenger : MonoBehaviour, IMessenger
             letters[i].GetComponent<BuzzwordLetterMessenger>().SetParentMessenger(this);
             for(int j = i + 1; j < letters.Count; j++)
             {
+                foreach(Collider2D hitboxCollider in letters[i].GetComponentInChildren<Hitbox>().BoxColliders)
+                {
+                    foreach(Collider2D hurtboxCollider in letters[j].GetComponentInChildren<Hurtbox>().BoxColliders)
+                    {
+                        Physics2D.IgnoreCollision(hitboxCollider, hurtboxCollider);
+                    }
+                }
+                foreach (Collider2D hurtboxCollider in letters[i].GetComponentInChildren<Hurtbox>().BoxColliders)
+                {
+                    foreach (Collider2D hitboxCollider in letters[j].GetComponentInChildren<Hitbox>().BoxColliders)
+                    {
+                        Physics2D.IgnoreCollision(hitboxCollider, hurtboxCollider);
+                    }
+                }
+               /* Physics2D.IgnoreCollision(
+                    letters[i].GetComponentInChildren<Hitbox>().BoxColliders[0],
+                    letters[j].GetComponentInChildren<Hurtbox>().BoxColliders[0]);
                 Physics2D.IgnoreCollision(
-                    letters[i].GetComponentInChildren<Hitbox>().HitboxCollider,
-                    letters[j].GetComponentInChildren<Hurtbox>().HurtboxCollider);
-                Physics2D.IgnoreCollision(
-                    letters[i].GetComponentInChildren<Hurtbox>().HurtboxCollider,
-                    letters[j].GetComponentInChildren<Hitbox>().HitboxCollider);
+                    letters[i].GetComponentInChildren<Hurtbox>().BoxColliders[0],
+                    letters[j].GetComponentInChildren<Hitbox>().BoxColliders[0]);*/
             }
         }
         letters[0].Activate();
