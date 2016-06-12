@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour, IDirected
     private float standardGravityScale;
 	private Vector2 acceleration;
 	private HorizontalDirection movementDirection;
-
+    
     public HorizontalDirection horizontalDirection
     {
         get { return movementDirection; }
@@ -122,12 +122,19 @@ public class PlayerMovement : MonoBehaviour, IDirected
 
     public void StartFastFall()
     {
-        rigidbodyObject.gravityScale = standardGravityScale * fastFallMultiplier;
+		rigidbodyObject.gravityScale = standardGravityScale * fastFallMultiplier;
+		IgnoreSoftPlatforms (true);
     }
 
     public void StopFastFall()
     {
-        rigidbodyObject.gravityScale = standardGravityScale;
+		rigidbodyObject.gravityScale = standardGravityScale;
+		IgnoreSoftPlatforms (false);
     }
 		
+	public void IgnoreSoftPlatforms(bool ignore) {
+		int playerLayer = LayerMask.NameToLayer ("Player");
+		int softPlatformLayer = LayerMask.NameToLayer ("Soft Platform");
+		Physics2D.IgnoreLayerCollision (playerLayer, softPlatformLayer, ignore);
+	}
 }

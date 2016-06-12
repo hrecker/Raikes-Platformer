@@ -66,7 +66,7 @@ public class BuzzwordLetterMovement : MonoBehaviour, IDirected
     {
         this.speed = speed;
     }
-
+    
     private Vector2 getVelocity()
     {
         VerticalDirection vert = high ? VerticalDirection.DOWN : VerticalDirection.UP;
