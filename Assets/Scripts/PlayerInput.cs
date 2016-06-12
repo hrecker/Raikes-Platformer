@@ -16,11 +16,6 @@ public class PlayerInput : MonoBehaviour
     
     void Update()
     {
-        if(!Input.GetKey(KeyCode.Space))
-        {
-            jumpFramesHeld = 0;
-        }
-
         if(jumped && movement.IsGrounded())
         {
             jumpFramesHeld = 0;
@@ -83,6 +78,11 @@ public class PlayerInput : MonoBehaviour
         else if(Input.GetKeyUp(KeyCode.DownArrow))
         {
             movement.StopFastFall();
+        }
+
+        if (!Input.GetKeyDown(KeyCode.Space) && !Input.GetKey(KeyCode.Space))
+        {
+            jumpFramesHeld = 0;
         }
     }
 
