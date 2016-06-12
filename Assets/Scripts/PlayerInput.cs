@@ -111,4 +111,5 @@ public class PlayerInput : MonoBehaviour
             movement.ShortHop(false);
         }
 	}
+
 }
