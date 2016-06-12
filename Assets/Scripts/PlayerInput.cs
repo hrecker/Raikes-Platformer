@@ -16,11 +16,6 @@ public class PlayerInput : MonoBehaviour
     
     void Update()
     {
-        if(!Input.GetKey(KeyCode.Space))
-        {
-            jumpFramesHeld = 0;
-        }
-
         if(jumped && movement.IsGrounded())
         {
             jumpFramesHeld = 0;
@@ -65,15 +60,15 @@ public class PlayerInput : MonoBehaviour
 			
 		if (Input.GetKey (KeyCode.RightArrow))
         {
-			movement.MovementDirection = HorizontalDirection.RIGHT;
+			movement.horizontalDirection = HorizontalDirection.RIGHT;
 		}
         else if (Input.GetKey (KeyCode.LeftArrow))
         {
-			movement.MovementDirection = HorizontalDirection.LEFT;
+			movement.horizontalDirection = HorizontalDirection.LEFT;
 		}
         else
         {
-			movement.MovementDirection = HorizontalDirection.NONE;
+			movement.horizontalDirection = HorizontalDirection.NONE;
 		}
 
         if(Input.GetKeyDown(KeyCode.DownArrow))
@@ -83,6 +78,11 @@ public class PlayerInput : MonoBehaviour
         else if(Input.GetKeyUp(KeyCode.DownArrow))
         {
             movement.StopFastFall();
+        }
+
+        if (!Input.GetKeyDown(KeyCode.Space) && !Input.GetKey(KeyCode.Space))
+        {
+            jumpFramesHeld = 0;
         }
     }
 
@@ -111,5 +111,4 @@ public class PlayerInput : MonoBehaviour
             movement.ShortHop(false);
         }
 	}
-
 }

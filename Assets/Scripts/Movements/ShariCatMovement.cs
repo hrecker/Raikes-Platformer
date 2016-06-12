@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ShariCatMovement : MonoBehaviour
+public class ShariCatMovement : MonoBehaviour, IDirected
 {
     public HorizontalDirection direction;
     public float speed;
@@ -12,6 +12,18 @@ public class ShariCatMovement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private float colliderMargin = 0.05f;
  	private float groundMargin = 0.1f;
+
+    public HorizontalDirection horizontalDirection
+    {
+        get { return direction; }
+        set { direction = value; }
+    }
+
+    public VerticalDirection verticalDirection
+    {
+        get { return VerticalDirection.NONE; }
+        set { }
+    }
 
     void Start()
     {

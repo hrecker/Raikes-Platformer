@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IDirected
 {
 	public float jumpSpeed;
     public float shortHopJumpSpeed;
@@ -16,17 +16,23 @@ public class PlayerMovement : MonoBehaviour
     private float standardGravityScale;
 	private Vector2 acceleration;
 	private HorizontalDirection movementDirection;
-
-	public HorizontalDirection MovementDirection
+    
+    public HorizontalDirection horizontalDirection
     {
-		get { return this.movementDirection; }
-		set
+        get { return movementDirection; }
+        set
         {
             messenger.Invoke(Message.DIRECTION_CHANGE, new object[] { value });
-			movementDirection = value;
-			acceleration = new Vector2 ((float)value * moveSpeed, acceleration.y);
-		}
-	}
+            movementDirection = value;
+            acceleration = new Vector2((float)value * moveSpeed, acceleration.y);
+        }
+    }
+
+    public VerticalDirection verticalDirection
+    {
+        get { return VerticalDirection.NONE; }
+        set { }
+    }
 
     void Awake()
     {

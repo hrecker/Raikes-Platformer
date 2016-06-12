@@ -1,13 +1,25 @@
 using UnityEngine;
 
-public class MiniLeenKiatMovement : MonoBehaviour
+public class MiniLeenKiatMovement : MonoBehaviour, IDirected
 {
-    public HorizontalDirection horizontalDirection;
+    public HorizontalDirection _horizontalDirection;
     public float normalHorizontalSpeed;
     public float squishedHorizontalSpeed;
     public float jumpSpeed;
     private Rigidbody2D rigidbodyObject;
     private bool squished;
+
+    public HorizontalDirection horizontalDirection
+    {
+        get { return _horizontalDirection; }
+        set { _horizontalDirection = value; }
+    }
+
+    public VerticalDirection verticalDirection
+    {
+        get { return VerticalDirection.NONE; }
+        set { }
+    }
 
     public bool Squished
     {
@@ -18,18 +30,18 @@ public class MiniLeenKiatMovement : MonoBehaviour
     {
         squished = false;
         rigidbodyObject = GetComponent<Rigidbody2D>();
-        rigidbodyObject.velocity = new Vector2((float) horizontalDirection * normalHorizontalSpeed, rigidbodyObject.velocity.y);
+        rigidbodyObject.velocity = new Vector2((float) _horizontalDirection * normalHorizontalSpeed, rigidbodyObject.velocity.y);
 	}
 	
 	void Update ()
     {
         if(!squished)
         {
-            rigidbodyObject.velocity = new Vector2((float) horizontalDirection * normalHorizontalSpeed, rigidbodyObject.velocity.y);
+            rigidbodyObject.velocity = new Vector2((float) _horizontalDirection * normalHorizontalSpeed, rigidbodyObject.velocity.y);
         }
         else
         {
-            rigidbodyObject.velocity = new Vector2((float) horizontalDirection * squishedHorizontalSpeed, rigidbodyObject.velocity.y);
+            rigidbodyObject.velocity = new Vector2((float) _horizontalDirection * squishedHorizontalSpeed, rigidbodyObject.velocity.y);
         }
     }
 
@@ -40,6 +52,6 @@ public class MiniLeenKiatMovement : MonoBehaviour
 
     public void Turn()
     {
-        horizontalDirection = (HorizontalDirection)((float)horizontalDirection * -1);
+        _horizontalDirection = (HorizontalDirection)((float)_horizontalDirection * -1);
     }
 }

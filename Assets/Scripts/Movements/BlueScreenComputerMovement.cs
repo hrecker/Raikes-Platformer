@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class BlueScreenComputerMovement : MonoBehaviour
+public class BlueScreenComputerMovement : MonoBehaviour, IDirected
 {
-    public HorizontalDirection horizontalDirection;
+    public HorizontalDirection _horizontalDirection;
     public float horizontalSpeed;
     public float movementTime; //How long the enemy moves before stopping
     public float stopTime; //How long the enemy stays stopped
@@ -12,11 +12,23 @@ public class BlueScreenComputerMovement : MonoBehaviour
     private Rigidbody2D rigidbodyObject;
     private IMessenger messenger;
 
+    public HorizontalDirection horizontalDirection
+    {
+        get { return _horizontalDirection; }
+        set { _horizontalDirection = value; }
+    }
+
+    public VerticalDirection verticalDirection
+    {
+        get { return VerticalDirection.NONE; }
+        set { }
+    }
+
     void Start()
     {
         rigidbodyObject = GetComponent<Rigidbody2D>();
         messenger = GetComponent<IMessenger>();
-        rigidbodyObject.velocity = new Vector2((float)horizontalDirection * horizontalSpeed, rigidbodyObject.velocity.y);
+        rigidbodyObject.velocity = new Vector2((float)_horizontalDirection * horizontalSpeed, rigidbodyObject.velocity.y);
         moving = true;
     }
 
@@ -25,7 +37,7 @@ public class BlueScreenComputerMovement : MonoBehaviour
         currentTimePassed += Time.deltaTime;
         if (moving)
         {
-            rigidbodyObject.velocity = new Vector2((float)horizontalDirection * horizontalSpeed, rigidbodyObject.velocity.y);
+            rigidbodyObject.velocity = new Vector2((float)_horizontalDirection * horizontalSpeed, rigidbodyObject.velocity.y);
         }
 
         if(moving && currentTimePassed >= movementTime)
@@ -49,7 +61,7 @@ public class BlueScreenComputerMovement : MonoBehaviour
 
     private void startMovement()
     {
-        rigidbodyObject.velocity = new Vector2((float)horizontalDirection * horizontalSpeed, rigidbodyObject.velocity.y);
+        rigidbodyObject.velocity = new Vector2((float)_horizontalDirection * horizontalSpeed, rigidbodyObject.velocity.y);
         moving = true;
         currentTimePassed = 0;
         messenger.Invoke(Message.STARTED_MOVEMENT, null);
@@ -59,7 +71,7 @@ public class BlueScreenComputerMovement : MonoBehaviour
     {
         if(moving)
         {
-            horizontalDirection = (HorizontalDirection)((float)horizontalDirection * -1);
+            _horizontalDirection = (HorizontalDirection)((float)_horizontalDirection * -1);
         }
     }
 }
