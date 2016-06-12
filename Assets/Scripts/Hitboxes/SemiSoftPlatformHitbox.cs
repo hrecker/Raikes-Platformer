@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SoftPlatformHitbox: MonoBehaviour
+public class SemiSoftPlatformHitbox: MonoBehaviour
 {
 	private IMessenger objectMessenger;
 	private BoxCollider2D boxCollider;

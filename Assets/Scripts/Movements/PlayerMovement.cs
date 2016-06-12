@@ -116,12 +116,19 @@ public class PlayerMovement : MonoBehaviour
 
     public void StartFastFall()
     {
-        rigidbodyObject.gravityScale = standardGravityScale * fastFallMultiplier;
+		rigidbodyObject.gravityScale = standardGravityScale * fastFallMultiplier;
+		IgnoreSoftPlatforms (true);
     }
 
     public void StopFastFall()
     {
-        rigidbodyObject.gravityScale = standardGravityScale;
+		rigidbodyObject.gravityScale = standardGravityScale;
+		IgnoreSoftPlatforms (false);
     }
 		
+	public void IgnoreSoftPlatforms(bool ignore) {
+		int playerLayer = LayerMask.NameToLayer ("Player");
+		int softPlatformLayer = LayerMask.NameToLayer ("Soft Platform");
+		Physics2D.IgnoreLayerCollision (playerLayer, softPlatformLayer, ignore);
+	}
 }
