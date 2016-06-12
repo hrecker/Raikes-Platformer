@@ -1,15 +1,22 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class EnemySpawnPoint : MonoBehaviour {
+public class EnemySpawnPoint : MonoBehaviour
+{
+    public GameObject enemyPrefab;
+    public HorizontalDirection spawnDirection;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    private GameObject spawn;
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "SpawnCollider" && spawn == null)
+        {
+            spawn = Instantiate(enemyPrefab, transform.position, Quaternion.identity) as GameObject;
+            IDirected directedComponent = spawn.GetComponent<IDirected>();
+            if(directedComponent != null)
+            {
+                directedComponent.horizontalDirection = spawnDirection;
+            }
+        }
+    }
 }

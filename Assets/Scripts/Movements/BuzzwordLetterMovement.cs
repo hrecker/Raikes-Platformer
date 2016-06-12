@@ -1,15 +1,37 @@
 ﻿using UnityEngine;
 
-public class BuzzwordLetterMovement : MonoBehaviour
+public class BuzzwordLetterMovement : MonoBehaviour, IDirected
 {
     private float speed;
-    private HorizontalDirection horizontalDirection;
+    private HorizontalDirection _horizontalDirection;
     private float directionChangeTime;
     private Rigidbody2D rigidbodyObject;
     private bool high; //Is this letter in the high position or the low position
     private bool movingHorizontal; // Is this letter moving horizontally or vertically
     private float currentTimePassed;
     private bool active;
+
+    public HorizontalDirection horizontalDirection
+    {
+        get { return _horizontalDirection; }
+        set { _horizontalDirection = value; }
+    }
+
+    public VerticalDirection verticalDirection
+    {
+        get
+        {
+            if (movingHorizontal)
+            {
+                return high ? VerticalDirection.UP : VerticalDirection.DOWN;
+            }
+            else
+            {
+                return VerticalDirection.NONE;
+            }
+        }
+        set { }
+    }
 
     void Start()
     {
@@ -45,11 +67,6 @@ public class BuzzwordLetterMovement : MonoBehaviour
         this.speed = speed;
     }
 
-    public void SetHorizontalDirection(HorizontalDirection direction)
-    {
-        horizontalDirection = direction;
-    }
-
     private Vector2 getVelocity()
     {
         VerticalDirection vert = high ? VerticalDirection.DOWN : VerticalDirection.UP;
@@ -62,7 +79,7 @@ public class BuzzwordLetterMovement : MonoBehaviour
         else
         {
             movingHorizontal = true;
-            return new Vector2((float)horizontalDirection * speed, 0);
+            return new Vector2((float)_horizontalDirection * speed, 0);
         }
     }
 }

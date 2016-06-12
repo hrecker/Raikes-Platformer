@@ -1,29 +1,48 @@
 ﻿using UnityEngine;
 
-public interface IMovement
-{
-	HorizontalDirection Direction { get; set; }
-}
-
-public class LaundryProjectileSpawner: MonoBehaviour, IMovement
+public class LaundryProjectileSpawner: MonoBehaviour, IDirected
 {
     public float firingDelay;
     public float projectileSpeed;
     public HorizontalDirection spawnDirection;
-	public HorizontalDirection Direction
-    {
-		get { return spawnDirection; }
-		set { spawnDirection = value; }
-	}
 
 	private float firingTimePassed;
 	private ObjectSpawner projectileSpawner;
 	private IMessenger messenger;
+    private SpriteRenderer spriteRenderer;
 
-	public void Start()
+    public HorizontalDirection horizontalDirection
+    {
+        get { return spawnDirection; }
+        set
+        {
+            spawnDirection = value;
+            if(projectileSpawner == null)
+            {
+                projectileSpawner = GetComponent<ObjectSpawner>();
+            }
+            projectileSpawner.horizontalDirection = value;
+            setSpriteDirection();
+        }
+    }
+
+    public VerticalDirection verticalDirection
+    {
+        get { return VerticalDirection.NONE; }
+        set { }
+    }
+
+    public void Start()
     {
 		messenger = GetComponent<IMessenger>();
-		projectileSpawner = GetComponent<ObjectSpawner> ();
+        if(projectileSpawner == null)
+        {
+            projectileSpawner = GetComponent<ObjectSpawner>();
+        }
+        if(spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
 	}
 
 	void Update()
@@ -35,8 +54,17 @@ public class LaundryProjectileSpawner: MonoBehaviour, IMovement
 			GameObject projectile = projectileSpawner.SpawnObject();
 			ProjectileMovement projectileMovement = projectile.GetComponent<ProjectileMovement> ();
 			projectileMovement.speed = projectileSpeed;
-			projectileMovement.MoveInDirection (spawnDirection);
+            projectileMovement.horizontalDirection = spawnDirection;
 			messenger.Invoke (Message.PROJECTILE_FIRED, null);
 		}
 	}
+
+    private void setSpriteDirection()
+    {
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+        spriteRenderer.flipX = (spawnDirection == HorizontalDirection.RIGHT);
+    }
 }

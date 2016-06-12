@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class GenericBuzzwordMessenger : MonoBehaviour, IMessenger
+public class GenericBuzzwordMessenger : MonoBehaviour, IMessenger, IDirected
 {
     public float speed;
     public string buzzword;
@@ -15,8 +15,20 @@ public class GenericBuzzwordMessenger : MonoBehaviour, IMessenger
     private int currentLetterToActivate; // index of next letter to activate
     private float currentTimePassed;
     private int lettersRemaining;
-    
-	void Awake ()
+
+    public HorizontalDirection horizontalDirection
+    {
+        get { return direction; }
+        set { direction = value; }
+    }
+
+    public VerticalDirection verticalDirection
+    {
+        get { return VerticalDirection.NONE; }
+        set { }
+    }
+
+    void Awake ()
     {
         letters = new List<BuzzwordLetterMovement>();
         for(int i = 0; i < buzzword.Length; i++)
@@ -30,7 +42,7 @@ public class GenericBuzzwordMessenger : MonoBehaviour, IMessenger
         for(int i = 0; i < letters.Count; i++)
         {
             letters[i].SetDirectionChangeTime(directionChangeTime);
-            letters[i].SetHorizontalDirection(direction);
+            letters[i].horizontalDirection = direction;
             letters[i].SetSpeed(speed);
             letters[i].GetComponent<BuzzwordLetterMessenger>().SetParentMessenger(this);
             for(int j = i + 1; j < letters.Count; j++)

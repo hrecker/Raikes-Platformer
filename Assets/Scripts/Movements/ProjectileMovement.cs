@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ProjectileMovement: MonoBehaviour
+public class ProjectileMovement: MonoBehaviour, IDirected
 {
 	public HorizontalDirection direction;
 	public float speed;
@@ -8,7 +8,19 @@ public class ProjectileMovement: MonoBehaviour
 	private float timePassed;
 	private IMessenger messenger;
 
-	public void Start()
+    public HorizontalDirection horizontalDirection
+    {
+        get { return direction; }
+        set { MoveInDirection(value); }
+    }
+
+    public VerticalDirection verticalDirection
+    {
+        get { return VerticalDirection.NONE; }
+        set { }
+    }
+
+    public void Start()
     {
 		messenger = GetComponent<IMessenger> ();
 	}
