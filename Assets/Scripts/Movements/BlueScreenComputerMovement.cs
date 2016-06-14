@@ -6,6 +6,7 @@ public class BlueScreenComputerMovement : MonoBehaviour, IDirected
     public float horizontalSpeed;
     public float movementTime; //How long the enemy moves before stopping
     public float stopTime; //How long the enemy stays stopped
+    public float jumpSpeed;
 
     private float currentTimePassed; //How long has passed since the last change of movement state
     private bool moving; //Is the enemy moving
@@ -49,6 +50,11 @@ public class BlueScreenComputerMovement : MonoBehaviour, IDirected
         {
             startMovement();
         }
+    }
+
+    public void Jump()
+    {
+        rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
     }
 
     private void stopMovement()

@@ -45,6 +45,11 @@ public class MiniLeenKiatMovement : MonoBehaviour, IDirected
         }
     }
 
+    public void Jump()
+    {
+        rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
+    }
+
     public void Squish()
     {
         squished = true;

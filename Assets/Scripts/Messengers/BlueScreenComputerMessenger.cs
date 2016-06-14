@@ -36,6 +36,9 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger
             case Message.TURN:
                 movement.Turn();
                 break;
+            case Message.BOUNCE:
+                movement.Jump();
+                break;
 
             case Message.STOPPED_MOVEMENT:
                 ActivateHitBox();
