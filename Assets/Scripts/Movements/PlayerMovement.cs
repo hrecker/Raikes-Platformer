@@ -104,7 +104,7 @@ public class PlayerMovement : MonoBehaviour, IDirected
 	public void Update()
     {
         rigidbodyObject.velocity += acceleration * Time.deltaTime;
-        if(playerState == PlayerState.JUMP && rigidbodyObject.velocity.y < 0)
+        if((playerState == PlayerState.JUMP || playerState == PlayerState.STAND) && rigidbodyObject.velocity.y < 0)
         {
             setPlayerState(PlayerState.FALL);
         }
@@ -132,7 +132,8 @@ public class PlayerMovement : MonoBehaviour, IDirected
 		IgnoreSoftPlatforms (false);
     }
 		
-	public void IgnoreSoftPlatforms(bool ignore) {
+	public void IgnoreSoftPlatforms(bool ignore)
+    {
 		int playerLayer = LayerMask.NameToLayer ("Player");
 		int softPlatformLayer = LayerMask.NameToLayer ("Soft Platform");
 		Physics2D.IgnoreLayerCollision (playerLayer, softPlatformLayer, ignore);

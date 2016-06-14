@@ -5,7 +5,8 @@ public class PlayerInput : MonoBehaviour
     private PlayerMovement movement;
     public float shortHopMaxFrames;
 
-    private int jumpFramesHeld;
+    private int totalJumpFramesHeld;
+    private int groundedJumpFramesHeld;
     private bool jumped;
     private bool spaceReleased;
 
@@ -18,7 +19,7 @@ public class PlayerInput : MonoBehaviour
     {
         if(jumped && movement.IsGrounded())
         {
-            jumpFramesHeld = 0;
+            groundedJumpFramesHeld = 0;
             jumped = false;
         }
 
@@ -32,8 +33,8 @@ public class PlayerInput : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.Space))
                 {
-                    jumpFramesHeld++;
-                    if (jumpFramesHeld > shortHopMaxFrames)
+                    groundedJumpFramesHeld++;
+                    if (groundedJumpFramesHeld > shortHopMaxFrames)
                     {
                         movement.FullHop(true);
                         spaceReleased = false;
@@ -42,13 +43,13 @@ public class PlayerInput : MonoBehaviour
                 }
                 else
                 {
-                    if (jumpFramesHeld > 0 && jumpFramesHeld <= shortHopMaxFrames)
+                    if (groundedJumpFramesHeld > 0 && groundedJumpFramesHeld <= shortHopMaxFrames)
                     {
                         movement.ShortHop(true);
                         spaceReleased = false;
                         jumped = true;
                     }
-                    else if (jumpFramesHeld > 0)
+                    else if (groundedJumpFramesHeld > 0)
                     {
                         movement.FullHop(true);
                         spaceReleased = false;
@@ -80,9 +81,13 @@ public class PlayerInput : MonoBehaviour
             movement.StopFastFall();
         }
 
-        if (!Input.GetKeyDown(KeyCode.Space) && !Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            jumpFramesHeld = 0;
+            totalJumpFramesHeld++;
+        }
+        else
+        {
+            totalJumpFramesHeld = 0;
         }
     }
 
@@ -90,14 +95,13 @@ public class PlayerInput : MonoBehaviour
     {
 		//Jumps frame held must be greater than 0 because the player must
 		//actually be holding the spacebar.
-		if (jumpFramesHeld > 0 && jumpFramesHeld <= framesToJumpOnTrampoline)
+		if (totalJumpFramesHeld > 0 && totalJumpFramesHeld <= framesToJumpOnTrampoline)
         {
 			movement.TrampolinePlatformHop (jumpSpeed, false);
 		} else
         {
 			movement.TrampolinePlatformHop (jumpSpeed, true);
 		}
-		jumpFramesHeld = 0;
 	}
 
 	public void BounceOnEnemy()
