@@ -1,6 +1,7 @@
 ﻿//types of messages that can be sent
 public enum Message
 {
+    BOUNCE,
     DIRECTION_CHANGE,
     HEALTH_LOST,
     HEALTH_UPDATED,

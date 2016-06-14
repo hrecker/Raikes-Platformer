@@ -46,9 +46,14 @@ public class ShariCatMovement : MonoBehaviour, IDirected
             currentTimePassed = 0;
             if (IsGrounded())
             {
-                rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
+                Jump();
             }
         }
+    }
+
+    public void Jump()
+    {
+        rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
     }
 
     public bool IsGrounded()
