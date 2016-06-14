@@ -4,6 +4,7 @@ public class IDEMovement : MonoBehaviour, IDirected
 {
     public HorizontalDirection _horizontalDirection;
     public float speed;
+    public float jumpSpeed;
     private Rigidbody2D rigidbodyObject;
 
     public HorizontalDirection horizontalDirection
@@ -27,6 +28,11 @@ public class IDEMovement : MonoBehaviour, IDirected
     void Update()
     {
         rigidbodyObject.velocity = new Vector2((float)_horizontalDirection * speed, rigidbodyObject.velocity.y);
+    }
+
+    public void Jump()
+    {
+        rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
     }
 
     public void Turn()

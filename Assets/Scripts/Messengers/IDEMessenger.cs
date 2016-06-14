@@ -35,6 +35,9 @@ public class IDEMessenger : MonoBehaviour, IMessenger
             case Message.TURN:
                 movement.Turn();
                 break;
+            case Message.BOUNCE:
+                movement.Jump();
+                break;
         }
     }
 }
