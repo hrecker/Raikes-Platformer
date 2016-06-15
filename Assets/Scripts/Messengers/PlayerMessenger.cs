@@ -37,6 +37,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
             makeInvulnerable();
             //TODO: allow for variable damage taken?
             health.TakeDamage(1);
+            SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth });
             break;
         case Message.NO_HEALTH_REMAINING:
             //TODO: add logic for death
