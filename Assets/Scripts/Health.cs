@@ -31,4 +31,19 @@ public class Health : MonoBehaviour
             messenger.Invoke(Message.HEALTH_LOST, null);
         }
     }
+
+    public bool IncreaseHealth(int increaseVal)
+    {
+        if(health == maxHealth)
+        {
+            return false;
+        }
+
+        health += increaseVal;
+        if(health > maxHealth)
+        {
+            health = maxHealth;
+        }
+        return true;
+    }
 }
