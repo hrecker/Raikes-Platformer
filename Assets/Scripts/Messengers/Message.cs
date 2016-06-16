@@ -5,6 +5,7 @@ public enum Message
     DIRECTION_CHANGE,
     HEALTH_LOST,
     HEALTH_UPDATED,
+    HEALTH_PICKUP,
     HIT_BY_OTHER,
     HIT_OTHER,
     LETTER_DESTROYED,
