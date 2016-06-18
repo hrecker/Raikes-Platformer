@@ -7,7 +7,8 @@ public class SceneMessenger : MonoBehaviour, IMessenger
     public static SceneMessenger Instance { get; private set; }
     private Dictionary<Message, List<Delegate>> callbacks;
 
-    public delegate void HealthCallback(int currentHealth, int maxHealth);
+    public delegate void HealthCallback (int currentHealth, int maxHealth);
+	public delegate void PointsCallback (int gainedPoints);
 
     void Awake()
     {
@@ -35,6 +36,12 @@ public class SceneMessenger : MonoBehaviour, IMessenger
                         callback.DynamicInvoke(args[0], args[1]);
                     }
                     break;
+				case Message.POINTS_RECEIVED:
+					foreach (Delegate callback in callbacks[msg])
+					{
+						callback.DynamicInvoke(args[0]);
+					}
+					break;
             }
         }
     }

@@ -6,7 +6,8 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger
     private Hurtbox[] hurtBoxes;
     private Turnbox turnBox;
     private SpriteRenderer spriteRenderer;
-    private BlueScreenComputerMovement movement;
+	private BlueScreenComputerMovement movement;
+	public int pointsReceived = 10;
 
     public Sprite movingSprite;
     public Sprite stoppedSprite;
@@ -31,7 +32,8 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger
                 break;
             case Message.HIT_BY_OTHER:
                 Debug.Log("Blue screen compuer received hit");
-                Destroy(gameObject);
+				Destroy(gameObject);
+				SceneMessenger.Instance.Invoke (Message.POINTS_RECEIVED, new object[] { this.pointsReceived });
                 break;
             case Message.TURN:
                 movement.Turn();
