@@ -12,6 +12,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
     private PlayerInput input;
     private Health health;
 	private PlayerMovement movement;
+    private AudioClipPlayer audioPlayer;
 
     void Start()
     {
@@ -21,6 +22,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         hurtboxes = GetComponentsInChildren<Hurtbox>();
         health = GetComponent<Health>();
 		movement = GetComponent<PlayerMovement> ();
+        audioPlayer = GetComponent<AudioClipPlayer>();
         makeVulnerable();
     }
 
@@ -64,6 +66,11 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                 //It uses it for short hops, but we can use it for bouncing
                 input.TrampolinePlatformHop((float)args[0], (int)args[1]);
                 break;
+        }
+
+        if (audioPlayer != null)
+        {
+            audioPlayer.PlayClip(msg);
         }
     }
 
