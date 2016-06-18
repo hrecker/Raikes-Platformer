@@ -3,10 +3,16 @@
 public class PickupController : MonoBehaviour
 {
     private Health health;
+    private PlayerInput playerInput;
+    private PlayerMovement playerMovement;
+    private IMessenger messenger;
 
     void Start()
     {
         health = GetComponent<Health>();
+        playerInput = GetComponent<PlayerInput>();
+        playerMovement = GetComponent<PlayerMovement>();
+        messenger = GetComponent<IMessenger>();
     }
 
     public bool Pickup(PickupBox pickupBox)
@@ -22,6 +28,21 @@ public class PickupController : MonoBehaviour
                     Debug.Log("Destroying pickup");
                     pickupBox.DestroyPickup();
                     effectActivated = true;
+                }
+                break;
+            case PickupType.ARMOR:
+                //TODO: allow for variable increase in armor?
+                if(health != null && health.IncreaseArmor(3))
+                {
+                    pickupBox.DestroyPickup();
+                    effectActivated = true;
+                }
+                break;
+            case PickupType.POISON:
+                if(health != null)
+                {
+                    health.TakeDamage(1);
+                    pickupBox.DestroyPickup();
                 }
                 break;
         }

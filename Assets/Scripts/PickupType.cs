@@ -2,6 +2,7 @@
 {
     HEALTH,
     ARMOR,
+    POISON,
     GUN,
     SUPER_FASTFALL,
     SPEED,

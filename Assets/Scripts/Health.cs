@@ -80,6 +80,10 @@ public class Health : MonoBehaviour
         {
             armor = maxArmor;
         }
+        if (messenger != null)
+        {
+            messenger.Invoke(Message.HEALTH_UPDATED, new object[] { health, maxHealth, armor, maxArmor });
+        }
         return true;
     }
 }
