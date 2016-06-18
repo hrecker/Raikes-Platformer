@@ -21,6 +21,14 @@ public class Health : MonoBehaviour
         if (armor > 0)
         {
             armor -= damage;
+            if (armor <= 0)
+            {
+                armor = 0;
+                if (messenger != null)
+                {
+                    messenger.Invoke(Message.NO_ARMOR_REMAINING, null);
+                }
+            }
         }
         else
         {

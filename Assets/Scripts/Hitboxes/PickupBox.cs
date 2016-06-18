@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
-public class HealthPickupBox : CollisionBox
+public class PickupBox : CollisionBox
 {
+    public PickupType type;
+
     void OnTriggerStay2D(Collider2D other)
     {
         Hurtbox otherHurtbox = other.GetComponent<Hurtbox>();
@@ -10,7 +12,7 @@ public class HealthPickupBox : CollisionBox
             IMessenger otherMessenger = otherHurtbox.getMessenger();
             if(otherMessenger != null)
             {
-                otherMessenger.Invoke(Message.HEALTH_PICKUP, new object[] { this });
+                otherMessenger.Invoke(Message.PICKUP, new object[] { this });
             }
         }
     }

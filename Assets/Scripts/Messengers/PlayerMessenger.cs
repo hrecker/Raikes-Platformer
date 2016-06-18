@@ -13,6 +13,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
     private Health health;
 	private PlayerMovement movement;
     private AudioClipPlayer audioPlayer;
+    private PickupController pickupController;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         health = GetComponent<Health>();
 		movement = GetComponent<PlayerMovement> ();
         audioPlayer = GetComponent<AudioClipPlayer>();
+        pickupController = GetComponent<PickupController>();
         makeVulnerable();
     }
 
@@ -42,19 +44,8 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                 health.TakeDamage(1);
                 //SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth, health.armor, health.maxArmor });
                 break;
-            case Message.HEALTH_PICKUP:
-                //TODO: allow for variable increase in health?
-                HealthPickupBox pickupBox = (HealthPickupBox)args[0];
-                if(health.IncreaseHealth(1))
-                {
-                    Debug.Log("Destroying pickup");
-                    //SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth, health.armor, health.maxArmor });
-                    pickupBox.DestroyPickup();
-                }
-                else
-                {
-                    playSound = false;
-                }
+            case Message.PICKUP:
+                playSound = pickupController.Pickup((PickupBox)args[0]);
                 break;
             case Message.HEALTH_UPDATED:
                 SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth, health.armor, health.maxArmor });
@@ -62,6 +53,9 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
             case Message.NO_HEALTH_REMAINING:
                 //TODO: add logic for death
                 Destroy(gameObject);
+                break;
+            case Message.NO_ARMOR_REMAINING:
+                pickupController.DeactivatePowerups();
                 break;
             case Message.STATE_CHANGE:
                 spriteChanger.SetSprite((PlayerState)args[0]);
