@@ -5,7 +5,8 @@ public class IDEMessenger : MonoBehaviour, IMessenger
 {
     public Sprite[] sprites;
     private SpriteRenderer spriteRenderer;
-    private IDEMovement movement;
+	private IDEMovement movement;
+	public int pointsReceived = 10;
 
     void Start()
     {
@@ -30,7 +31,8 @@ public class IDEMessenger : MonoBehaviour, IMessenger
                 break;
             case Message.HIT_BY_OTHER:
                 Debug.Log("IDE logo received hit");
-                Destroy(gameObject);
+				Destroy(gameObject);
+				SceneMessenger.Instance.Invoke (Message.POINTS_RECEIVED, new object[] { this.pointsReceived });
                 break;
             case Message.TURN:
                 movement.Turn();

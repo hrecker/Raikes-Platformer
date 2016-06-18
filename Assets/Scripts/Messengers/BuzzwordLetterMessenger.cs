@@ -2,7 +2,8 @@
 
 public class BuzzwordLetterMessenger : MonoBehaviour, IMessenger
 {
-    private IMessenger parentMessenger;
+	private IMessenger parentMessenger;
+	public int pointsReceived = 10;
 
     public void SetParentMessenger(IMessenger messenger)
     {
@@ -18,7 +19,8 @@ public class BuzzwordLetterMessenger : MonoBehaviour, IMessenger
                 {
                     parentMessenger.Invoke(Message.LETTER_DESTROYED, null);
                 }
-                Destroy(gameObject);
+				Destroy(gameObject);
+				SceneMessenger.Instance.Invoke (Message.POINTS_RECEIVED, new object[] { this.pointsReceived });
                 break;
             default:
                 break;

@@ -9,7 +9,8 @@ public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
 
     private MiniLeenKiatMovement movement;
     private BoxCollider2D bodyCollider;
-    private SpriteAlternator spriteAlternator;
+	private SpriteAlternator spriteAlternator;
+	public int pointsReceived = 10;
 
     void Start()
     {
@@ -34,6 +35,7 @@ public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
                 }
                 else
                 {
+					SceneMessenger.Instance.Invoke (Message.POINTS_RECEIVED, new object[] { this.pointsReceived });
                     Destroy(gameObject);
                 }
                 break;
