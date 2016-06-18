@@ -5,7 +5,6 @@ public class UIController : MonoBehaviour
 {
     public Image healthBar;
     private Image[] healthUIImages;
-	public Image scoreImage;
 	public Text scoreText;
 	private int points = 0;
 
