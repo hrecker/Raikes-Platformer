@@ -74,6 +74,7 @@ public class PlayerMovement : MonoBehaviour, IDirected
 		{
 			rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
             setPlayerState(PlayerState.JUMP);
+            messenger.Invoke(Message.BOUNCE, null);
 		}
 	}
 
@@ -84,10 +85,12 @@ public class PlayerMovement : MonoBehaviour, IDirected
         {
             rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, shortHopJumpSpeed);
             setPlayerState(PlayerState.JUMP);
+            messenger.Invoke(Message.BOUNCE, null);
         }
     }
 
-	public void TrampolinePlatformHop(float jumpSpeed, bool shortHop) {
+	public void TrampolinePlatformHop(float jumpSpeed, bool shortHop)
+    {
 		if (rigidbodyObject != null)
 		{
 			if (shortHop)
@@ -98,7 +101,8 @@ public class PlayerMovement : MonoBehaviour, IDirected
 			}
 			rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x, jumpSpeed);
 			setPlayerState(PlayerState.JUMP);
-		}
+            messenger.Invoke(Message.BOUNCE, null);
+        }
 	}
 
 	public void Update()
