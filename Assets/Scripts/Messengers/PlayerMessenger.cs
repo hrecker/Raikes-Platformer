@@ -28,6 +28,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
 
     public void Invoke(Message msg, object[] args)
     {
+        bool playSound = true;
         switch (msg)
         {
             case Message.HIT_OTHER:
@@ -39,7 +40,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                 makeInvulnerable();
                 //TODO: allow for variable damage taken?
                 health.TakeDamage(1);
-                SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth });
+                //SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth, health.armor, health.maxArmor });
                 break;
             case Message.HEALTH_PICKUP:
                 //TODO: allow for variable increase in health?
@@ -47,9 +48,16 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                 if(health.IncreaseHealth(1))
                 {
                     Debug.Log("Destroying pickup");
-                    SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth });
+                    //SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth, health.armor, health.maxArmor });
                     pickupBox.DestroyPickup();
                 }
+                else
+                {
+                    playSound = false;
+                }
+                break;
+            case Message.HEALTH_UPDATED:
+                SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth, health.armor, health.maxArmor });
                 break;
             case Message.NO_HEALTH_REMAINING:
                 //TODO: add logic for death
@@ -68,7 +76,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                 break;
         }
 
-        if (audioPlayer != null)
+        if (audioPlayer != null && playSound)
         {
             audioPlayer.PlayClip(msg);
         }
