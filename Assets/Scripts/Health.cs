@@ -75,7 +75,7 @@ public class Health : MonoBehaviour
             return false;
         }
 
-        armor += maxArmor;
+        armor += increaseVal;
         if (armor > maxArmor)
         {
             armor = maxArmor;
