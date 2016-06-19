@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour, IDirected
     public float shortHopJumpSpeed;
 	public float moveSpeed;
     public float fastFallMultiplier;
+    public float superFastFallMultiplier;
+    public float superFastFallVerticalVelocity;
 
     private IMessenger messenger;
 	private Rigidbody2D rigidbodyObject;
@@ -128,6 +130,16 @@ public class PlayerMovement : MonoBehaviour, IDirected
     {
 		rigidbodyObject.gravityScale = standardGravityScale * fastFallMultiplier;
 		IgnoreSoftPlatforms (true);
+    }
+
+    public void StartSuperFastFall()
+    {
+        // stop all horizontal movement
+        rigidbodyObject.velocity = new Vector2(0, superFastFallVerticalVelocity);//rigidbodyObject.velocity.y > 0 ? 0 : rigidbodyObject.velocity.y);
+        // stop all horizontal acceleration?
+        acceleration = new Vector2(0, 0);
+        rigidbodyObject.gravityScale = standardGravityScale * fastFallMultiplier;
+        IgnoreSoftPlatforms(true);
     }
 
     public void StopFastFall()
