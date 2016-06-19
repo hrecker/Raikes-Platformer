@@ -3,8 +3,10 @@ using UnityEngine;
 public class PlayerMessenger : MonoBehaviour, IMessenger
 {
     public float invincibilityTime; // Time that player is invincible after getting hit
+    public float powerupInvincibilityTime; // Time that player is invincible after picking up invincibility powerup
 
     private bool invulnerable;
+    private bool invulnerablePowerup;
     private float currentTimePassed;
     private Hurtbox[] hurtboxes;
     private SpriteAlternator invincibilityAlternator;
@@ -68,6 +70,9 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                 //It uses it for short hops, but we can use it for bouncing
                 input.TrampolinePlatformHop((float)args[0], (int)args[1]);
                 break;
+            case Message.INVINCIBILITY_PICKUP:
+                activateInvulnerablePowerup();
+                break;
         }
 
         if (audioPlayer != null && playSound)
@@ -78,14 +83,22 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
 
     void Update()
     {
-        if (invulnerable)
+        if (invulnerable || invulnerablePowerup)
         {
             currentTimePassed += Time.deltaTime;
-            if(currentTimePassed >= invincibilityTime)
+            if((!invulnerablePowerup && invulnerable && currentTimePassed >= invincibilityTime) ||
+                (invulnerablePowerup && currentTimePassed >= powerupInvincibilityTime))
             {
                 makeVulnerable();
             }
         }
+    }
+
+    private void activateInvulnerablePowerup()
+    {
+        currentTimePassed = 0;
+        invulnerablePowerup = true;
+        makeInvulnerable();
     }
 
     private void makeInvulnerable()
@@ -103,6 +116,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
     {
         currentTimePassed = 0;
         invulnerable = false;
+        invulnerablePowerup = false;
         foreach (Hurtbox hurtbox in hurtboxes)
         {
             hurtbox.Activate();

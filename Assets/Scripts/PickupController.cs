@@ -76,6 +76,14 @@ public class PickupController : MonoBehaviour
                     effectActivated = true;
                 }
                 break;
+            case PickupType.INVINCIBILITY:
+                if(messenger != null)
+                {
+                    messenger.Invoke(Message.INVINCIBILITY_PICKUP, null);
+                    pickupBox.DestroyPickup();
+                    effectActivated = true;
+                }
+                break;
         }
         return effectActivated;
     }

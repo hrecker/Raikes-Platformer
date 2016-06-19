@@ -135,8 +135,7 @@ public class PlayerMovement : MonoBehaviour, IDirected
     public void StartSuperFastFall()
     {
         // stop all horizontal movement
-        rigidbodyObject.velocity = new Vector2(0, superFastFallVerticalVelocity);//rigidbodyObject.velocity.y > 0 ? 0 : rigidbodyObject.velocity.y);
-        // stop all horizontal acceleration?
+        rigidbodyObject.velocity = new Vector2(0, superFastFallVerticalVelocity);
         acceleration = new Vector2(0, 0);
         rigidbodyObject.gravityScale = standardGravityScale * fastFallMultiplier;
         IgnoreSoftPlatforms(true);
