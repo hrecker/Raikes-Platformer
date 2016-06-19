@@ -20,7 +20,7 @@ public class ObjectSpawner: MonoBehaviour, IDirected
 		set { verticalSpawnDirection = value; }
     }
 
-    public GameObject SpawnObject(Vector2 position, Vector2 offset, HorizontalDirection spawnDirection)
+    public virtual GameObject SpawnObject(Vector2 position, Vector2 offset, HorizontalDirection spawnDirection)
     {
         GameObject obj = Instantiate(objectToSpawn, new Vector3(position.x + offset.x * (float)horizontalSpawnDirection,
 			position.y + offset.y * (float)verticalSpawnDirection), Quaternion.identity) as GameObject;
