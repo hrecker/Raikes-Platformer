@@ -6,10 +6,10 @@ public class PickupBox : CollisionBox
 
     void OnTriggerStay2D(Collider2D other)
     {
-        Hurtbox otherHurtbox = other.GetComponent<Hurtbox>();
-        if (other.isTrigger && otherHurtbox != null && otherHurtbox.harmType == HitboxHarmType.PLAYER)
+        Debug.Log("Collision, tag is " + other.gameObject.tag);
+        if (other.gameObject.tag == "Player")
         {
-            IMessenger otherMessenger = otherHurtbox.getMessenger();
+            IMessenger otherMessenger = other.GetComponent<IMessenger>();
             if(otherMessenger != null)
             {
                 otherMessenger.Invoke(Message.PICKUP, new object[] { this });
