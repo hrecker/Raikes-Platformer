@@ -4,6 +4,7 @@ public class PlayerInput : MonoBehaviour
 {
     private PlayerMovement movement;
     public float shortHopMaxFrames;
+    public bool superFastfallActive;
 
     private int totalJumpFramesHeld;
     private int groundedJumpFramesHeld;
@@ -74,7 +75,14 @@ public class PlayerInput : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.DownArrow))
         {
-            movement.StartFastFall();
+            if(superFastfallActive)
+            {
+                movement.StartSuperFastFall();
+            }
+            else
+            {
+                movement.StartFastFall();
+            }
         }
         else if(Input.GetKeyUp(KeyCode.DownArrow))
         {

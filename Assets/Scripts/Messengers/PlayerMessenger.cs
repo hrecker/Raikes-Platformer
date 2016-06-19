@@ -3,8 +3,10 @@ using UnityEngine;
 public class PlayerMessenger : MonoBehaviour, IMessenger
 {
     public float invincibilityTime; // Time that player is invincible after getting hit
+    public float powerupInvincibilityTime; // Time that player is invincible after picking up invincibility powerup
 
     private bool invulnerable;
+    private bool invulnerablePowerup;
     private float currentTimePassed;
     private Hurtbox[] hurtboxes;
     private SpriteAlternator invincibilityAlternator;
@@ -13,6 +15,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
     private Health health;
 	private PlayerMovement movement;
     private AudioClipPlayer audioPlayer;
+    private PickupController pickupController;
 
     void Start()
     {
@@ -23,11 +26,13 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         health = GetComponent<Health>();
 		movement = GetComponent<PlayerMovement> ();
         audioPlayer = GetComponent<AudioClipPlayer>();
+        pickupController = GetComponent<PickupController>();
         makeVulnerable();
     }
 
     public void Invoke(Message msg, object[] args)
     {
+        bool playSound = true;
         switch (msg)
         {
             case Message.HIT_OTHER:
@@ -39,21 +44,20 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                 makeInvulnerable();
                 //TODO: allow for variable damage taken?
                 health.TakeDamage(1);
-                SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth });
+                //SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth, health.armor, health.maxArmor });
                 break;
-            case Message.HEALTH_PICKUP:
-                //TODO: allow for variable increase in health?
-                HealthPickupBox pickupBox = (HealthPickupBox)args[0];
-                if(health.IncreaseHealth(1))
-                {
-                    Debug.Log("Destroying pickup");
-                    SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth });
-                    pickupBox.DestroyPickup();
-                }
+            case Message.PICKUP:
+                playSound = pickupController.Pickup((PickupBox)args[0]);
+                break;
+            case Message.HEALTH_UPDATED:
+                SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth, health.armor, health.maxArmor });
                 break;
             case Message.NO_HEALTH_REMAINING:
                 //TODO: add logic for death
                 Destroy(gameObject);
+                break;
+            case Message.NO_ARMOR_REMAINING:
+                pickupController.DeactivatePowerups();
                 break;
             case Message.STATE_CHANGE:
                 spriteChanger.SetSprite((PlayerState)args[0]);
@@ -66,9 +70,12 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                 //It uses it for short hops, but we can use it for bouncing
                 input.TrampolinePlatformHop((float)args[0], (int)args[1]);
                 break;
+            case Message.INVINCIBILITY_PICKUP:
+                activateInvulnerablePowerup();
+                break;
         }
 
-        if (audioPlayer != null)
+        if (audioPlayer != null && playSound)
         {
             audioPlayer.PlayClip(msg);
         }
@@ -76,14 +83,22 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
 
     void Update()
     {
-        if (invulnerable)
+        if (invulnerable || invulnerablePowerup)
         {
             currentTimePassed += Time.deltaTime;
-            if(currentTimePassed >= invincibilityTime)
+            if((!invulnerablePowerup && invulnerable && currentTimePassed >= invincibilityTime) ||
+                (invulnerablePowerup && currentTimePassed >= powerupInvincibilityTime))
             {
                 makeVulnerable();
             }
         }
+    }
+
+    private void activateInvulnerablePowerup()
+    {
+        currentTimePassed = 0;
+        invulnerablePowerup = true;
+        makeInvulnerable();
     }
 
     private void makeInvulnerable()
@@ -101,6 +116,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
     {
         currentTimePassed = 0;
         invulnerable = false;
+        invulnerablePowerup = false;
         foreach (Hurtbox hurtbox in hurtboxes)
         {
             hurtbox.Activate();

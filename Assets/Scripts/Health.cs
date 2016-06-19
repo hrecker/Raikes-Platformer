@@ -4,6 +4,8 @@ public class Health : MonoBehaviour
 {
     public int health;
     public int maxHealth;
+    public int armor;
+    public int maxArmor;
 
     private IMessenger messenger;
 
@@ -11,23 +13,38 @@ public class Health : MonoBehaviour
     {
         health = maxHealth;
         messenger = GetComponent<IMessenger>();
-        messenger.Invoke(Message.HEALTH_UPDATED, new object[] { health, maxHealth });
+        //messenger.Invoke(Message.HEALTH_UPDATED, new object[] { health, maxHealth, armor, maxArmor });
     }
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        if (health <= 0)
+        if (armor > 0)
         {
-            health = 0;
-            if (messenger != null)
+            armor -= damage;
+            if (armor <= 0)
             {
-                messenger.Invoke(Message.NO_HEALTH_REMAINING, null);
+                armor = 0;
+                if (messenger != null)
+                {
+                    messenger.Invoke(Message.NO_ARMOR_REMAINING, null);
+                }
+            }
+        }
+        else
+        {
+            health -= damage;
+            if (health <= 0)
+            {
+                health = 0;
+                if (messenger != null)
+                {
+                    messenger.Invoke(Message.NO_HEALTH_REMAINING, null);
+                }
             }
         }
         if (messenger != null)
         {
-            messenger.Invoke(Message.HEALTH_UPDATED, new object[] { health, maxHealth });
+            messenger.Invoke(Message.HEALTH_UPDATED, new object[] { health, maxHealth, armor, maxArmor });
             messenger.Invoke(Message.HEALTH_LOST, null);
         }
     }
@@ -43,6 +60,29 @@ public class Health : MonoBehaviour
         if(health > maxHealth)
         {
             health = maxHealth;
+        }
+        if (messenger != null)
+        {
+            messenger.Invoke(Message.HEALTH_UPDATED, new object[] { health, maxHealth, armor, maxArmor });
+        }
+        return true;
+    }
+
+    public bool IncreaseArmor(int increaseVal)
+    {
+        if (armor == maxArmor)
+        {
+            return false;
+        }
+
+        armor += increaseVal;
+        if (armor > maxArmor)
+        {
+            armor = maxArmor;
+        }
+        if (messenger != null)
+        {
+            messenger.Invoke(Message.HEALTH_UPDATED, new object[] { health, maxHealth, armor, maxArmor });
         }
         return true;
     }
