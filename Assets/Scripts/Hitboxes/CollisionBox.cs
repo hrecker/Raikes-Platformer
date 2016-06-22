@@ -32,19 +32,11 @@ public abstract class CollisionBox : MonoBehaviour
 
     public void Deactivate()
     {
-        /*foreach (Collider2D boxCollider in boxColliders)
-        {
-            boxCollider.enabled = false;
-        }*/
         active = false;
     }
 
     public void Activate()
     {
-        /*foreach (Collider2D boxCollider in boxColliders)
-        {
-            boxCollider.enabled = true;
-        }*/
         active = true;
     }
 
