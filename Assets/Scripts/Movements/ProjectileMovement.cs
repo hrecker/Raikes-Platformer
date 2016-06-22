@@ -36,7 +36,10 @@ public class ProjectileMovement: MonoBehaviour, IDirected
 		timePassed += Time.deltaTime;
 		if (timePassed >= duration)
         {
-			messenger.Invoke (Message.PROJECTILE_EXPIRED, null);
+            if(messenger != null)
+            {
+                messenger.Invoke(Message.PROJECTILE_EXPIRED, null);
+            }
 			Expire ();
 		}
 	}

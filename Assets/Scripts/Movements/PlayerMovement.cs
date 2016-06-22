@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour, IDirected
     public float fastFallMultiplier;
     public float superFastFallMultiplier;
     public float superFastFallVerticalVelocity;
+    public HorizontalDirection facingDirection;
 
     private IMessenger messenger;
 	private Rigidbody2D rigidbodyObject;
@@ -26,6 +27,10 @@ public class PlayerMovement : MonoBehaviour, IDirected
         {
             messenger.Invoke(Message.DIRECTION_CHANGE, new object[] { value });
             movementDirection = value;
+            if(value != HorizontalDirection.NONE)
+            {
+                facingDirection = value;
+            }
             acceleration = new Vector2((float)value * moveSpeed, acceleration.y);
         }
     }
@@ -38,6 +43,11 @@ public class PlayerMovement : MonoBehaviour, IDirected
 
     void Awake()
     {
+        if(facingDirection == HorizontalDirection.NONE)
+        {
+            facingDirection = HorizontalDirection.RIGHT;
+        }
+
         messenger = GetComponent<IMessenger>();
         boxCollider = GetComponent<BoxCollider2D>();
 

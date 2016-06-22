@@ -6,10 +6,10 @@ public class Hitbox : CollisionBox
     public HitboxHarmType harmType;
     public bool affectsPlatforms = false;
 
-    void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         Hurtbox otherHurtbox = other.GetComponent<Hurtbox>();
-        if (other.isTrigger && otherHurtbox != null && objectMessenger != null &&
+        if (active && other.isTrigger && otherHurtbox != null && otherHurtbox.IsActive() && objectMessenger != null &&
             (boxType == ColliderBoxType.ANY || otherHurtbox.boxType == ColliderBoxType.ANY || boxType == otherHurtbox.boxType) &&
 			CanHarm(otherHurtbox))
         {
