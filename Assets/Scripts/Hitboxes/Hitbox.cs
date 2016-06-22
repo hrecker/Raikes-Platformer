@@ -6,7 +6,7 @@ public class Hitbox : CollisionBox
     public HitboxHarmType harmType;
     public bool affectsPlatforms = false;
 
-    void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         Hurtbox otherHurtbox = other.GetComponent<Hurtbox>();
         if (active && other.isTrigger && otherHurtbox != null && otherHurtbox.IsActive() && objectMessenger != null &&

@@ -3,9 +3,13 @@
 public class PlayerInput : MonoBehaviour
 {
     private PlayerMovement movement;
+    private ObjectSpawner gunProjectileSpawner;
     public float shortHopMaxFrames;
     public bool superFastfallActive;
+    public bool gunActive;
+    public float gunFireDelay;
 
+    private float currentGunTimePassed;
     private int totalJumpFramesHeld;
     private int groundedJumpFramesHeld;
     private bool jumped;
@@ -14,10 +18,13 @@ public class PlayerInput : MonoBehaviour
     void Start()
     {
         movement = GetComponent<PlayerMovement>();
+        gunProjectileSpawner = GetComponent<ObjectSpawner>();
+        currentGunTimePassed = gunFireDelay;
     }
     
     void Update()
     {
+        // jumping
         if(jumped && movement.IsGrounded())
         {
             groundedJumpFramesHeld = 0;
@@ -60,6 +67,7 @@ public class PlayerInput : MonoBehaviour
             }
         }
 			
+        // horizontal movement
 		if (Input.GetKey (KeyCode.RightArrow))
         {
 			movement.horizontalDirection = HorizontalDirection.RIGHT;
@@ -73,6 +81,7 @@ public class PlayerInput : MonoBehaviour
 			movement.horizontalDirection = HorizontalDirection.NONE;
 		}
 
+        // fast fall
         if(Input.GetKeyDown(KeyCode.DownArrow))
         {
             if(superFastfallActive)
@@ -89,6 +98,20 @@ public class PlayerInput : MonoBehaviour
             movement.StopFastFall();
         }
 
+        // lasergun
+        if(gunActive)
+        {
+            currentGunTimePassed += Time.deltaTime;
+            if (Input.GetKey(KeyCode.Z) && currentGunTimePassed > gunFireDelay)
+            {
+                GameObject projectile = gunProjectileSpawner.SpawnObject(transform.position, gunProjectileSpawner.spawnOffset, movement.facingDirection);
+                projectile.GetComponent<ProjectileMovement>().MoveInDirection(movement.facingDirection);
+                currentGunTimePassed = 0;
+            }
+
+        }
+
+        // count jump frames
         if (Input.GetKey(KeyCode.Space))
         {
             totalJumpFramesHeld++;
@@ -123,4 +146,10 @@ public class PlayerInput : MonoBehaviour
             movement.ShortHop(false);
         }
 	}
+
+    public void DeactivateGun()
+    {
+        gunActive = false;
+        currentGunTimePassed = 0;
+    }
 }

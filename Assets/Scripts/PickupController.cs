@@ -84,6 +84,16 @@ public class PickupController : MonoBehaviour
                     effectActivated = true;
                 }
                 break;
+            case PickupType.GUN:
+                if(playerInput != null && (activePowerups == null || !activePowerups.Contains(PickupType.GUN)))
+                {
+                    playerInput.gunActive = true;
+                    health.IncreaseArmor(1);
+                    pickupBox.DestroyPickup();
+                    activePowerups.Add(PickupType.GUN);
+                    effectActivated = true;
+                }
+                break;
         }
         return effectActivated;
     }
@@ -100,6 +110,9 @@ public class PickupController : MonoBehaviour
                     break;
                 case PickupType.SUPER_FASTFALL:
                     playerInput.superFastfallActive = false;
+                    break;
+                case PickupType.GUN:
+                    playerInput.DeactivateGun();
                     break;
             }
         }
