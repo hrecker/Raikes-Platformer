@@ -8,7 +8,7 @@ public class Hurtbox : CollisionBox
     void OnTriggerEnter2D(Collider2D other)
     {
         Hitbox otherHitbox = other.GetComponent<Hitbox>();
-        if (other.isTrigger && otherHitbox != null && objectMessenger != null &&
+        if (active && other.isTrigger && otherHitbox != null && otherHitbox.IsActive() && objectMessenger != null &&
             (boxType == ColliderBoxType.ANY || otherHitbox.boxType == ColliderBoxType.ANY || boxType == otherHitbox.boxType) &&
 			canReceiveHarm(otherHitbox))
         {
