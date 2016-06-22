@@ -4,6 +4,7 @@ public abstract class CollisionBox : MonoBehaviour
 {
     protected IMessenger objectMessenger;
     protected Collider2D[] boxColliders;
+    protected bool active;
 
     public Collider2D[] BoxColliders
     {
@@ -12,6 +13,7 @@ public abstract class CollisionBox : MonoBehaviour
 
     void Awake()
     {
+        active = true;
         boxColliders = GetComponents<Collider2D>();
     }
 
@@ -30,17 +32,24 @@ public abstract class CollisionBox : MonoBehaviour
 
     public void Deactivate()
     {
-        foreach (Collider2D boxCollider in boxColliders)
+        /*foreach (Collider2D boxCollider in boxColliders)
         {
             boxCollider.enabled = false;
-        }
+        }*/
+        active = false;
     }
 
     public void Activate()
     {
-        foreach (Collider2D boxCollider in boxColliders)
+        /*foreach (Collider2D boxCollider in boxColliders)
         {
             boxCollider.enabled = true;
-        }
+        }*/
+        active = true;
+    }
+
+    public bool IsActive()
+    {
+        return active;
     }
 }

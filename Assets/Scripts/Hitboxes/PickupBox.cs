@@ -7,7 +7,7 @@ public class PickupBox : CollisionBox
     void OnTriggerStay2D(Collider2D other)
     {
         Debug.Log("Collision, tag is " + other.gameObject.tag);
-        if (other.gameObject.tag == "Player")
+        if (active && other.gameObject.tag == "Player")
         {
             IMessenger otherMessenger = other.GetComponent<IMessenger>();
             if(otherMessenger != null)
