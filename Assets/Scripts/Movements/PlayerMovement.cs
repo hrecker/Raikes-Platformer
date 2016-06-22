@@ -153,4 +153,5 @@ public class PlayerMovement : MonoBehaviour, IDirected
 		int softPlatformLayer = LayerMask.NameToLayer ("Soft Platform");
 		Physics2D.IgnoreLayerCollision (playerLayer, softPlatformLayer, ignore);
 	}
+
 }
