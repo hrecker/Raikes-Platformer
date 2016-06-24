@@ -13,7 +13,7 @@ public class Hitbox : CollisionBox
             (boxType == ColliderBoxType.ANY || otherHurtbox.boxType == ColliderBoxType.ANY || boxType == otherHurtbox.boxType) &&
 			CanHarm(otherHurtbox))
         {
-            objectMessenger.Invoke(Message.HIT_OTHER, null);
+            objectMessenger.Invoke(Message.HIT_OTHER, new object[] { boxType });
         }
     }
 		
