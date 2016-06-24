@@ -37,7 +37,10 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         {
             case Message.HIT_OTHER:
                 Debug.Log("Player hit another object");
-                input.BounceOnEnemy();
+                if(((ColliderBoxType) args[0]) == ColliderBoxType.BOUNCE)
+                {
+                    input.BounceOnEnemy();
+                }
                 break;
             case Message.HIT_BY_OTHER:
                 Debug.Log("Player received hit");
