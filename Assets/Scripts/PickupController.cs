@@ -116,6 +116,7 @@ public class PickupController : MonoBehaviour
                     break;
             }
         }
+        activePowerups.Clear();
     }
 
     private void ActivatePowerup(PickupType type)
