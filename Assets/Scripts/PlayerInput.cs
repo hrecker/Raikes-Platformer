@@ -4,6 +4,7 @@ public class PlayerInput : MonoBehaviour
 {
     private PlayerMovement movement;
     private ObjectSpawner gunProjectileSpawner;
+    private IMessenger messenger;
     public float shortHopMaxFrames;
     public bool superFastfallActive;
     public bool gunActive;
@@ -19,6 +20,7 @@ public class PlayerInput : MonoBehaviour
     {
         movement = GetComponent<PlayerMovement>();
         gunProjectileSpawner = GetComponent<ObjectSpawner>();
+        messenger = GetComponent<IMessenger>();
         currentGunTimePassed = gunFireDelay;
     }
     
@@ -107,6 +109,7 @@ public class PlayerInput : MonoBehaviour
                 GameObject projectile = gunProjectileSpawner.SpawnObject(transform.position, gunProjectileSpawner.spawnOffset, movement.facingDirection);
                 projectile.GetComponent<ProjectileMovement>().MoveInDirection(movement.facingDirection);
                 currentGunTimePassed = 0;
+                messenger.Invoke(Message.PROJECTILE_FIRED, null);
             }
 
         }

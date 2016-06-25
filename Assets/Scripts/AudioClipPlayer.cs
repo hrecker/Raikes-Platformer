@@ -11,23 +11,22 @@ public struct MessageAudio
 public class AudioClipPlayer : MonoBehaviour
 {    
     public MessageAudio[] audioClips;
-    private AudioSource source;
+    private AudioPoolController audioPool;
 
     void Awake()
     {
-        source = GetComponent<AudioSource>();
+        audioPool = GetComponent<AudioPoolController>();
     }
 
     public void PlayClip(Message message)
     {
-        if(audioClips != null && source != null)
+        if(audioClips != null && audioPool != null)
         {
             foreach(MessageAudio messageAudio in audioClips)
             {
                 if(messageAudio.message == message)
                 {
-                    source.clip = messageAudio.clip;
-                    source.Play();
+                    audioPool.PlayClip(messageAudio.clip);
                 }
             }
         }
