@@ -3,6 +3,7 @@
 public class ShariCatMovement : MonoBehaviour, IDirected
 {
     public HorizontalDirection direction;
+    public Turnbox turnbox;
     public float speed;
     public float jumpSpeed;
     public float jumpTime;
@@ -74,6 +75,19 @@ public class ShariCatMovement : MonoBehaviour, IDirected
         else
         {
             spriteRenderer.flipX = false;
+        }
+        SetActiveTurnbox(direction);
+    }
+
+    public void SetActiveTurnbox(HorizontalDirection direction)
+    {
+        if (direction == HorizontalDirection.LEFT)
+        {
+            turnbox.DeactivateRightmostBox();
+        }
+        else if (direction == HorizontalDirection.RIGHT)
+        {
+            turnbox.DeactiveLeftmostBox();
         }
     }
 }

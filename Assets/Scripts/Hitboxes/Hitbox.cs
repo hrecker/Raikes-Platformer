@@ -16,8 +16,8 @@ public class Hitbox : CollisionBox
             objectMessenger.Invoke(Message.HIT_OTHER, new object[] { boxType });
         }
     }
-		
-	public bool CanHarm(Hurtbox hurtbox)
+
+    public bool CanHarm(Hurtbox hurtbox)
     {
 		return (harmType & hurtbox.harmType) != 0;
 	}

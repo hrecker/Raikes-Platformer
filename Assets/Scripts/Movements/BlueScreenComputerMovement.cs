@@ -3,6 +3,7 @@
 public class BlueScreenComputerMovement : MonoBehaviour, IDirected
 {
     public HorizontalDirection _horizontalDirection;
+    public Turnbox turnbox;
     public float horizontalSpeed;
     public float movementTime; //How long the enemy moves before stopping
     public float stopTime; //How long the enemy stays stopped
@@ -78,6 +79,19 @@ public class BlueScreenComputerMovement : MonoBehaviour, IDirected
         if(moving)
         {
             _horizontalDirection = (HorizontalDirection)((float)_horizontalDirection * -1);
+            SetActiveTurnbox(_horizontalDirection);
+        }
+    }
+
+    public void SetActiveTurnbox(HorizontalDirection direction)
+    {
+        if (direction == HorizontalDirection.LEFT)
+        {
+            turnbox.DeactivateRightmostBox();
+        }
+        else if (direction == HorizontalDirection.RIGHT)
+        {
+            turnbox.DeactiveLeftmostBox();
         }
     }
 }

@@ -5,6 +5,7 @@ public abstract class CollisionBox : MonoBehaviour
     protected IMessenger objectMessenger;
     protected Collider2D[] boxColliders;
     protected bool active;
+    protected bool activationFrame; //Is this the frame where this box was activated
 
     public Collider2D[] BoxColliders
     {
@@ -38,6 +39,12 @@ public abstract class CollisionBox : MonoBehaviour
     public void Activate()
     {
         active = true;
+        // disable and reenable each collider to cause OnTriggerEnter events to fire
+        foreach(Collider2D boxCollider in boxColliders)
+        {
+            boxCollider.enabled = false;
+            boxCollider.enabled = true;
+        }
     }
 
     public bool IsActive()
