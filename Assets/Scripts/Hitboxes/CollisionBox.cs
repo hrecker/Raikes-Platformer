@@ -5,7 +5,6 @@ public abstract class CollisionBox : MonoBehaviour
     protected IMessenger objectMessenger;
     protected Collider2D[] boxColliders;
     protected bool active;
-    protected bool activationFrame; //Is this the frame where this box was activated
 
     public Collider2D[] BoxColliders
     {
