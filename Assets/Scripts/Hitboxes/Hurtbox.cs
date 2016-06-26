@@ -16,7 +16,7 @@ public class Hurtbox : CollisionBox
         }
     }
 
-	public bool canReceiveHarm(Hitbox hitbox)
+    public bool canReceiveHarm(Hitbox hitbox)
     {
 		return (harmType & hitbox.harmType) != 0;
 	}

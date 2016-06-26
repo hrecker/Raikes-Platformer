@@ -38,6 +38,12 @@ public abstract class CollisionBox : MonoBehaviour
     public void Activate()
     {
         active = true;
+        // disable and reenable each collider to cause OnTriggerEnter events to fire
+        foreach(Collider2D boxCollider in boxColliders)
+        {
+            boxCollider.enabled = false;
+            boxCollider.enabled = true;
+        }
     }
 
     public bool IsActive()

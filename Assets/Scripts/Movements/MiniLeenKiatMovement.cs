@@ -6,6 +6,8 @@ public class MiniLeenKiatMovement : MonoBehaviour, IDirected
     public float normalHorizontalSpeed;
     public float squishedHorizontalSpeed;
     public float jumpSpeed;
+    public Turnbox turnbox;
+
     private Rigidbody2D rigidbodyObject;
     private bool squished;
 
@@ -31,6 +33,7 @@ public class MiniLeenKiatMovement : MonoBehaviour, IDirected
         squished = false;
         rigidbodyObject = GetComponent<Rigidbody2D>();
         rigidbodyObject.velocity = new Vector2((float) _horizontalDirection * normalHorizontalSpeed, rigidbodyObject.velocity.y);
+        SetActiveTurnbox(_horizontalDirection);
 	}
 	
 	void Update ()
@@ -58,5 +61,18 @@ public class MiniLeenKiatMovement : MonoBehaviour, IDirected
     public void Turn()
     {
         _horizontalDirection = (HorizontalDirection)((float)_horizontalDirection * -1);
+        SetActiveTurnbox(_horizontalDirection);
+    }
+
+    public void SetActiveTurnbox(HorizontalDirection direction)
+    {
+        if(direction == HorizontalDirection.LEFT)
+        {
+            turnbox.DeactivateRightmostBox();
+        }
+        else if(direction == HorizontalDirection.RIGHT)
+        {
+            turnbox.DeactiveLeftmostBox();
+        }
     }
 }

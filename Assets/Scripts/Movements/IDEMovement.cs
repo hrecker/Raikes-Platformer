@@ -3,6 +3,7 @@
 public class IDEMovement : MonoBehaviour, IDirected
 {
     public HorizontalDirection _horizontalDirection;
+    public Turnbox turnbox;
     public float speed;
     public float jumpSpeed;
     private Rigidbody2D rigidbodyObject;
@@ -38,5 +39,18 @@ public class IDEMovement : MonoBehaviour, IDirected
     public void Turn()
     {
         _horizontalDirection = (HorizontalDirection)((float)_horizontalDirection * -1);
+        SetActiveTurnbox(_horizontalDirection);
+    }
+
+    public void SetActiveTurnbox(HorizontalDirection direction)
+    {
+        if (direction == HorizontalDirection.LEFT)
+        {
+            turnbox.DeactivateRightmostBox();
+        }
+        else if (direction == HorizontalDirection.RIGHT)
+        {
+            turnbox.DeactiveLeftmostBox();
+        }
     }
 }
