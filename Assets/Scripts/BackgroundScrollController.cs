@@ -36,8 +36,8 @@ public class BackgroundScrollController : MonoBehaviour
         background.transform.position = new Vector3(background.transform.position.x + backgroundDistance, background.transform.position.y, background.transform.position.z);
 
         checkForWrap(ref playerPosAtLastForegroundWrap, swapDistance, foreground);
-        checkForWrap(ref playerPosAtLastMiddlegroundWrap, (1 / middlegroundMotionRatio) * swapDistance, middleground);
-        checkForWrap(ref playerPosAtLastBackgroundWrap, (1 / backgroundMotionRatio) * swapDistance, background);
+        checkForWrap(ref playerPosAtLastMiddlegroundWrap, (1 / (1 - middlegroundMotionRatio)) * swapDistance, middleground);
+        checkForWrap(ref playerPosAtLastBackgroundWrap, (1 / (1 - backgroundMotionRatio)) * swapDistance, background);
 
         previousPlayerPosition = player.transform.position;
     }
