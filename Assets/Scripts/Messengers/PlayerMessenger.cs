@@ -42,11 +42,11 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                     input.BounceOnEnemy();
                 }
                 break;
-            case Message.HIT_BY_OTHER:
-                Debug.Log("Player received hit");
-                makeInvulnerable();
-                //TODO: allow for variable damage taken?
-                health.TakeDamage(1);
+		case Message.HIT_BY_OTHER:
+			Debug.Log ("Player received hit");
+			makeInvulnerable ();
+				int damage = (int)args [1];
+                health.TakeDamage(damage);
                 //SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth, health.armor, health.maxArmor });
                 break;
             case Message.PICKUP:
