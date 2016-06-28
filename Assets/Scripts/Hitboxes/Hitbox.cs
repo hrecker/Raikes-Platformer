@@ -5,6 +5,7 @@ public class Hitbox : CollisionBox
     public ColliderBoxType boxType; // what type of collisions does this hitbox detect
     public HitboxHarmType harmType;
     public bool affectsPlatforms = false;
+	public int damage = 1;
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -13,7 +14,7 @@ public class Hitbox : CollisionBox
             (boxType == ColliderBoxType.ANY || otherHurtbox.boxType == ColliderBoxType.ANY || boxType == otherHurtbox.boxType) &&
 			CanHarm(otherHurtbox))
         {
-            objectMessenger.Invoke(Message.HIT_OTHER, new object[] { boxType });
+            objectMessenger.Invoke(Message.HIT_OTHER, new object[] { boxType, damage });
         }
     }
 
