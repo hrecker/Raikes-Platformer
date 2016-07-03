@@ -9,13 +9,11 @@ public class MaterialTiling : MonoBehaviour
 	void Start ()
     {
         Material material = meshRenderer.material;
-        if(xTile == 0 && yTile == 0)
+        if (xTile == 0 && yTile == 0)
         {
-            material.mainTextureScale = transform.localScale;
+            xTile = transform.localScale.x;
+            yTile = transform.localScale.y;
         }
-        else
-        {
-            material.mainTextureScale = new Vector2(xTile, yTile);
-        }
-	}
+        material.mainTextureScale = new Vector2(xTile, yTile);
+    }
 }
