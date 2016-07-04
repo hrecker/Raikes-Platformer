@@ -19,7 +19,6 @@ public class BackgroundScrollController : MonoBehaviour
     {
         previousPlayerPosition = player.transform.position;
         swapDistance = foreground.GetSpriteLength();
-        Debug.Log(swapDistance);
         playerPosAtLastBackgroundWrap = player.transform.position.x;
         playerPosAtLastMiddlegroundWrap = player.transform.position.x;
         playerPosAtLastForegroundWrap = player.transform.position.x;

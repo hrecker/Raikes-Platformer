@@ -52,7 +52,8 @@ public class EdgeTextureController : MonoBehaviour
         edgeInstance.transform.parent = transform;
         edgeInstance.GetComponent<EdgeTexture>().parentTexture = transform;
         edgeInstance.GetComponent<EdgeTexture>().grassYScale = 2;
-        edgeInstance.GetComponent<MaterialTiling>().yTile = 1;
+        edgeInstance.GetComponent<MaterialTiling>().yTile = 0.99f;
+        edgeInstance.GetComponent<MeshRenderer>().material.mainTextureOffset = new Vector2(0, 0.01f);
         return edgeInstance;
     }
 }
