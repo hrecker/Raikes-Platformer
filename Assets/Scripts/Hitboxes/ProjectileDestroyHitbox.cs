@@ -8,8 +8,11 @@ public class ProjectileDestroyHitbox : Hitbox
 
     new void OnTriggerEnter2D(Collider2D other)
     {
-        base.OnTriggerEnter2D(other);
-        destroy = true;
+        if(other.gameObject.tag != "SpawnCollider")
+        {
+            base.OnTriggerEnter2D(other);
+            destroy = true;
+        }
     }
 
     void Update()
