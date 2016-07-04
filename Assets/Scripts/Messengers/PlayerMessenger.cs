@@ -76,6 +76,10 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
             case Message.INVINCIBILITY_PICKUP:
                 activateInvulnerablePowerup();
                 break;
+
+			case Message.HIT_SIDE_OF_PLATFORM:
+				this.movement.touchingSideOfPlatform = true;
+				break;
         }
 
         if (audioPlayer != null && playSound)

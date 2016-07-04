@@ -11,7 +11,9 @@ public class MovingPlatformMovement: MonoBehaviour
 		get { return waypoints [waypointIndex]; }
 	}
 	private Vector2 NextWaypoint {
-		get { return waypoints [IndexOfNextWaypoint ()]; }
+		get {
+			return waypoints [IndexOfNextWaypoint ()];
+		}
 	}
 	private bool goingBackwards = false;
 	private System.Collections.Generic.IList<GameObject> objectsStandingOn;
@@ -71,6 +73,7 @@ public class MovingPlatformMovement: MonoBehaviour
 
 	private int IndexOfNextWaypoint()
 	{
+		return 0;
 		if (reversePath) {
 			if (goingBackwards) {
 				return waypointIndex - 1;
