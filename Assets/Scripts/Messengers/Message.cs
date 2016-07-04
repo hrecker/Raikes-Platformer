@@ -23,5 +23,7 @@ public enum Message
     STARTED_MOVEMENT,
     STATE_CHANGE,
     STOPPED_MOVEMENT,
-    TURN
+    TURN,
+
+	HIT_SIDE_OF_PLATFORM
 }
