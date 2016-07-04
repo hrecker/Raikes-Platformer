@@ -73,7 +73,6 @@ public class MovingPlatformMovement: MonoBehaviour
 
 	private int IndexOfNextWaypoint()
 	{
-		return 0;
 		if (reversePath) {
 			if (goingBackwards) {
 				return waypointIndex - 1;

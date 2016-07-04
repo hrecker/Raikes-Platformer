@@ -126,6 +126,7 @@ public class PlayerMovement : MonoBehaviour, IDirected
     {
 		//When touching the side of a platform, the player's horizontal movement should stop.
 		//touchingSideOfPlatform is reset at the end of each frame so the player doesn't get stuck.
+		
 		if(horizontalDirection != HorizontalDirection.NONE && !touchingSideOfPlatform)
         {
             rigidbodyObject.velocity = new Vector2(previousVelocity.x + (acceleration.x * Time.deltaTime), rigidbodyObject.velocity.y);
@@ -159,7 +160,6 @@ public class PlayerMovement : MonoBehaviour, IDirected
         }
 
         previousVelocity = rigidbodyObject.velocity;
-
 
         if ((playerState == PlayerState.JUMP || playerState == PlayerState.STAND) && rigidbodyObject.velocity.y < 0)
         {
