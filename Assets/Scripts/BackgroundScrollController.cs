@@ -19,7 +19,6 @@ public class BackgroundScrollController : MonoBehaviour
     {
         previousPlayerPosition = player.transform.position;
         swapDistance = foreground.GetSpriteLength();
-        Debug.Log(swapDistance);
         playerPosAtLastBackgroundWrap = player.transform.position.x;
         playerPosAtLastMiddlegroundWrap = player.transform.position.x;
         playerPosAtLastForegroundWrap = player.transform.position.x;
@@ -27,19 +26,22 @@ public class BackgroundScrollController : MonoBehaviour
 
     void Update()
     {
-        float playerDistanceMoved = player.transform.position.x - previousPlayerPosition.x;
-        //Debug.Log(playerDistanceMoved);
-        float middlegroundDistance = (playerDistanceMoved * middlegroundMotionRatio);
-        float backgroundDistance = (playerDistanceMoved * backgroundMotionRatio);
-        //foreground.transform.position = new Vector3(foreground.transform.position.x + playerDistanceMoved, foreground.transform.position.y, foreground.transform.position.z);
-        middleground.transform.position = new Vector3(middleground.transform.position.x + middlegroundDistance, middleground.transform.position.y, middleground.transform.position.z);
-        background.transform.position = new Vector3(background.transform.position.x + backgroundDistance, background.transform.position.y, background.transform.position.z);
+        if(player != null)
+        {
+            float playerDistanceMoved = player.transform.position.x - previousPlayerPosition.x;
+            //Debug.Log(playerDistanceMoved);
+            float middlegroundDistance = (playerDistanceMoved * middlegroundMotionRatio);
+            float backgroundDistance = (playerDistanceMoved * backgroundMotionRatio);
+            //foreground.transform.position = new Vector3(foreground.transform.position.x + playerDistanceMoved, foreground.transform.position.y, foreground.transform.position.z);
+            middleground.transform.position = new Vector3(middleground.transform.position.x + middlegroundDistance, middleground.transform.position.y, middleground.transform.position.z);
+            background.transform.position = new Vector3(background.transform.position.x + backgroundDistance, background.transform.position.y, background.transform.position.z);
 
-        checkForWrap(ref playerPosAtLastForegroundWrap, swapDistance, foreground);
-        checkForWrap(ref playerPosAtLastMiddlegroundWrap, (1 / (1 - middlegroundMotionRatio)) * swapDistance, middleground);
-        checkForWrap(ref playerPosAtLastBackgroundWrap, (1 / (1 - backgroundMotionRatio)) * swapDistance, background);
+            checkForWrap(ref playerPosAtLastForegroundWrap, swapDistance, foreground);
+            checkForWrap(ref playerPosAtLastMiddlegroundWrap, (1 / (1 - middlegroundMotionRatio)) * swapDistance, middleground);
+            checkForWrap(ref playerPosAtLastBackgroundWrap, (1 / (1 - backgroundMotionRatio)) * swapDistance, background);
 
-        previousPlayerPosition = player.transform.position;
+            previousPlayerPosition = player.transform.position;
+        }
     }
 
     private void checkForWrap(ref float playerPosAtLastWrap, float elementSwapDistance, BackgroundElement element)
