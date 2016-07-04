@@ -17,13 +17,16 @@ public class CameraMovement : MonoBehaviour
         {
             transform.position = new Vector3(player.position.x, baseHeight, transform.position.z);
         }*/
-        if(player.position.y >= verticalMotionLine)
+        if(player != null)
         {
-            transform.position = new Vector3(player.position.x, baseHeight + player.position.y - verticalMotionLine, transform.position.z);
-        }
-        else
-        {
-            transform.position = new Vector3(player.position.x, baseHeight, transform.position.z);
+            if (player.position.y >= verticalMotionLine)
+            {
+                transform.position = new Vector3(player.position.x, baseHeight + player.position.y - verticalMotionLine, transform.position.z);
+            }
+            else
+            {
+                transform.position = new Vector3(player.position.x, baseHeight, transform.position.z);
+            }
         }
     }
 }

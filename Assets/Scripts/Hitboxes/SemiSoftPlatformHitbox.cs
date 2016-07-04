@@ -14,12 +14,18 @@ public class SemiSoftPlatformHitbox: MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		updateCollisionState (other);
+        if(other.gameObject.tag == "Player")
+        {
+            updateCollisionState(other);
+        }
 	}
 
 	void OnTriggerStay2D(Collider2D other)
 	{
-		updateCollisionState (other);
+        if(other.gameObject.tag == "Player")
+        {
+            updateCollisionState(other);
+        }
 	}
 
 	private void updateCollisionState(Collider2D other)
