@@ -2,12 +2,16 @@
 
 public class Turnbox : CollisionBox
 {
-    public float turnDelay = 1.0f;
+    private float turnDelay = 1.0f;
     private float turnTimePassed;
+    private bool triggerActive;
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (active && objectMessenger != null && other.tag != "SpawnCollider" && other.tag != "Ground")
+        triggerActive = true;
+        // Only turn on "Ground" collisions if the center of the ground is higher than the bottom of this collider
+        if (active && objectMessenger != null && other.tag != "SpawnCollider" && 
+            (other.tag != "Ground" || other.bounds.center.y >= GetComponent<Collider2D>().bounds.min.y))
         {
             objectMessenger.Invoke(Message.TURN, null);
         }
@@ -17,14 +21,20 @@ public class Turnbox : CollisionBox
     {
         if(turnTimePassed >= turnDelay)
         {
-            turnTimePassed = 0;
             OnTriggerEnter2D(other);
+            turnTimePassed = 0;
         }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        triggerActive = false;
+        turnTimePassed = 0;
     }
 
     void Update()
     {
-        if(turnTimePassed < turnDelay)
+        if(triggerActive && turnTimePassed < turnDelay)
         {
             turnTimePassed += Time.deltaTime;
         }
@@ -32,7 +42,7 @@ public class Turnbox : CollisionBox
 
     public void DeactiveLeftmostBox()
     {
-        Debug.Log("deactivating leftmost");
+        //Debug.Log("deactivating leftmost");
         int leftMostIndex = 0;
         for(int i = 1; i < boxColliders.Length; i++)
         {
@@ -54,7 +64,7 @@ public class Turnbox : CollisionBox
 
     public void DeactivateRightmostBox()
     {
-        Debug.Log("deactivating rightmost");
+        //Debug.Log("deactivating rightmost");
         int rightMostIndex = 0;
         for (int i = 1; i < boxColliders.Length; i++)
         {
