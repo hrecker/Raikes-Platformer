@@ -42,13 +42,20 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                     input.BounceOnEnemy();
                 }
                 break;
-            case Message.HIT_BY_OTHER:
-                //Debug.Log ("Player received hit");
-                makeInvulnerable();
-                int damage = (int)args[1];
-                health.TakeDamage(damage);
+			case Message.HIT_BY_OTHER:
+	                //Debug.Log ("Player received hit");
+				if (!invulnerable) {
+					int damage = (int)args [1];
+					health.TakeDamage (damage);
+				}
+				makeInvulnerable ();
                 //SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth, health.armor, health.maxArmor });
                 break;
+			case Message.INSTANT_KILL:
+				if (!invulnerable) {
+					health.InstantKill ();
+				}
+				break;
             case Message.PICKUP:
                 playSound = pickupController.Pickup((PickupBox)args[0]);
                 break;
