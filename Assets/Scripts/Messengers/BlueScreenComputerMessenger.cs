@@ -28,10 +28,10 @@ public class BlueScreenComputerMessenger : MonoBehaviour, IMessenger
         switch (msg)
         {
             case Message.HIT_OTHER:
-                Debug.Log("Blue screen computer hit another object");
+                //Debug.Log("Blue screen computer hit another object");
                 break;
             case Message.HIT_BY_OTHER:
-                Debug.Log("Blue screen compuer received hit");
+                //Debug.Log("Blue screen compuer received hit");
 				Destroy(gameObject);
 				SceneMessenger.Instance.Invoke (Message.POINTS_RECEIVED, new object[] { this.pointsReceived });
                 break;

@@ -15,10 +15,10 @@ public class ShariCatMessenger : MonoBehaviour, IMessenger
         switch (msg)
         {
             case Message.HIT_OTHER:
-                Debug.Log("Shari's cat hit another object");
+                //Debug.Log("Shari's cat hit another object");
                 break;
             case Message.HIT_BY_OTHER:
-				Debug.Log("Shari's cat received hit");
+				//Debug.Log("Shari's cat received hit");
 				SceneMessenger.Instance.Invoke (Message.POINTS_RECEIVED, new object[] { this.pointsReceived });
                 Destroy(gameObject);
                 break;

@@ -33,7 +33,7 @@ public class PickupController : MonoBehaviour
                 //TODO: allow for variable increase in health?
                 if (health != null && health.IncreaseHealth(1))
                 {
-                    Debug.Log("Destroying pickup");
+                    //Debug.Log("Destroying pickup");
                     pickupBox.DestroyPickup();
                     effectActivated = true;
                 }

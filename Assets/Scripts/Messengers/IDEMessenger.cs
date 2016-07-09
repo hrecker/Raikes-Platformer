@@ -27,10 +27,10 @@ public class IDEMessenger : MonoBehaviour, IMessenger
         switch (msg)
         {
             case Message.HIT_OTHER:
-                Debug.Log("IDE logo hit another object");
+                //Debug.Log("IDE logo hit another object");
                 break;
             case Message.HIT_BY_OTHER:
-                Debug.Log("IDE logo received hit");
+                //Debug.Log("IDE logo received hit");
 				Destroy(gameObject);
 				SceneMessenger.Instance.Invoke (Message.POINTS_RECEIVED, new object[] { this.pointsReceived });
                 break;

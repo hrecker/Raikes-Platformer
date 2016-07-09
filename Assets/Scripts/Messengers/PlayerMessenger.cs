@@ -36,16 +36,16 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         switch (msg)
         {
             case Message.HIT_OTHER:
-                Debug.Log("Player hit another object");
-                if(((ColliderBoxType) args[0]) == ColliderBoxType.BOUNCE)
+                //Debug.Log("Player hit another object");
+                if (((ColliderBoxType)args[0]) == ColliderBoxType.BOUNCE)
                 {
                     input.BounceOnEnemy();
                 }
                 break;
-		case Message.HIT_BY_OTHER:
-			Debug.Log ("Player received hit");
-			makeInvulnerable ();
-				int damage = (int)args [1];
+            case Message.HIT_BY_OTHER:
+                //Debug.Log ("Player received hit");
+                makeInvulnerable();
+                int damage = (int)args[1];
                 health.TakeDamage(damage);
                 //SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth, health.armor, health.maxArmor });
                 break;
@@ -77,9 +77,9 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                 activateInvulnerablePowerup();
                 break;
 
-			case Message.HIT_SIDE_OF_PLATFORM:
-				this.movement.touchingSideOfPlatform = true;
-				break;
+            case Message.HIT_SIDE_OF_PLATFORM:
+                this.movement.touchingSideOfPlatform = true;
+                break;
         }
 
         if (audioPlayer != null && playSound)

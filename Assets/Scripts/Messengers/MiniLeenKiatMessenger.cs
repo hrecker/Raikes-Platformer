@@ -26,10 +26,10 @@ public class MiniLeenKiatMessenger : MonoBehaviour, IMessenger
         switch (msg)
         {
             case Message.HIT_OTHER:
-                Debug.Log("MiniLeenKiat hit another object");
+                //Debug.Log("MiniLeenKiat hit another object");
                 break;
             case Message.HIT_BY_OTHER:
-                Debug.Log("MiniLeenKiat received hit");
+                //Debug.Log("MiniLeenKiat received hit");
                 if(!movement.Squished)
                 {
                     squish();
