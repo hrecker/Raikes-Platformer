@@ -14,6 +14,7 @@ public class Turnbox : CollisionBox
             (other.tag != "Ground" || other.bounds.center.y >= GetComponent<Collider2D>().bounds.min.y))
         {
             objectMessenger.Invoke(Message.TURN, null);
+            turnTimePassed = 0;
         }
     }
 
@@ -22,7 +23,6 @@ public class Turnbox : CollisionBox
         if(turnTimePassed >= turnDelay)
         {
             OnTriggerEnter2D(other);
-            turnTimePassed = 0;
         }
     }
 
