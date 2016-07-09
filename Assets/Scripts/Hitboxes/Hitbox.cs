@@ -6,6 +6,7 @@ public class Hitbox : CollisionBox
     public HitboxHarmType harmType;
     public bool affectsPlatforms = false;
 	public int damage = 1;
+	public bool instantKill;
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -14,7 +15,7 @@ public class Hitbox : CollisionBox
             (boxType == ColliderBoxType.ANY || otherHurtbox.boxType == ColliderBoxType.ANY || boxType == otherHurtbox.boxType) &&
 			CanHarm(otherHurtbox))
         {
-            objectMessenger.Invoke(Message.HIT_OTHER, new object[] { boxType, damage });
+			objectMessenger.Invoke(Message.HIT_OTHER, new object[] { boxType, damage, instantKill });
         }
     }
 
