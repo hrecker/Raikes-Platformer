@@ -20,7 +20,6 @@ public class PlayerMovement : MonoBehaviour, IDirected
     private PlayerState playerState;
     private float standardGravityScale;
 	private Vector2 acceleration;
-    private Vector2 previousVelocity;
 	private HorizontalDirection movementDirection;
 	public bool touchingSideOfPlatform = false;
     
@@ -47,7 +46,6 @@ public class PlayerMovement : MonoBehaviour, IDirected
 
     void Awake()
     {
-        previousVelocity = Vector2.zero;
         if(facingDirection == HorizontalDirection.NONE)
         {
             facingDirection = HorizontalDirection.RIGHT;
@@ -129,7 +127,7 @@ public class PlayerMovement : MonoBehaviour, IDirected
 		
 		if(horizontalDirection != HorizontalDirection.NONE && !touchingSideOfPlatform)
         {
-            rigidbodyObject.velocity = new Vector2(previousVelocity.x + (acceleration.x * Time.deltaTime), rigidbodyObject.velocity.y);
+            rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x + (acceleration.x * Time.deltaTime), rigidbodyObject.velocity.y);
             if(horizontalDirection == HorizontalDirection.RIGHT && rigidbodyObject.velocity.x > maxMoveSpeed)
             {
                 rigidbodyObject.velocity = new Vector2(maxMoveSpeed, rigidbodyObject.velocity.y);
@@ -143,7 +141,7 @@ public class PlayerMovement : MonoBehaviour, IDirected
         {
             if(rigidbodyObject.velocity.x > 0)
             {
-                rigidbodyObject.velocity = new Vector2(previousVelocity.x - (slowDownAcceleration * Time.deltaTime), rigidbodyObject.velocity.y);
+                rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x - (slowDownAcceleration * Time.deltaTime), rigidbodyObject.velocity.y);
                 if(rigidbodyObject.velocity.x < 0)
                 {
                     rigidbodyObject.velocity = new Vector2(0, rigidbodyObject.velocity.y);
@@ -151,15 +149,13 @@ public class PlayerMovement : MonoBehaviour, IDirected
             }
             else if(rigidbodyObject.velocity.x < 0)
             {
-                rigidbodyObject.velocity = new Vector2(previousVelocity.x + (slowDownAcceleration * Time.deltaTime), rigidbodyObject.velocity.y);
+                rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x + (slowDownAcceleration * Time.deltaTime), rigidbodyObject.velocity.y);
                 if (rigidbodyObject.velocity.x > 0)
                 {
                     rigidbodyObject.velocity = new Vector2(0, rigidbodyObject.velocity.y);
                 }
             }
         }
-
-        previousVelocity = rigidbodyObject.velocity;
 
         if ((playerState == PlayerState.JUMP || playerState == PlayerState.STAND) && rigidbodyObject.velocity.y < 0)
         {
