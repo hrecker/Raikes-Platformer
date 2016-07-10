@@ -49,6 +49,18 @@ public class Health : MonoBehaviour
         }
     }
 
+	public void InstantKill()
+	{
+		armor = 0;
+		health = 0;
+		if (messenger != null)
+		{
+			messenger.Invoke(Message.HEALTH_UPDATED, new object[] { health, maxHealth, armor, maxArmor });
+			messenger.Invoke(Message.HEALTH_LOST, null);
+			messenger.Invoke(Message.NO_HEALTH_REMAINING, null);
+		}
+	}
+
     public bool IncreaseHealth(int increaseVal)
     {
         if(health == maxHealth)

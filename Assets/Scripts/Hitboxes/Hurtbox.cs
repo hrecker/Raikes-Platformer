@@ -12,7 +12,11 @@ public class Hurtbox : CollisionBox
             (boxType == ColliderBoxType.ANY || otherHitbox.boxType == ColliderBoxType.ANY || boxType == otherHitbox.boxType) &&
 			canReceiveHarm(otherHitbox))
         {
-			objectMessenger.Invoke(Message.HIT_BY_OTHER, new object[] { boxType, otherHitbox.damage });
+			if (otherHitbox.instantKill) {
+				objectMessenger.Invoke (Message.INSTANT_KILL, new object[] { boxType });
+			} else {
+				objectMessenger.Invoke (Message.HIT_BY_OTHER, new object[] { boxType, otherHitbox.damage });
+			}
         }
     }
 
