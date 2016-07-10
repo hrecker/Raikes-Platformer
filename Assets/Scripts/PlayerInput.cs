@@ -2,6 +2,7 @@
 
 public class PlayerInput : MonoBehaviour
 {
+
     private PlayerMovement movement;
     private ObjectSpawner gunProjectileSpawner;
     private IMessenger messenger;
@@ -17,11 +18,12 @@ public class PlayerInput : MonoBehaviour
     private bool spaceReleased;
 
     void Start()
-    {
+	{
         movement = GetComponent<PlayerMovement>();
         gunProjectileSpawner = GetComponent<ObjectSpawner>();
         messenger = GetComponent<IMessenger>();
         currentGunTimePassed = gunFireDelay;
+		DontDestroyOnLoad (gameObject);
     }
     
     void Update()

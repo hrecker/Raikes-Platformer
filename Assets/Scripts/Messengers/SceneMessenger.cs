@@ -22,6 +22,7 @@ public class SceneMessenger : MonoBehaviour, IMessenger
         {
             callbacks = new Dictionary<Message, List<Delegate>>();
         }
+
     }
 
     public void Invoke(Message msg, object[] args)

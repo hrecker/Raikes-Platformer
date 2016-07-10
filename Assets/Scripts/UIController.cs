@@ -12,20 +12,20 @@ public class UIController : MonoBehaviour
 
     void Awake()
     {
-        Image[] uiImages = healthBar.GetComponentsInChildren<Image>();
-        healthUIImages = new Image[3];
-        armorUIImages = new Image[3];
-        Array.Copy(uiImages, 1, healthUIImages, 0, 3);
-        Array.Copy(uiImages, 1 + healthUIImages.Length, armorUIImages, 0, 3);
+		Image[] uiImages = healthBar.GetComponentsInChildren<Image> ();
+		healthUIImages = new Image[3];
+		armorUIImages = new Image[3];
+		Array.Copy (uiImages, 1, healthUIImages, 0, 3);
+		Array.Copy (uiImages, 1 + healthUIImages.Length, armorUIImages, 0, 3);
 
-        foreach(Image armorUIImage in armorUIImages)
-        {
-            armorUIImage.gameObject.SetActive(false);
-        }
-
-        SceneMessenger sceneMessenger = GameObject.FindGameObjectWithTag("SceneMessenger").GetComponent<SceneMessenger>();
-        sceneMessenger.AddListener (Message.HEALTH_UPDATED, new SceneMessenger.HealthCallback(UpdateHealthUI));
+		foreach (Image armorUIImage in armorUIImages) {
+			armorUIImage.gameObject.SetActive (false);
+		}
+		SceneMessenger sceneMessenger = GameObject.FindGameObjectWithTag ("SceneMessenger").GetComponent<SceneMessenger> ();
+		sceneMessenger.AddListener (Message.HEALTH_UPDATED, new SceneMessenger.HealthCallback (UpdateHealthUI));
 		sceneMessenger.AddListener (Message.POINTS_RECEIVED, new SceneMessenger.PointsCallback (UpdateScoreUI));
+
+		DontDestroyOnLoad (gameObject);
     }
 
     public void UpdateHealthUI(int currentHealth, int maxHealth, int currentArmor, int maxArmor)

@@ -25,6 +25,7 @@ public enum Message
     STATE_CHANGE,
     STOPPED_MOVEMENT,
     TURN,
+	WARPED,
 
 	HIT_SIDE_OF_PLATFORM
 }
