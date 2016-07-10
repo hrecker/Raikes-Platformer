@@ -2,6 +2,7 @@
 
 public class PlayerInput : MonoBehaviour
 {
+
     private PlayerMovement movement;
     private ObjectSpawner gunProjectileSpawner;
     private IMessenger messenger;
@@ -16,13 +17,8 @@ public class PlayerInput : MonoBehaviour
     private bool jumped;
     private bool spaceReleased;
 
-	void Awake() {
-		Debug.Log ("Awake");
-	}
-
     void Start()
 	{
-		Debug.Log ("Start");
         movement = GetComponent<PlayerMovement>();
         gunProjectileSpawner = GetComponent<ObjectSpawner>();
         messenger = GetComponent<IMessenger>();
