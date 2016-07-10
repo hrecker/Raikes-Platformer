@@ -22,6 +22,12 @@ public class PlayerMovement : MonoBehaviour, IDirected
 	private Vector2 acceleration;
 	private HorizontalDirection movementDirection;
 	public bool touchingSideOfPlatform = false;
+	/// <summary>
+	/// The index of the WarpPointExit the player is warping to.
+	/// Initially -1 because no warp point exit should have that
+	/// tag, so they will never load on the start of the level.
+	/// </summary>
+	public int warpTag = -1;
     
     public HorizontalDirection horizontalDirection
     {

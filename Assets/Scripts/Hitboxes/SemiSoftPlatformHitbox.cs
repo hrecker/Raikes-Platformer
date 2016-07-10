@@ -8,7 +8,7 @@ public class SemiSoftPlatformHitbox: MonoBehaviour
 
 	void Start()
 	{
-		objectMessenger = this.getMessenger ();
+		objectMessenger = this.GetMessenger ();
 		boxCollider = this.GetAdjacentComponent<BoxCollider2D> ();
 	}
 

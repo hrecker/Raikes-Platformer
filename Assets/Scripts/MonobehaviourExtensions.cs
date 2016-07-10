@@ -2,7 +2,7 @@
 
 public static class MonobehaviourExtensions
 {
-	public static IMessenger getMessenger(this MonoBehaviour behaviour)
+	public static IMessenger GetMessenger(this Behaviour behaviour)
     {
 		IMessenger objectMessenger = behaviour.GetComponent<IMessenger>();
 		if (objectMessenger == null)

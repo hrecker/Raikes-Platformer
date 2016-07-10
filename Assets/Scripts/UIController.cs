@@ -26,6 +26,8 @@ public class UIController : MonoBehaviour
         SceneMessenger sceneMessenger = GameObject.FindGameObjectWithTag("SceneMessenger").GetComponent<SceneMessenger>();
         sceneMessenger.AddListener (Message.HEALTH_UPDATED, new SceneMessenger.HealthCallback(UpdateHealthUI));
 		sceneMessenger.AddListener (Message.POINTS_RECEIVED, new SceneMessenger.PointsCallback (UpdateScoreUI));
+
+		DontDestroyOnLoad (gameObject);
     }
 
     public void UpdateHealthUI(int currentHealth, int maxHealth, int currentArmor, int maxArmor)
