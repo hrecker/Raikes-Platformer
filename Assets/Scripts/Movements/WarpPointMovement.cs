@@ -4,7 +4,7 @@ using UnityEngine;
 public class WarpPointMovement: MonoBehaviour
 {
 	private IMessenger objectMessenger;
-	public Vector2 warpPoint;
+	public Transform warpPoint;
 	private GameObject collidedObject;
 
 	public void Start() {
@@ -43,9 +43,9 @@ public class WarpPointMovement: MonoBehaviour
 				otherMessenger = collidedObject.GetComponentInChildren<IMessenger> ();
 			}
 			if (otherMessenger != null) {
-				otherMessenger.Invoke (Message.WARPED, new object[] { warpPoint, collidedObject });
+				otherMessenger.Invoke (Message.WARPED, new object[] { warpPoint.position, collidedObject });
 			}
-			objectMessenger.Invoke (Message.WARPED, new object[] { warpPoint, collidedObject });
+			objectMessenger.Invoke (Message.WARPED, new object[] { warpPoint.position, collidedObject });
 			collidedObject = null;
 		}
 	}

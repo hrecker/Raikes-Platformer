@@ -8,7 +8,7 @@ public class WarpPointMessenger: MonoBehaviour, IMessenger
 	public void Invoke(Message msg, object[] args) {
 		switch (msg) {
 		case Message.WARPED:
-			Vector2 warpPoint = (Vector2)args [0];
+			Vector3 warpPoint = (Vector3)args [0];
 			GameObject player = (GameObject)args [1];
 			Rigidbody2D rigidbody = player.GetComponent<Rigidbody2D> ();
 			if (rigidbody != null)
