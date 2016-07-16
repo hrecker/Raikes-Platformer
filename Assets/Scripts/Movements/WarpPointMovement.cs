@@ -50,7 +50,7 @@ public class WarpPointMovement: MonoBehaviour
 		}
 	}
 
-	private GameObject GetMainPlayerObject(GameObject obj)
+	public static GameObject GetMainPlayerObject(GameObject obj)
 	{
 		//Some of the player's children can trigger the collision,
 		//but we need the main player object so we can access its rigidbody object.
