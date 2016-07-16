@@ -9,13 +9,20 @@ public class Cutscene: MonoBehaviour
 	public Text textObject;
 	private bool running = false;
 	public string[] textBubbles;
+	public GameObject[] objects;
+	public int[] textBubbleOwners;
 	private int textBubbleIndex = 0;
+	//If we only check the space for key up, it can trigger
+	//during a jump (basically skipping the first text bubble).
+	//If we verify that the space was pressed down during the
+	//cutscene, we prevent that.
+	private bool keyPressedDuringCutscene = false;
+	public Texture2D texture;
 
 	public void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.tag == "Player") {
 			player = WarpPointMovement.GetMainPlayerObject (other.gameObject);
-			Debug.Log ("Player: " + player.transform);
 			StartCutscene ();
 		}
 	}
@@ -44,10 +51,15 @@ public class Cutscene: MonoBehaviour
 
 	public void Update()
 	{
-		if (Input.GetKeyUp (KeyCode.Space)) {
-			textBubbleIndex++;
-			if (textBubbleIndex >= textBubbles.Length) {
-				EndCutscene ();
+		if (running) {
+			if (Input.GetKeyDown (KeyCode.Space)) {
+				keyPressedDuringCutscene = true;
+			} else if (Input.GetKeyUp (KeyCode.Space) && keyPressedDuringCutscene) {
+				keyPressedDuringCutscene = false;
+				textBubbleIndex++;
+				if (textBubbleIndex >= textBubbles.Length) {
+					EndCutscene ();
+				}
 			}
 		}
 	}
@@ -55,7 +67,9 @@ public class Cutscene: MonoBehaviour
 	public void OnGUI()
 	{
 		if (running) {
-			RenderTextAt (textBubbles[textBubbleIndex], player.GetComponent<BoxCollider2D> ().bounds);
+			string text = textBubbles [textBubbleIndex];
+			Bounds bounds = objects [textBubbleOwners [textBubbleIndex]].GetComponent<BoxCollider2D>().bounds;
+			RenderTextAt (text, bounds);
 		}
 	}
 
@@ -76,6 +90,7 @@ public class Cutscene: MonoBehaviour
 		float positionHeight = ScreenHeightOfBounds (atPosition);
 		//Subtract the positionHeight, because screen coordinates start in the upper left corner.
 		coords = new Vector3 (coords.x - TextBubbleWidth / 2.0f, coords.y - textBubbleHeight / 2.0f - positionHeight, coords.z);
+		GUI.Label(new Rect (coords.x - 10.0f, coords.y - 10.0f, TextBubbleWidth + 20.0f, textBubbleHeight + 20.0f), texture, style);
 		GUI.Label(new Rect (coords.x, coords.y, TextBubbleWidth, textBubbleHeight), content, style);
 	}
 
