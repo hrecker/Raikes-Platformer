@@ -9,6 +9,7 @@ public class SceneMessenger : MonoBehaviour, IMessenger
 
     public delegate void HealthCallback (int currentHealth, int maxHealth, int currentArmor, int maxArmor);
 	public delegate void PointsCallback (int gainedPoints);
+    public delegate void VoidCallback ();
 
     void Awake()
     {
@@ -43,6 +44,12 @@ public class SceneMessenger : MonoBehaviour, IMessenger
 						callback.DynamicInvoke(args[0]);
 					}
 					break;
+                case Message.BOSS_RECEIVED_HIT:
+                    foreach(Delegate callback in callbacks[msg])
+                    {
+                        callback.DynamicInvoke();
+                    }
+                    break;
             }
         }
     }
@@ -58,5 +65,10 @@ public class SceneMessenger : MonoBehaviour, IMessenger
             callbacks.Add(msg, new List<Delegate>());
         }
         callbacks[msg].Add(callback);
+    }
+
+    public void RemoveListener(Message msg, Delegate callback)
+    {
+        callbacks[msg].Remove(callback);
     }
 }

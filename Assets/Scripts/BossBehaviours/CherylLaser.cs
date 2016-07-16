@@ -6,14 +6,13 @@ public class CherylLaser : MonoBehaviour
     public float fullYScale;
     public float xScale;
     public float expandDelay;
-    public float lifetime;
+    public float activeLifetime;
 
     private BoxCollider2D boxCollider;
     private float currentDelayPassed;
 
     void Start()
     {
-        Destroy(gameObject, lifetime);
         transform.localScale = new Vector2(xScale, startYScale);
         boxCollider = GetComponent<BoxCollider2D>();
         boxCollider.enabled = false;
@@ -25,10 +24,11 @@ public class CherylLaser : MonoBehaviour
         {
             currentDelayPassed += Time.deltaTime;
         }
-        else
+        else // Expand the laser
         {
             boxCollider.enabled = true;
             transform.localScale = new Vector2(xScale, fullYScale);
+            Destroy(gameObject, activeLifetime);
         }
     }
 }

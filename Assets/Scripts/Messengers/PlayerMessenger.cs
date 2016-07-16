@@ -85,7 +85,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                 break;
 
             case Message.HIT_SIDE_OF_PLATFORM:
-                this.movement.touchingSideOfPlatform = true;
+                //this.movement.touchingSideOfPlatform = true;
                 break;
         }
 
