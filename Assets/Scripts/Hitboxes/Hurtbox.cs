@@ -15,7 +15,7 @@ public class Hurtbox : CollisionBox
 			if (otherHitbox.instantKill) {
 				objectMessenger.Invoke (Message.INSTANT_KILL, new object[] { boxType });
 			} else {
-				objectMessenger.Invoke (Message.HIT_BY_OTHER, new object[] { boxType, otherHitbox.damage });
+				objectMessenger.Invoke (Message.HIT_BY_OTHER, new object[] { boxType, otherHitbox.damage, other });
 			}
         }
     }

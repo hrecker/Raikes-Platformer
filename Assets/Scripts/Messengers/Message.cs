@@ -2,6 +2,7 @@
 public enum Message
 {
     BOUNCE,
+    BOSS_RECEIVED_HIT,
     DIRECTION_CHANGE,
     HEALTH_LOST,
     HEALTH_UPDATED,

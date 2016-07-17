@@ -127,14 +127,22 @@ public class PlayerMovement : MonoBehaviour, IDirected
 		
 		if(horizontalDirection != HorizontalDirection.NONE && !touchingSideOfPlatform)
         {
-            rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x + (acceleration.x * Time.deltaTime), rigidbodyObject.velocity.y);
-            if(horizontalDirection == HorizontalDirection.RIGHT && rigidbodyObject.velocity.x > maxMoveSpeed)
+            // Only limit to maxMoveSpeed if the player moved above it manually
+            bool startedBelowMaxMoveSpeed = horizontalDirection == HorizontalDirection.LEFT ?
+                rigidbodyObject.velocity.x >= -maxMoveSpeed :
+                rigidbodyObject.velocity.x <= maxMoveSpeed;
+
+            if(startedBelowMaxMoveSpeed)
             {
-                rigidbodyObject.velocity = new Vector2(maxMoveSpeed, rigidbodyObject.velocity.y);
-            }
-            else if (horizontalDirection == HorizontalDirection.LEFT && rigidbodyObject.velocity.x < -maxMoveSpeed)
-            {
-                rigidbodyObject.velocity = new Vector2(-maxMoveSpeed, rigidbodyObject.velocity.y);
+                rigidbodyObject.velocity = new Vector2(rigidbodyObject.velocity.x + (acceleration.x * Time.deltaTime), rigidbodyObject.velocity.y);
+                if (horizontalDirection == HorizontalDirection.RIGHT && rigidbodyObject.velocity.x > maxMoveSpeed)
+                {
+                    rigidbodyObject.velocity = new Vector2(maxMoveSpeed, rigidbodyObject.velocity.y);
+                }
+                else if (horizontalDirection == HorizontalDirection.LEFT && rigidbodyObject.velocity.x < -maxMoveSpeed)
+                {
+                    rigidbodyObject.velocity = new Vector2(-maxMoveSpeed, rigidbodyObject.velocity.y);
+                }
             }
         }
         else

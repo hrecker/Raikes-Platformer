@@ -25,7 +25,7 @@ public class PlatformSideHitbox: MonoBehaviour
 		}
 	}
 		
-	public void OnTriggerEnter2D(Collider2D other)
+	/*public void OnTriggerEnter2D(Collider2D other)
 	{
 		SendHitMessage (other);
 	}
@@ -52,7 +52,7 @@ public class PlatformSideHitbox: MonoBehaviour
 		if (otherMessenger != null) {
 			otherMessenger.Invoke (Message.HIT_SIDE_OF_PLATFORM, null);
 		}
-	}
+	}*/
 
 }
 
