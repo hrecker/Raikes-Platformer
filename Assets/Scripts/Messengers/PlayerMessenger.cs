@@ -42,7 +42,7 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
                     input.BounceOnEnemy();
                 }
                 break;
-			case Message.HIT_BY_OTHER:
+		case Message.HIT_BY_OTHER:
 	                //Debug.Log ("Player received hit");
 				if (!invulnerable) {
 					int damage = (int)args [1];

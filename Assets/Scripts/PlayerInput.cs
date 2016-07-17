@@ -17,6 +17,8 @@ public class PlayerInput : MonoBehaviour
     private bool jumped;
     private bool spaceReleased;
 
+	public bool inputDisabled = false;
+
     void Start()
 	{
         movement = GetComponent<PlayerMovement>();
@@ -28,6 +30,9 @@ public class PlayerInput : MonoBehaviour
     
     void Update()
     {
+		if (inputDisabled) {
+			return;
+		}
         // jumping
         if(jumped && movement.IsGrounded())
         {

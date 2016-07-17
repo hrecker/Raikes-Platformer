@@ -20,7 +20,7 @@ public class WarpPointMovement: MonoBehaviour
 	public void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.tag == "Player" && objectMessenger != null) {
-			collidedObject = GetMainPlayerObject(other.gameObject);
+			collidedObject = SceneMessenger.GetMainPlayerObject(other.gameObject);
 		}
 	}
 
@@ -48,16 +48,6 @@ public class WarpPointMovement: MonoBehaviour
 			objectMessenger.Invoke (Message.WARPED, new object[] { warpPoint.position, collidedObject });
 			collidedObject = null;
 		}
-	}
-
-	private GameObject GetMainPlayerObject(GameObject obj)
-	{
-		//Some of the player's children can trigger the collision,
-		//but we need the main player object so we can access its rigidbody object.
-		while (obj.transform.parent != null) {
-			obj = obj.transform.parent.gameObject;
-		}
-		return obj;
 	}
 
 }
