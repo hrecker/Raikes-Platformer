@@ -39,12 +39,14 @@ public class Cutscene: MonoBehaviour
 		t.rectTransform.position = new Vector3 (0.0f, 0.0f, 0.0f);
 		t.transform.SetParent (c.transform);
 		*/
+		player.GetComponent<PlayerInput> ().inputDisabled = true;
 		running = true;
 	}
 
 	public void EndCutscene()
 	{
 		Time.timeScale = 1.0f;
+		player.GetComponent<PlayerInput> ().inputDisabled = false;
 		running = false;
 		Destroy (gameObject);
 	}
@@ -83,14 +85,14 @@ public class Cutscene: MonoBehaviour
 
 		GUIStyle style = new GUIStyle ();
 		style.alignment = TextAnchor.UpperCenter;
-		style.normal.textColor = Color.white;
+		style.normal.textColor = Color.black;
 		style.wordWrap = true;
 		GUIContent content = new GUIContent (text);
 		float textBubbleHeight = style.CalcHeight (content, TextBubbleWidth);
 		float positionHeight = ScreenHeightOfBounds (atPosition);
 		//Subtract the positionHeight, because screen coordinates start in the upper left corner.
 		coords = new Vector3 (coords.x - TextBubbleWidth / 2.0f, coords.y - textBubbleHeight / 2.0f - positionHeight, coords.z);
-		GUI.Label(new Rect (coords.x - 10.0f, coords.y - 10.0f, TextBubbleWidth + 20.0f, textBubbleHeight + 20.0f), texture, style);
+		GUI.DrawTexture (new Rect (coords.x - 10.0f, coords.y - 10.0f, TextBubbleWidth + 20.0f, textBubbleHeight + 20.0f), texture);
 		GUI.Label(new Rect (coords.x, coords.y, TextBubbleWidth, textBubbleHeight), content, style);
 	}
 
