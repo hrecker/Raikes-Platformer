@@ -2,15 +2,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
+public struct CutsceneTextBubble
+{
+	public GameObject owner;
+	public string text;
+}
+
 public class Cutscene: MonoBehaviour
 {
 	private static float TextBubbleWidth = 128.0f;
 	private GameObject player = null;
 	public Text textObject;
 	private bool running = false;
-	public string[] textBubbles;
-	public GameObject[] objects;
-	public int[] textBubbleOwners;
+	public CutsceneTextBubble[] textBubbles;
 	private int textBubbleIndex = 0;
 	//If we only check the space for key up, it can trigger
 	//during a jump (basically skipping the first text bubble).
@@ -22,7 +27,7 @@ public class Cutscene: MonoBehaviour
 	public void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.tag == "Player") {
-			player = WarpPointMovement.GetMainPlayerObject (other.gameObject);
+			player = SceneMessenger.GetMainPlayerObject (other.gameObject);
 			StartCutscene ();
 		}
 	}
@@ -69,8 +74,8 @@ public class Cutscene: MonoBehaviour
 	public void OnGUI()
 	{
 		if (running) {
-			string text = textBubbles [textBubbleIndex];
-			Bounds bounds = objects [textBubbleOwners [textBubbleIndex]].GetComponent<BoxCollider2D>().bounds;
+			string text = textBubbles [textBubbleIndex].text;
+			Bounds bounds = textBubbles [textBubbleIndex].owner.GetComponent<BoxCollider2D>().bounds;
 			RenderTextAt (text, bounds);
 		}
 	}
