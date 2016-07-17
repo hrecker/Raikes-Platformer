@@ -66,9 +66,14 @@ public class SceneMessenger : MonoBehaviour, IMessenger
         }
         callbacks[msg].Add(callback);
     }
-
-    public void RemoveListener(Message msg, Delegate callback)
-    {
-        callbacks[msg].Remove(callback);
-    }
+		
+	public static GameObject GetMainPlayerObject(GameObject obj)
+	{
+		//Some of the player's children can trigger the collision,
+		//but we need the main player object so we can access its rigidbody object.
+		while (obj.transform.parent != null) {
+			obj = obj.transform.parent.gameObject;
+		}
+		return obj;
+	}
 }

@@ -20,7 +20,6 @@ public class CherylPlatform : MonoBehaviour
         {
             transform.position = startPosition;
             reset = true;
-            //SceneMessenger.Instance.RemoveListenersForMessage(Message.BOSS_RECEIVED_HIT);
         }
     }
 }
