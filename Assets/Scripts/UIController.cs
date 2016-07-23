@@ -10,7 +10,7 @@ public class UIController : MonoBehaviour
 	public Text scoreText;
 	private int points = 0;
 
-    void Awake()
+    void Start()
     {
 		Image[] uiImages = healthBar.GetComponentsInChildren<Image> ();
 		healthUIImages = new Image[3];
@@ -21,9 +21,9 @@ public class UIController : MonoBehaviour
 		foreach (Image armorUIImage in armorUIImages) {
 			armorUIImage.gameObject.SetActive (false);
 		}
-		SceneMessenger sceneMessenger = GameObject.FindGameObjectWithTag ("SceneMessenger").GetComponent<SceneMessenger> ();
-		sceneMessenger.AddListener (Message.HEALTH_UPDATED, new SceneMessenger.HealthCallback (UpdateHealthUI));
-		sceneMessenger.AddListener (Message.POINTS_RECEIVED, new SceneMessenger.PointsCallback (UpdateScoreUI));
+
+		SceneMessenger.Instance.AddListener (Message.HEALTH_UPDATED, new SceneMessenger.HealthCallback (UpdateHealthUI));
+		SceneMessenger.Instance.AddListener (Message.POINTS_RECEIVED, new SceneMessenger.PointsCallback (UpdateScoreUI));
 
 		DontDestroyOnLoad (gameObject);
     }
