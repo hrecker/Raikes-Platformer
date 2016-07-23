@@ -5,6 +5,8 @@ public class PickupController : MonoBehaviour
 {
     public float jumpSpeedMultiplier;
     public float moveSpeedMultiplier;
+    public float helmetHeight;
+    public SpriteRenderer helmetSpriteRenderer;
 
     private Health health;
     private PlayerInput playerInput;
@@ -13,6 +15,7 @@ public class PickupController : MonoBehaviour
     private float previousJumpSpeed;
     private float previousMoveSpeed;
     private List<PickupType> activePowerups;
+    private BoxCollider2D bodyHurtboxCollider;
 
     void Start()
     {
@@ -21,6 +24,12 @@ public class PickupController : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         messenger = GetComponent<IMessenger>();
         activePowerups = new List<PickupType>();
+        Hurtbox bodyHurtbox = GetComponentInChildren<Hurtbox>();
+        if(bodyHurtbox != null)
+        {
+            bodyHurtboxCollider = bodyHurtbox.GetComponent<BoxCollider2D>();
+        }
+        helmetSpriteRenderer.enabled = false;
     }
 
     public bool Pickup(PickupBox pickupBox)
@@ -94,6 +103,17 @@ public class PickupController : MonoBehaviour
                     effectActivated = true;
                 }
                 break;
+            case PickupType.HELMET:
+                if(bodyHurtboxCollider != null && (activePowerups == null || !activePowerups.Contains(PickupType.HELMET)))
+                {
+                    bodyHurtboxCollider.size = new Vector2(bodyHurtboxCollider.size.x, bodyHurtboxCollider.size.y - helmetHeight);
+                    bodyHurtboxCollider.offset = new Vector2(bodyHurtboxCollider.offset.x, bodyHurtboxCollider.offset.y - (helmetHeight / 2));
+                    helmetSpriteRenderer.enabled = true;
+                    activePowerups.Add(PickupType.HELMET);
+                    pickupBox.DestroyPickup();
+                    effectActivated = true;
+                }
+                break;
         }
         return effectActivated;
     }
@@ -113,6 +133,11 @@ public class PickupController : MonoBehaviour
                     break;
                 case PickupType.GUN:
                     playerInput.DeactivateGun();
+                    break;
+                case PickupType.HELMET:
+                    bodyHurtboxCollider.size = new Vector2(bodyHurtboxCollider.size.x, bodyHurtboxCollider.size.y + helmetHeight);
+                    bodyHurtboxCollider.offset = new Vector2(bodyHurtboxCollider.offset.x, bodyHurtboxCollider.offset.y + (helmetHeight / 2));
+                    helmetSpriteRenderer.enabled = false;
                     break;
             }
         }
