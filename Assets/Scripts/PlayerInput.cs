@@ -25,7 +25,8 @@ public class PlayerInput : MonoBehaviour
         gunProjectileSpawner = GetComponent<ObjectSpawner>();
         messenger = GetComponent<IMessenger>();
         currentGunTimePassed = gunFireDelay;
-		DontDestroyOnLoad (gameObject);
+
+		SceneMessenger.Instance.LoadPlayerState ();
     }
     
     void Update()

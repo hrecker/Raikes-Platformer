@@ -9,6 +9,11 @@ public class UIController : MonoBehaviour
     private Image[] armorUIImages;
 	public Text scoreText;
 	private int points = 0;
+	public int Points
+	{
+		get { return points; }
+		set { points = value; }
+	}
 
     void Awake()
     {
@@ -24,8 +29,7 @@ public class UIController : MonoBehaviour
 		SceneMessenger sceneMessenger = GameObject.FindGameObjectWithTag ("SceneMessenger").GetComponent<SceneMessenger> ();
 		sceneMessenger.AddListener (Message.HEALTH_UPDATED, new SceneMessenger.HealthCallback (UpdateHealthUI));
 		sceneMessenger.AddListener (Message.POINTS_RECEIVED, new SceneMessenger.PointsCallback (UpdateScoreUI));
-
-		DontDestroyOnLoad (gameObject);
+//		DontDestroyOnLoad (gameObject);
     }
 
     public void UpdateHealthUI(int currentHealth, int maxHealth, int currentArmor, int maxArmor)
