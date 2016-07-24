@@ -127,5 +127,17 @@ public class PickupController : MonoBehaviour
         }
         activePowerups.Add(type);
     }
+
+	public List<PickupType> GetActivePowerups()
+	{
+		//Deep copy the pickups. This works because PickupType is a value type.
+		return new List<PickupType>(activePowerups);
+	}
+
+	public void SetActivePowerups(List<PickupType> activePowerups)
+	{
+		this.activePowerups = new List<PickupType> (activePowerups);
+	}
+
 }
 
