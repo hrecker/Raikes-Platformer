@@ -9,12 +9,13 @@ public class RosenbaumAttackScript : MonoBehaviour
     public float strongAttackDelay;
     [Range(0.0f, 0.1f)]
     public float defaultAttackSpawnRate;
-    [Range(0.0f, 0.2f)]
+    [Range(0.0f, 0.5f)]
     public float strongAttackSpawnRate;
     public float maxDefaultAttackOffset;
     public float maxStrongAttackOffset;
     public int numDefaultAttacksBeforeStrong;
     public Transform[] defaultSpawnPoints;
+    public Transform[] strongAttackSpawnPoints;
     public Transform player;
 
     private float currentTimePassed;
@@ -28,10 +29,20 @@ public class RosenbaumAttackScript : MonoBehaviour
     private ActiveAttack activeAttack;
     private int numDefaultAttacksDone;
     private Transform defaultAttackSpawnPoint;
+    private IMessenger messenger;
     
     void Start ()
     {
         activeAttack = ActiveAttack.DEFAULT_DELAY;
+        messenger = GetComponent<IMessenger>();
+        if(messenger == null)
+        {
+            messenger = GetComponentInParent<IMessenger>();
+        }
+        if(messenger == null)
+        {
+            messenger = GetComponentInChildren<IMessenger>();
+        }
 	}
 	
 	void Update ()
@@ -42,7 +53,15 @@ public class RosenbaumAttackScript : MonoBehaviour
             case ActiveAttack.DEFAULT_DELAY:
                 if(currentTimePassed >= defaultAttackDelay)
                 {
-                    startDefaultAttack();
+                    if(numDefaultAttacksDone >= numDefaultAttacksBeforeStrong)
+                    {
+                        numDefaultAttacksDone = 0;
+                        startStrongAttackDelay();
+                    }
+                    else
+                    {
+                        startDefaultAttack();
+                    }
                 }
                 break;
             case ActiveAttack.DEFAULT:
@@ -61,13 +80,23 @@ public class RosenbaumAttackScript : MonoBehaviour
             case ActiveAttack.STRONG_DELAY:
                 if(currentTimePassed >= strongAttackDelay)
                 {
-
+                    startStrongAttack();
                 }
                 break;
             case ActiveAttack.STRONG:
-                if(currentTimePassed >= strongAttackDuration)
+                if (currentTimePassed >= strongAttackDuration)
                 {
-
+                    activeAttack = ActiveAttack.DEFAULT_DELAY;
+                }
+                else
+                {
+                    foreach(Transform spawnPoint in strongAttackSpawnPoints)
+                    {
+                        if (Random.value <= defaultAttackSpawnRate)
+                        {
+                            spawnStrongAttackSpike(spawnPoint);
+                        }
+                    }
                 }
                 break;
         }
@@ -89,6 +118,7 @@ public class RosenbaumAttackScript : MonoBehaviour
         defaultAttackSpawnPoint = defaultSpawnPoints[minDistanceIndex];
         activeAttack = ActiveAttack.DEFAULT;
         currentTimePassed = 0;
+        numDefaultAttacksDone++;
     }
 
     private void spawnDefaultAttackSpike()
@@ -98,5 +128,30 @@ public class RosenbaumAttackScript : MonoBehaviour
             defaultAttackSpawnPoint.position.y, defaultAttackSpawnPoint.position.z);
         GameObject newSpike = Instantiate(spikePrefab, spawnPosition, Quaternion.identity) as GameObject;
         newSpike.GetComponent<RosenbaumSpike>().SetDirection(VerticalDirection.UP);
+    }
+
+    private void startStrongAttackDelay()
+    {
+        Debug.Log("sending message now");
+        messenger.Invoke(Message.START_ATTACK_DELAY, new object[] { strongAttackDelay });
+        activeAttack = ActiveAttack.STRONG_DELAY;
+        numDefaultAttacksDone = 0;
+        currentTimePassed = 0;
+    }
+
+    private void startStrongAttack()
+    {
+        activeAttack = ActiveAttack.STRONG;
+        currentTimePassed = 0;
+    }
+
+    private void spawnStrongAttackSpike(Transform spawnPoint)
+    {
+        Vector3 spawnPosition = new Vector3(spawnPoint.position.x,
+            spawnPoint.position.y + ((Random.value - 0.5f) * 2 * maxStrongAttackOffset),
+            spawnPoint.position.z);
+        GameObject newSpike = Instantiate(spikePrefab, spawnPosition, Quaternion.identity) as GameObject;
+        newSpike.GetComponent<RosenbaumSpike>().SetDirection(HorizontalDirection.LEFT);
+        newSpike.GetComponent<Transform>().Rotate(new Vector3(0, 0, 90));
     }
 }
