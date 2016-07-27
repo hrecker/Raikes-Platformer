@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PickupController : MonoBehaviour
@@ -156,4 +156,22 @@ public class PickupController : MonoBehaviour
         activePowerups.Add(type);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

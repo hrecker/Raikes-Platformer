@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +9,11 @@ public class UIController : MonoBehaviour
     private Image[] armorUIImages;
 	public Text scoreText;
 	private int points = 0;
+	public int Points
+	{
+		get { return points; }
+		set { points = value; }
+	}
 
     void Start()
     {
