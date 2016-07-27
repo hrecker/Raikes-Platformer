@@ -13,6 +13,9 @@ public class RosenbaumMessenger : MonoBehaviour, IMessenger
             case Message.HEALTH_UPDATED:
                 uiController.SetBossHealthWidth((int)args[0], (int)args[1]);
                 break;
+            case Message.NO_HEALTH_REMAINING:
+                Destroy(gameObject);
+                break;
             case Message.START_ATTACK_DELAY:
                 Debug.Log("start attack delay");
                 uiController.ActivateWarning((float)args[0]);

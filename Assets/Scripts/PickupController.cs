@@ -134,14 +134,17 @@ public class PickupController : MonoBehaviour
                 case PickupType.GUN:
                     playerInput.DeactivateGun();
                     break;
-                case PickupType.HELMET:
-                    bodyHurtboxCollider.size = new Vector2(bodyHurtboxCollider.size.x, bodyHurtboxCollider.size.y + helmetHeight);
-                    bodyHurtboxCollider.offset = new Vector2(bodyHurtboxCollider.offset.x, bodyHurtboxCollider.offset.y + (helmetHeight / 2));
-                    helmetSpriteRenderer.enabled = false;
-                    break;
             }
         }
         activePowerups.Clear();
+    }
+
+    public void DeactivateHelmetPowerup()
+    {
+        bodyHurtboxCollider.size = new Vector2(bodyHurtboxCollider.size.x, bodyHurtboxCollider.size.y + helmetHeight);
+        bodyHurtboxCollider.offset = new Vector2(bodyHurtboxCollider.offset.x, bodyHurtboxCollider.offset.y + (helmetHeight / 2));
+        helmetSpriteRenderer.enabled = false;
+        activePowerups.Remove(PickupType.HELMET);
     }
 
     private void ActivatePowerup(PickupType type)
