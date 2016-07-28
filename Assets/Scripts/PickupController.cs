@@ -169,21 +169,3 @@ public class PickupController : MonoBehaviour
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
