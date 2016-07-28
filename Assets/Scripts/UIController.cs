@@ -30,7 +30,7 @@ public class UIController : MonoBehaviour
 		SceneMessenger.Instance.AddListener (Message.HEALTH_UPDATED, new SceneMessenger.HealthCallback (UpdateHealthUI));
 		SceneMessenger.Instance.AddListener (Message.POINTS_RECEIVED, new SceneMessenger.PointsCallback (UpdateScoreUI));
 
-		DontDestroyOnLoad (gameObject);
+		//DontDestroyOnLoad (gameObject);
     }
 
     public void UpdateHealthUI(int currentHealth, int maxHealth, int currentArmor, int maxArmor)
