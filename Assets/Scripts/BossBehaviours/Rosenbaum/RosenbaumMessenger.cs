@@ -4,7 +4,9 @@ using UnityEngine;
 public class RosenbaumMessenger : MonoBehaviour, IMessenger
 {
     public RosenbaumUIController uiController;
-    public Health health;
+	public Health health;
+	public int sceneToLoadOnDeath;
+	public float loadSceneDelay = 1.0f;
 
     public void Invoke(Message msg, object[] args)
     {
@@ -13,7 +15,8 @@ public class RosenbaumMessenger : MonoBehaviour, IMessenger
             case Message.HEALTH_UPDATED:
                 uiController.SetBossHealthWidth((int)args[0], (int)args[1]);
                 break;
-            case Message.NO_HEALTH_REMAINING:
+		case Message.NO_HEALTH_REMAINING:
+				SceneMessenger.Instance.LoadSceneWithDelay (sceneToLoadOnDeath, loadSceneDelay);
                 Destroy(gameObject);
                 break;
             case Message.START_ATTACK_DELAY:
