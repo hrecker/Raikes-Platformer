@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +15,7 @@ public class UIController : MonoBehaviour
 		set { points = value; }
 	}
 
-    void Awake()
+    void Start()
     {
 		Image[] uiImages = healthBar.GetComponentsInChildren<Image> ();
 		healthUIImages = new Image[3];
@@ -26,10 +26,11 @@ public class UIController : MonoBehaviour
 		foreach (Image armorUIImage in armorUIImages) {
 			armorUIImage.gameObject.SetActive (false);
 		}
-		SceneMessenger sceneMessenger = GameObject.FindGameObjectWithTag ("SceneMessenger").GetComponent<SceneMessenger> ();
-		sceneMessenger.AddListener (Message.HEALTH_UPDATED, new SceneMessenger.HealthCallback (UpdateHealthUI));
-		sceneMessenger.AddListener (Message.POINTS_RECEIVED, new SceneMessenger.PointsCallback (UpdateScoreUI));
-//		DontDestroyOnLoad (gameObject);
+
+		SceneMessenger.Instance.AddListener (Message.HEALTH_UPDATED, new SceneMessenger.HealthCallback (UpdateHealthUI));
+		SceneMessenger.Instance.AddListener (Message.POINTS_RECEIVED, new SceneMessenger.PointsCallback (UpdateScoreUI));
+
+		//DontDestroyOnLoad (gameObject);
     }
 
     public void UpdateHealthUI(int currentHealth, int maxHealth, int currentArmor, int maxArmor)

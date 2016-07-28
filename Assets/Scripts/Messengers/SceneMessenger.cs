@@ -8,13 +8,15 @@ public class ScenePersistence
 	public int armor;
 	public List<PickupType> activePowerups;
 	public int points;
+	public bool gunActive;
 
-	public ScenePersistence(int health, int armor, List<PickupType> activePowerups, int points)
+	public ScenePersistence(int health, int armor, List<PickupType> activePowerups, int points, bool gunActive)
 	{
 		this.health = health;
 		this.armor = armor;
 		this.activePowerups = activePowerups;
 		this.points = points;
+		this.gunActive = gunActive;
 	}
 
 }
@@ -120,7 +122,8 @@ public class SceneMessenger : MonoBehaviour, IMessenger
 		int armor = obj.GetComponent<Health> ().armor;
 		List<PickupType> activePickups = obj.GetComponent<PickupController> ().GetActivePowerups ();
 		int points = GameObject.FindGameObjectWithTag ("UIController").GetComponent<UIController> ().Points;
-		SceneMessenger.playerData = new ScenePersistence (health, armor, activePickups, points);
+		bool gunActive = obj.GetComponent<PlayerInput> ().gunActive;
+		SceneMessenger.playerData = new ScenePersistence (health, armor, activePickups, points, gunActive);
 	}
 
 	public void LoadPlayerState()
@@ -130,11 +133,13 @@ public class SceneMessenger : MonoBehaviour, IMessenger
 			int health = SceneMessenger.playerData.health;
 			int armor = SceneMessenger.playerData.armor;
 			int points = SceneMessenger.playerData.points;
+			bool gunActive = SceneMessenger.playerData.gunActive;
 			int maxHealth = obj.GetComponent<Health> ().maxHealth;
 			int maxArmor = obj.GetComponent<Health> ().maxArmor;
 			obj.GetComponent<Health> ().health = health;
 			obj.GetComponent<Health> ().armor = armor;
 			obj.GetComponent<PickupController> ().SetActivePowerups (SceneMessenger.playerData.activePowerups);
+			obj.GetComponent<PlayerInput> ().gunActive = gunActive;
 			GameObject.FindGameObjectWithTag ("UIController").GetComponent<UIController> ().Points = points;
 
 			Invoke (Message.HEALTH_UPDATED, new object[] { health, maxHealth, armor, maxArmor });
