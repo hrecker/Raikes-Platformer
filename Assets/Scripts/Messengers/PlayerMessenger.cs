@@ -62,9 +62,10 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
             case Message.HEALTH_UPDATED:
                 SceneMessenger.Instance.Invoke(Message.HEALTH_UPDATED, new object[] { health.health, health.maxHealth, health.armor, health.maxArmor });
                 break;
-            case Message.NO_HEALTH_REMAINING:
-                //TODO: add logic for death
-                Destroy(gameObject);
+		case Message.NO_HEALTH_REMAINING:
+				//TODO: add logic for death
+				SceneMessenger.Instance.RestartScene (1.0f);
+				Destroy (gameObject);
                 break;
             case Message.NO_ARMOR_REMAINING:
                 pickupController.DeactivatePowerups();
@@ -137,4 +138,5 @@ public class PlayerMessenger : MonoBehaviour, IMessenger
         }
         spriteChanger.DeactivateFlash();
     }
+
 }
