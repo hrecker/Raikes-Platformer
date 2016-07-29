@@ -32,6 +32,7 @@ public class SceneMessenger : MonoBehaviour, IMessenger
 
 	private static ScenePersistence playerData = null;
 	private static int currentScene = 0;
+	public static string currentSceneKey = "Current Scene";
 
     void Awake()
     {
@@ -102,6 +103,7 @@ public class SceneMessenger : MonoBehaviour, IMessenger
 	public void LoadScene(int sceneToLoad)
 	{
 		SceneMessenger.currentScene = sceneToLoad;
+		PlayerPrefs.SetInt (SceneMessenger.currentSceneKey, sceneToLoad);
 		SavePlayerState ();
 		UnityEngine.SceneManagement.SceneManager.LoadScene (sceneToLoad);
 	}
