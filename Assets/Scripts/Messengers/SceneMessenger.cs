@@ -31,6 +31,8 @@ public class SceneMessenger : MonoBehaviour, IMessenger
     public delegate void VoidCallback ();
 
 	private static ScenePersistence playerData = null;
+	private static int currentScene = 0;
+	public static string currentSceneKey = "Current Scene";
 
     void Awake()
     {
@@ -100,24 +102,40 @@ public class SceneMessenger : MonoBehaviour, IMessenger
 
 	public void LoadScene(int sceneToLoad)
 	{
+		SceneMessenger.currentScene = sceneToLoad;
+		PlayerPrefs.SetInt (SceneMessenger.currentSceneKey, sceneToLoad);
 		SavePlayerState ();
 		UnityEngine.SceneManagement.SceneManager.LoadScene (sceneToLoad);
 	}
 
 	private System.Collections.IEnumerator LoadSceneAfterDelay(int sceneToLoad, float seconds)
 	{
+		Debug.Log ("Delay...");
 		yield return new WaitForSeconds (seconds);
+		Debug.Log ("Finished...");
 		LoadScene (sceneToLoad);
 	}
 
 	public void LoadSceneWithDelay(int sceneToLoad, float seconds)
 	{
+		Debug.Log ("Begin Delay...");
 		StartCoroutine (LoadSceneAfterDelay (sceneToLoad, seconds));
 	}
 
 	public void SavePlayerState()
 	{
-		GameObject obj = SceneMessenger.GetMainPlayerObject (GameObject.FindWithTag ("Player"));
+		GameObject playerObj = GameObject.FindWithTag ("Player");
+		if (playerObj == null) {
+			//This most likely means the player is dead
+			//and we are restarting the level.
+			return;
+		}
+		GameObject obj = SceneMessenger.GetMainPlayerObject (playerObj);
+		if (obj == null) {
+			//This most likely means the player is dead
+			//and we are restarting the level.
+			return;
+		}
 		int health = obj.GetComponent<Health> ().health;
 		int armor = obj.GetComponent<Health> ().armor;
 		List<PickupType> activePickups = obj.GetComponent<PickupController> ().GetActivePowerups ();
@@ -147,6 +165,12 @@ public class SceneMessenger : MonoBehaviour, IMessenger
 
 			SceneMessenger.playerData = null;
 		}
+	}
+
+	public void RestartScene(float secondsDelay)
+	{
+		Debug.Log ("Restarting...");
+		LoadSceneWithDelay (currentScene, secondsDelay);
 	}
 
 }
