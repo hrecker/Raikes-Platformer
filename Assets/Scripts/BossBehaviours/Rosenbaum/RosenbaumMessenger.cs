@@ -20,7 +20,6 @@ public class RosenbaumMessenger : MonoBehaviour, IMessenger
                 Destroy(gameObject);
                 break;
             case Message.START_ATTACK_DELAY:
-                Debug.Log("start attack delay");
                 uiController.ActivateWarning((float)args[0]);
                 break;
             case Message.HIT_BY_OTHER:

@@ -152,7 +152,6 @@ public class RosenbaumAttackScript : MonoBehaviour
 
     private void startStrongAttackDelay()
     {
-        Debug.Log("sending message now");
         messenger.Invoke(Message.START_ATTACK_DELAY, new object[] { strongAttackDelay });
         activeAttack = ActiveAttack.STRONG_DELAY;
         numDefaultAttacksDone = 0;

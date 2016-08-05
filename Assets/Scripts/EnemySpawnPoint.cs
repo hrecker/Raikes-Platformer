@@ -4,6 +4,8 @@ public class EnemySpawnPoint : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public HorizontalDirection spawnDirection;
+    public bool isBuzzword;
+    public string[] buzzwordStrings;
 
     private GameObject spawn;
 
@@ -17,6 +19,18 @@ public class EnemySpawnPoint : MonoBehaviour
             if(directedComponent != null)
             {
                 directedComponent.horizontalDirection = spawnDirection;
+            }
+            if(isBuzzword)
+            {
+                GenericBuzzwordMessenger buzzwordMessenger = spawn.GetComponent<GenericBuzzwordMessenger>();
+                if(buzzwordMessenger == null)
+                {
+                    Debug.LogError("Spawn point marked for buzzword, but GenericBuzzwordMessenger was not found on the enemyPrefab");
+                }
+                else
+                {
+                    buzzwordMessenger.buzzword = buzzwordStrings[Random.Range(0, buzzwordStrings.Length - 1)];
+                }
             }
         }
     }
