@@ -170,7 +170,7 @@ public class SceneMessenger : MonoBehaviour, IMessenger
 	public void RestartScene(float secondsDelay)
 	{
 		Debug.Log ("Restarting...");
-		LoadSceneWithDelay (currentScene, secondsDelay);
+		LoadSceneWithDelay (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex, secondsDelay);
 	}
 
 }
