@@ -17,7 +17,6 @@ public class TrampolinePlatformMessenger: MonoBehaviour, IMessenger
                 if (args[0] is Behaviour)
                 {
                     Behaviour behaviour = ((Behaviour)args[0]);
-                    this.GetComponentInHierarchy<IMessenger>();
                     IMessenger argMessenger = behaviour.GetComponentInHierarchy<IMessenger>();
                     argMessenger.Invoke(Message.LANDED_ON_TRAMPOLINE_PLATFORM,
                         new object[] { bounce.bounciness, bounce.framesToJumpOnTrampoline });

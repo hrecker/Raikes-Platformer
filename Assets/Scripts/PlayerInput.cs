@@ -14,6 +14,7 @@ public class PlayerInput : MonoBehaviour
     private float currentGunTimePassed;
     private int totalJumpFramesHeld;
     private int groundedJumpFramesHeld;
+    private int framesSinceJumpPress;
     private bool jumped;
     private bool spaceReleased;
 
@@ -31,6 +32,8 @@ public class PlayerInput : MonoBehaviour
     
     void Update()
     {
+        framesSinceJumpPress++;
+
 		if (inputDisabled) {
 			return;
 		}
@@ -126,6 +129,7 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             totalJumpFramesHeld++;
+            framesSinceJumpPress = 0;
         }
         else
         {
@@ -137,7 +141,7 @@ public class PlayerInput : MonoBehaviour
     {
 		//Jumps frame held must be greater than 0 because the player must
 		//actually be holding the spacebar.
-		if (totalJumpFramesHeld > 0 && totalJumpFramesHeld <= framesToJumpOnTrampoline)
+		if (framesSinceJumpPress <= framesToJumpOnTrampoline)
         {
 			movement.TrampolinePlatformHop (jumpSpeed, false);
 		} else
