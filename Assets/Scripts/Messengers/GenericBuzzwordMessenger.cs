@@ -28,7 +28,7 @@ public class GenericBuzzwordMessenger : MonoBehaviour, IMessenger, IDirected
         set { }
     }
 
-    void Awake ()
+    void Start ()
     {
         letters = new List<BuzzwordLetterMovement>();
         for(int i = 0; i < buzzword.Length; i++)
