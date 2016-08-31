@@ -6,36 +6,45 @@ public class EnemySpawnPoint : MonoBehaviour
     public HorizontalDirection spawnDirection;
     public bool isBuzzword;
     public string[] buzzwordStrings;
+    public bool repeating;
+    public float repeatTime;
 
     private GameObject spawn;
+    private bool activated;
+    private float currentRepeatTimePassed;
 
-    void OnTriggerEnter2D(Collider2D other)
+    void Update() 
     {
-		Rigidbody2D otherRigidbody = other.GetComponentInParent<Rigidbody2D> ();
-		if (other.tag == "SpawnCollider" && spawn == null && rigidbodyIsMovingInCorrectDirection(otherRigidbody, other))
+        if(activated && repeating)
         {
-            spawn = Instantiate(enemyPrefab, transform.position, Quaternion.identity) as GameObject;
-            IDirected directedComponent = spawn.GetComponent<IDirected>();
-            if(directedComponent != null)
+            currentRepeatTimePassed += Time.deltaTime;
+            if(currentRepeatTimePassed >= repeatTime)
             {
-                directedComponent.horizontalDirection = spawnDirection;
-            }
-            if(isBuzzword)
-            {
-                GenericBuzzwordMessenger buzzwordMessenger = spawn.GetComponent<GenericBuzzwordMessenger>();
-                if(buzzwordMessenger == null)
-                {
-                    Debug.LogError("Spawn point marked for buzzword, but GenericBuzzwordMessenger was not found on the enemyPrefab");
-                }
-                else
-                {
-                    buzzwordMessenger.buzzword = buzzwordStrings[Random.Range(0, buzzwordStrings.Length - 1)];
-                }
+                currentRepeatTimePassed = 0;
+                spawnEnemy();
             }
         }
     }
 
-	bool rigidbodyIsMovingInCorrectDirection(Rigidbody2D rigidbody, Collider2D other) {
+    void OnTriggerEnter2D(Collider2D other)
+    {
+		Rigidbody2D otherRigidbody = other.GetComponentInParent<Rigidbody2D> ();
+		if (other.tag == "SpawnCollider" && spawn == null)
+        {
+            if (rigidbodyIsMovingInCorrectDirection(otherRigidbody, other))
+            {
+                spawnEnemy();
+                activated = true;
+            }
+            else
+            {
+                activated = false;
+            }
+        }
+    }
+
+	bool rigidbodyIsMovingInCorrectDirection(Rigidbody2D rigidbody, Collider2D other)
+    {
 		Collider2D collider = GetComponent<Collider2D> ();
 		//If the other collider's width is less than its height, then it is
 		//oriented vertically, and we need to check the relative x-coordinates.
@@ -63,4 +72,26 @@ public class EnemySpawnPoint : MonoBehaviour
 			}
 		}
 	}
+
+    private void spawnEnemy()
+    {
+        spawn = Instantiate(enemyPrefab, transform.position, Quaternion.identity) as GameObject;
+        IDirected directedComponent = spawn.GetComponent<IDirected>();
+        if (directedComponent != null)
+        {
+            directedComponent.horizontalDirection = spawnDirection;
+        }
+        if (isBuzzword)
+        {
+            GenericBuzzwordMessenger buzzwordMessenger = spawn.GetComponent<GenericBuzzwordMessenger>();
+            if (buzzwordMessenger == null)
+            {
+                Debug.LogError("Spawn point marked for buzzword, but GenericBuzzwordMessenger was not found on the enemyPrefab");
+            }
+            else
+            {
+                buzzwordMessenger.buzzword = buzzwordStrings[Random.Range(0, buzzwordStrings.Length - 1)];
+            }
+        }
+    }
 }
